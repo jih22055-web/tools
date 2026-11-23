@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASCII 码表 - 万能工具箱</title>
+<meta name="description" content="完整 ASCII 码表 0-127，十进制/十六进制/二进制/字符对照，可搜索可复制。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / ASCII 码表速查</div>
+  <div class="panel">
+    <h2>🔣 ASCII 码表速查</h2>
+    <p class="desc">完整 ASCII 码表 0-127，十进制/十六进制/二进制/字符对照，可搜索可复制。</p>
+    <label>搜索字符、十进制或十六进制</label>
+    <input type="text" id="q" placeholder="例如 A、65、0x41、换行">
+    <div class="row" style="margin-top:14px">
+      <button class="btn ghost" id="all">显示全部 0-127</button>
+      <button class="btn ghost" id="ctrl">只看控制字符</button>
+      <button class="btn ghost" id="print">只看可打印字符</button>
+    </div>
+    <div class="result" id="out" style="padding:0;background:#fff;overflow:auto;max-height:520px"></div>
+    <p class="hint">点击任意一行复制对应字符。</p>
+  </div>
+<section class="seo">
+<p class="lead">ASCII 码表把 0 到 127 每个编码对应的字符、二进制、十六进制一次列全。写程序时遇到乱码、协议里看到 0x0D 0x0A 不知道是什么、需要确认某个字符的编码值，查这张表最快。表格支持按字符或编码搜索，点击任意一行直接复制字符。</p>
+<h2>适用场景</h2><ul><li>排查乱码问题时对照编码值</li><li>确认换行符到底是 LF(10) 还是 CRLF(13+10)</li><li>协议分析时查控制字符含义</li><li>学习字符编码基础</li></ul>
+<h2>使用方法</h2><ol><li>直接在搜索框输入字符、十进制数或 0x 十六进制</li><li>或用下方按钮筛选控制字符 / 可打印字符</li><li>点击表格任意一行复制该字符</li></ol>
+<h2>常见问题</h2><details><summary>ASCII 只有 128 个字符吗？</summary><p>标准 ASCII 是 0-127 共 128 个。128-255 是扩展 ASCII（Latin-1），不同地区编码表不同，没有统一标准。</p></details><details><summary>中文在哪里？</summary><p>ASCII 里没有中文。中文在 GBK、UTF-8 等多字节编码里，占多个字节，不属于 ASCII 范畴。</p></details><details><summary>换行符 LF 和 CRLF 的区别？</summary><p>LF 是 10（0x0A），Unix/Linux/macOS 用。CRLF 是 13+10（0x0D 0x0A），Windows 用。跨平台处理文件时经常要转换。</p></details><details><summary>为什么有的控制字符显示不出来？</summary><p>0-31 和 127 是不可打印字符，屏幕上没有字形。表格里用说明文字标注它们的含义。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="unicode.html">Unicode 编码</a><a href="hex.html">Hex 转字符串</a><a href="htmlentity.html">HTML 特殊字符表</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var CTRL={0:'NUL 空字符',7:'BEL 响铃',8:'BS 退格',9:'TAB 制表符',10:'LF 换行',11:'VT 垂直制表',12:'FF 换页',13:'CR 回车',27:'ESC 转义',32:'SPACE 空格',127:'DEL 删除'};
+function nameOf(i,c){
+  if(CTRL[i])return CTRL[i];
+  if(i<32)return '控制字符';
+  if(i===127)return 'DEL 删除';
+  return '';
+}
+var ROWS=[];
+for(var i=0;i<128;i++)ROWS.push(i);
+function esc(s){
+  if(s==='<')return '&lt;';
+  if(s==='>')return '&gt;';
+  if(s==='&')return '&amp;';
+  if(s===' ')return '<span style="color:#bbb">␣</span>';
+  if(s==='"')return '&quot;';
+  return s;
+}
+function render(list){
+  var h='<table style="width:100%;border-collapse:collapse;font-size:13px">';
+  h+='<thead><tr style="background:var(--bg2);position:sticky;top:0">';
+  ['十进制','十六进制','二进制','字符','说明'].forEach(function(x){
+    h+='<th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-weight:600">'+x+'</th>';
+  });
+  h+='</tr></thead><tbody>';
+  list.forEach(function(i){
+    var c=String.fromCharCode(i);
+    h+='<tr data-c="'+encodeURIComponent(c)+'" style="cursor:pointer" onmouseover="this.style.background=\'#fff8f6\'" onmouseout="this.style.background=\'\'">';
+    h+='<td style="padding:6px 10px;border-bottom:1px solid #f2f2f2;font-family:ui-monospace,monospace">'+i+'</td>';
+    h+='<td style="padding:6px 10px;border-bottom:1px solid #f2f2f2;font-family:ui-monospace,monospace">0x'+i.toString(16).toUpperCase().padStart(2,'0')+'</td>';
+    h+='<td style="padding:6px 10px;border-bottom:1px solid #f2f2f2;font-family:ui-monospace,monospace;color:#888">'+i.toString(2).padStart(8,'0')+'</td>';
+    h+='<td style="padding:6px 10px;border-bottom:1px solid #f2f2f2;font-family:ui-monospace,monospace;font-size:15px;font-weight:600">'+esc(c)+'</td>';
+    h+='<td style="padding:6px 10px;border-bottom:1px solid #f2f2f2;color:var(--muted)">'+nameOf(i,c)+'</td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  var out=document.getElementById('out');
+  out.innerHTML=h;
+  out.querySelectorAll('tr[data-c]').forEach(function(tr){
+    tr.onclick=function(){
+      var ch=decodeURIComponent(tr.getAttribute('data-c'));
+      navigator.clipboard.writeText(ch).then(function(){
+        var td=tr.children[3];
+        var old=td.innerHTML;td.innerHTML='<span style="color:var(--brand)">已复制</span>';
+        setTimeout(function(){td.innerHTML=old},800);
+      });
+    };
+  });
+  document.getElementById('n')&&(document.getElementById('n').textContent=list.length);
+}
+function search(){
+  var q=document.getElementById('q').value.trim().toLowerCase();
+  if(!q){render(ROWS);return}
+  var num=null;
+  if(/^0x[0-9a-f]+$/i.test(q))num=parseInt(q,16);
+  else if(/^\d+$/.test(q))num=parseInt(q,10);
+  var list=ROWS.filter(function(i){
+    if(num!==null&&i===num)return true;
+    var c=String.fromCharCode(i).toLowerCase();
+    if(c===q)return true;
+    if(nameOf(i,c).toLowerCase().indexOf(q)>=0)return true;
+    return false;
+  });
+  render(list);
+}
+document.getElementById('q').addEventListener('input',search);
+document.getElementById('all').onclick=function(){document.getElementById('q').value='';render(ROWS)};
+document.getElementById('ctrl').onclick=function(){render(ROWS.filter(function(i){return i<32||i===127}))};
+document.getElementById('print').onclick=function(){render(ROWS.filter(function(i){return i>=32&&i<127}))};
+render(ROWS);
+
+</script></body></html>

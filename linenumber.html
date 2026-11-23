@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文本加行号 - 万能工具箱</title>
+<meta name="description" content="给文本每行批量添加序号，可设起始值、步长、分隔符与补零。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 文本批量加行号</div>
+  <div class="panel">
+    <h2>🔢 文本批量加行号</h2>
+    <p class="desc">给文本每行批量添加序号，可设起始值、步长、分隔符与补零。</p>
+    <label>原始文本</label>
+    <textarea id="in" style="min-height:150px">第一行内容
+第二行内容
+
+第四行内容
+第五行内容</textarea>
+    <div class="row" style="margin-top:14px">
+      <div><label style="margin-top:0">起始序号</label><input type="number" id="start" value="1"></div>
+      <div><label style="margin-top:0">步长</label><input type="number" id="step" value="1"></div>
+      <div><label style="margin-top:0">分隔符</label>
+        <select id="sep">
+          <option value=". ">. 空格</option>
+          <option value="、">、</option>
+          <option value=") ">) 空格</option>
+          <option value=": ">: 空格</option>
+          <option value="	">Tab</option>
+          <option value=" ">空格</option>
+        </select>
+      </div>
+      <div><label style="margin-top:0">补零位数</label><input type="number" id="pad" value="0" min="0" max="8"></div>
+    </div>
+    <label style="margin-top:16px"><input type="checkbox" id="skip" style="width:auto"> 空行不编号（也不输出）</label>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="go">添加行号</button>
+      <button class="btn ghost" id="cp">复制结果</button>
+    </div>
+    <label>结果</label>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace">结果将在这里显示</div>
+    <p class="hint">给代码、清单、字幕稿批量加序号，省得手动敲。</p>
+  </div>
+<section class="seo">
+<p class="lead">文本加行号工具给每一行前面批量加上序号。几十上百条清单手动敲数字既慢又容易串行，粘进来一次生成最省事。起始序号、步长、分隔符、补零位数都能调，代码行号、清单编号、字幕序号三种需求都能覆盖。</p>
+<h2>适用场景</h2><ul><li>给长清单批量编号</li><li>整理会议记录、需求列表时加序号</li><li>给字幕稿、台词稿标行号方便定位</li><li>生成测试数据需要递增编号</li></ul>
+<h2>使用方法</h2><ol><li>把文本粘到输入框</li><li>设置起始序号、步长、分隔符</li><li>需要 001 这种格式就设补零位数 3</li><li>点「添加行号」再复制</li></ol>
+<h2>常见问题</h2><details><summary>空行怎么处理？</summary><p>默认空行也占一个编号。勾选「空行不编号」后空行会被直接丢掉，编号连续不断。</p></details><details><summary>能加在行尾吗？</summary><p>当前只支持加在行首。加在行尾可以用文本对比或正则工具处理。</p></details><details><summary>支持自定义分隔符吗？</summary><p>下拉里有常用的几种。需要别的可以选「空格」后在结果里批量替换，或者用正则工具处理。</p></details><details><summary>序号能倒序吗？</summary><p>步长填负数即可倒序编号。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="dedupe.html">文本去重</a><a href="wordcount.html">字数统计</a><a href="regex.html">正则表达式测试</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+function run(){
+  var v=document.getElementById('in').value;
+  if(!v){document.getElementById('out').textContent='请先输入文本';return}
+  var start=parseInt(document.getElementById('start').value,10);
+  var step=parseInt(document.getElementById('step').value,10);
+  if(isNaN(start))start=1;
+  if(isNaN(step)||step===0)step=1;
+  var sep=document.getElementById('sep').value.replace('\\t','\t');
+  var pad=parseInt(document.getElementById('pad').value,10)||0;
+  var skip=document.getElementById('skip').checked;
+  var lines=v.split('\n');
+  var n=start,out=[];
+  lines.forEach(function(l){
+    if(skip&&!l.trim())return;
+    var num=String(n);
+    if(pad>0)num=num.padStart(pad,'0');
+    out.push(num+sep+l);
+    n+=step;
+  });
+  document.getElementById('out').textContent=out.join('\n');
+}
+document.getElementById('go').onclick=run;
+document.getElementById('cp').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('out').textContent).then(function(){
+    var b=document.getElementById('cp'),o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+run();
+
+</script></body></html>

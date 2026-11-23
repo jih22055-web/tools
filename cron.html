@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cron 表达式解析 - 万能工具箱</title>
+<meta name="description" content="在线解析 Crontab 表达式，说明每个字段含义并算出接下来 8 次执行时间。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / Cron 表达式解析</div>
+  <div class="panel">
+    <h2>⏰ Cron 表达式解析</h2>
+    <p class="desc">在线解析 Crontab 表达式，说明每个字段含义并算出接下来 8 次执行时间。</p>
+    <label>Cron 表达式（分 时 日 月 周）</label>
+    <input type="text" id="expr" value="*/15 9-18 * * 1-5" style="font-family:ui-monospace,Consolas,monospace">
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">解析并计算</button>
+    </div>
+    <label>字段含义</label>
+    <div class="result" id="fields" style="font-family:inherit">等待解析</div>
+    <label>接下来 8 次执行时间</label>
+    <div class="result" id="runs" style="font-family:ui-monospace,Consolas,monospace">等待解析</div>
+    <p class="hint">标准 5 字段格式。常用：<code>0 * * * *</code> 每小时整点、<code>0 3 * * *</code> 每天 3 点、<code>0 0 1 * *</code> 每月 1 号零点。</p>
+  </div>
+<section class="seo">
+<p class="lead">Cron 表达式解析工具把 */15 9-18 * * 1-5 这种天书翻译成人话，同时算出接下来几次实际执行的时间点。写定时任务最容易犯的错是表达式看着对、实际触发时间和预期差一截（尤其星期和日期字段），先跑一遍看真实时间最保险。</p>
+<h2>适用场景</h2><ul><li>写 crontab 前验证表达式是否正确</li><li>接手别人的定时任务，搞清楚它到底什么时候跑</li><li>排查定时任务没按时执行的问题</li><li>换算时区——页面按你电脑的本地时间计算</li></ul>
+<h2>使用方法</h2><ol><li>在输入框填 5 段式 Cron 表达式</li><li>点「解析并计算」</li><li>看字段含义那一栏确认每位是否符合预期</li><li>看下面 8 条时间是否落在你想要的时点</li></ol>
+<h2>常见问题</h2><details><summary>支持 6 段式（带秒）吗？</summary><p>只支持标准 5 段式：分 时 日 月 周。Quartz 的 6 段式带秒格式需要另找工具。</p></details><details><summary>星期几从 0 开始还是 1？</summary><p>0 和 7 都表示周日，1-6 表示周一到周六。和标准 crontab 一致。</p></details><details><summary>日和星期同时指定时怎么算？</summary><p>标准 cron 里这两个字段是「或」的关系，本工具计算时要求两者都满足（更严格）。如果两个字段都不是 *，建议只用其中一个。</p></details><details><summary>算出来的时间和服务器上不一致？</summary><p>本工具按你本地时区计算。服务器通常跑 UTC，如果表达式里有小时数，记得把时差算进去。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="timestamp.html">时间戳转换</a><a href="linuxcmd.html">Linux 命令速查</a><a href="datecalc.html">日期计算器</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var NAMES={0:'周日',1:'周一',2:'周二',3:'周三',4:'周四',5:'周五',6:'周六'};
+function parseField(str,min,max,name){
+  var set={},err=null;
+  str.split(',').forEach(function(part){
+    if(!part)return;
+    var step=1,base=part;
+    var slash=part.indexOf('/');
+    if(slash>=0){base=part.slice(0,slash);step=parseInt(part.slice(slash+1),10)}
+    if(!step||step<1){err=name+' 步长无效';return}
+    var lo,hi;
+    if(base==='*'){lo=min;hi=max}
+    else if(base.indexOf('-')>0){
+      var r=base.split('-');lo=parseInt(r[0],10);hi=parseInt(r[1],10);
+    }else{lo=parseInt(base,10);hi=(slash>=0)?max:lo}
+    if(isNaN(lo)||isNaN(hi)||lo<min||hi>max||lo>hi){err=name+' 取值范围应为 '+min+'-'+max;return}
+    for(var v=lo;v<=hi;v+=step)set[v]=1;
+  });
+  return {set:set,err:err};
+}
+function describe(f){
+  var parts=f.trim().split(/\s+/);
+  if(parts.length!==5)return {err:'需要 5 个字段（分 时 日 月 周），当前 '+parts.length+' 个'};
+  var mn=parseField(parts[0],0,59,'分钟'),hr=parseField(parts[1],0,23,'小时'),
+      dm=parseField(parts[2],1,31,'日'),mo=parseField(parts[3],1,12,'月'),dw=parseField(parts[4],0,6,'周');
+  var e=mn.err||hr.err||dm.err||mo.err||dw.err;
+  if(e)return {err:e};
+  function fmtSet(set,max,nm,map){
+    var arr=Object.keys(set).map(Number).sort(function(a,b){return a-b});
+    if(arr.length===max+1)return '每'+nm;
+    return arr.map(function(v){return map?map(v):String(v).padStart(2,'0')}).join('、');
+  }
+  var rows=[
+    ['分钟',parts[0],fmtSet(mn.set,59,'分钟')],
+    ['小时',parts[1],fmtSet(hr.set,23,'小时')],
+    ['日',parts[2],fmtSet(dm.set,31,'天')],
+    ['月',parts[3],fmtSet(mo.set,12,'月')],
+    ['星期',parts[4],fmtSet(dw.set,6,'周',function(v){return NAMES[v]})]
+  ];
+  var d=new Date();
+  d.setSeconds(0,0);
+  d.setMinutes(d.getMinutes()+1);
+  var runs=[],limit=527040;
+  while(runs.length<8&&limit-->0){
+    if(mn.set[d.getMinutes()]&&hr.set[d.getHours()]&&mo.set[d.getMonth()+1]&&dm.set[d.getDate()]&&dw.set[d.getDay()])runs.push(new Date(d));
+    d.setMinutes(d.getMinutes()+1);
+  }
+  return {rows:rows,runs:runs};
+}
+function pad(n){return String(n).padStart(2,'0')}
+function fmtDate(d){
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+' '+NAMES[d.getDay()];
+}
+function run(){
+  var v=document.getElementById('expr').value;
+  var r=describe(v);
+  if(r.err){
+    document.getElementById('fields').textContent='解析失败：'+r.err;
+    document.getElementById('runs').textContent='—';
+    return;
+  }
+  document.getElementById('fields').textContent=r.rows.map(function(x){return x[0]+'（'+x[1]+'）→ '+x[2]}).join('\n');
+  document.getElementById('runs').textContent=r.runs.length?r.runs.map(fmtDate).join('\n'):'未来一年内没有匹配时间';
+}
+document.getElementById('go').onclick=run;
+document.getElementById('expr').addEventListener('keydown',function(e){if(e.key==='Enter')run()});
+run();
+
+</script></body></html>

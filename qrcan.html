@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>二维码识别 - 万能工具箱</title>
+<meta name="description" content="上传或拖入图片，自动识别其中的二维码内容，本地解析不上传。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 二维码识别</div>
+  <div class="panel">
+    <h2>📷 二维码识别</h2>
+    <p class="desc">上传或拖入图片，自动识别其中的二维码内容，本地解析不上传。</p>
+    <div class="dropzone" id="drop" style="padding:34px">
+      <div style="font-size:34px;margin-bottom:8px">📷</div>
+      <div>点击选择图片，或把图片拖到这里</div>
+      <div style="font-size:12px;margin-top:6px;color:var(--muted)">支持 PNG / JPG / WEBP / GIF，图片只在本地解析</div>
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div class="preview" id="pv" style="margin-top:16px;display:none"></div>
+    <label>识别结果</label>
+    <div class="result" id="out" style="min-height:70px">等待上传图片</div>
+    <p class="hint">识别失败的常见原因：图片太模糊、二维码太小、有遮挡、对比度不足。</p>
+  </div>
+<section class="seo">
+<p class="lead">二维码识别工具从图片里把二维码内容读出来。收到一张二维码截图但不知道指向哪里、需要核对二维码里的文本是否正确、二维码印在纸上要提取内容，都可以传图识别。图片在你的浏览器里解析，不会上传到任何服务器。</p>
+<h2>适用场景</h2><ul><li>看到一张二维码图片，想知道内容是什么</li><li>核对生成的二维码是否写对了链接</li><li>从截图、海报、文档中提取二维码内容</li><li>识别带 logo 或轻微遮挡的二维码</li></ul>
+<h2>使用方法</h2><ol><li>点击虚线框选择图片，或直接把图拖进来</li><li>等待 1-2 秒自动识别</li><li>结果框显示二维码里的原始文本</li><li>如果是网址，复制到浏览器打开即可</li></ol>
+<h2>常见问题</h2><details><summary>为什么识别不出来？</summary><p>常见原因：二维码太小（低于 200×200 像素）、图片模糊、压缩过度、反光或被遮挡。用原始图片、不用二次截图，成功率最高。</p></details><details><summary>支持彩色二维码吗？</summary><p>支持。只要前景和背景对比度足够，深浅颜色的二维码也能识别。</p></details><details><summary>一次能识别多个二维码吗？</summary><p>当前只返回第一个识别到的。一张图里有多个码时建议裁开分别识别。</p></details><details><summary>图片会上传到服务器吗？</summary><p>不会。全部在浏览器本地用 canvas 解析，图片不离开你的电脑。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="qrcode.html">二维码生成器</a><a href="barcode.html">条形码生成</a><a href="imgbase64.html">图片转 Base64</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script src="jsqr.js?v=1"></script>
+<script>
+
+var fileInput=document.getElementById('file');
+var drop=document.getElementById('drop');
+drop.onclick=function(){fileInput.click()};
+fileInput.onchange=function(){if(this.files[0])handle(this.files[0])};
+['dragenter','dragover'].forEach(function(e){
+  drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('over')});
+});
+['dragleave','drop'].forEach(function(e){
+  drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('over')});
+});
+drop.addEventListener('drop',function(ev){
+  var f=ev.dataTransfer.files[0];
+  if(f)handle(f);
+});
+function handle(f){
+  if(!f.type.startsWith('image/')){document.getElementById('out').textContent='请上传图片文件';return}
+  var out=document.getElementById('out');
+  out.textContent='正在识别…';
+  var img=new Image();
+  var url=URL.createObjectURL(f);
+  img.onload=function(){
+    var pv=document.getElementById('pv');
+    pv.style.display='block';
+    pv.innerHTML='';
+    var shown=img.cloneNode();
+    shown.style.cssText='max-width:100%;max-height:260px;border-radius:8px;border:1px solid var(--line)';
+    pv.appendChild(shown);
+    var c=document.createElement('canvas');
+    var max=1400,scale=Math.min(1,max/Math.max(img.width,img.height));
+    c.width=Math.round(img.width*scale);
+    c.height=Math.round(img.height*scale);
+    var ctx=c.getContext('2d');
+    ctx.drawImage(img,0,0,c.width,c.height);
+    var data=ctx.getImageData(0,0,c.width,c.height);
+    var code=null;
+    try{code=jsQR(data.data,data.width,data.height,{inversionAttempts:'attemptBoth'})}catch(e){}
+    if(code&&code.data){
+      out.textContent=code.data+'\n\n/* 尺寸 '+img.width+'×'+img.height+'，定位点 '+code.location.topLeftCorner.x.toFixed(0)+','+code.location.topLeftCorner.y.toFixed(0)+' */';
+    }else{
+      out.textContent='没有识别到二维码。\n\n建议：\n1. 用原图而不是截图缩放后的版本\n2. 确认二维码完整、无遮挡\n3. 图片分辨率不低于 200×200';
+    }
+    URL.revokeObjectURL(url);
+  };
+  img.onerror=function(){out.textContent='图片加载失败，请换一张试试';URL.revokeObjectURL(url)};
+  img.src=url;
+}
+
+</script></body></html>

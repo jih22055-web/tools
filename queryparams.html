@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>URL 参数解析 - 万能工具箱</title>
+<meta name="description" content="解析 URL 里的查询参数，自动解码，可编辑后重新生成完整链接。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / URL 参数解析</div>
+  <div class="panel">
+    <h2>🔗 URL 参数解析</h2>
+    <p class="desc">解析 URL 里的查询参数，自动解码，可编辑后重新生成完整链接。</p>
+    <label>粘贴 URL</label>
+    <textarea id="in" style="min-height:90px;font-family:ui-monospace,Consolas,monospace">https://example.com/search?q=%E5%B7%A5%E5%85%B7%E7%AE%B1&page=2&sort=desc&tags=a,b,c#result</textarea>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">解析参数</button>
+      <button class="btn ghost" id="rebuild">按表格重新生成 URL</button>
+      <button class="btn ghost" id="cp">复制 URL</button>
+    </div>
+    <label>基础信息</label>
+    <div class="result" id="base" style="min-height:auto;font-family:ui-monospace,Consolas,monospace">等待解析</div>
+    <label>查询参数（可直接编辑，编辑后点重新生成）</label>
+    <div class="result" id="tbl" style="padding:0;background:#fff;min-height:auto"></div>
+    <p class="hint">自动 URL 解码，重复参数会分别列出。做接口调试、看别人链接里带了什么参数很方便。</p>
+  </div>
+<section class="seo">
+<p class="lead">URL 参数解析工具把链接问号后面那一串 a=1&b=2&c=3 拆成表格，自动做 URL 解码，中文参数也能直接看懂。调试接口时想改某个参数重发请求、看别人分享的链接里带了哪些追踪参数、从长链接里提取关键信息，用它比肉眼数 & 快得多。</p>
+<h2>适用场景</h2><ul><li>分析分享链接里的追踪参数（utm_source 之类）</li><li>调试接口时修改查询参数</li><li>从长 URL 里提取有用字段</li><li>检查参数是否正确编码</li></ul>
+<h2>使用方法</h2><ol><li>把 URL 粘到输入框</li><li>点「解析参数」看表格</li><li>直接编辑参数名或值，点「重新生成」得到新链接</li><li>或点「复制」拿走原链接</li></ol>
+<h2>常见问题</h2><details><summary>中文参数为什么显示成 %E5%B7%A5 这样？</summary><p>URL 里的非 ASCII 字符必须编码。工具会自动解码显示成中文，重新生成时再编码回去，所以复制的链接依然可用。</p></details><details><summary>重复的参数名怎么处理？</summary><p>会分行列出，比如 tags=a&tags=b 显示两行，重新生成时也会保留两个。</p></details><details><summary>锚点（# 后面）会参与解析吗？</summary><p>不参与。锚点部分单独显示，查询参数只解析 ? 到 # 之间的内容。</p></details><details><summary>能解析 POST 请求的 body 吗？</summary><p>不能，本工具只处理 URL。表单 body 可以用 URL 编码解码工具处理。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="urlencode.html">URL 编码解码</a><a href="jsonformat.html">JSON 格式化</a><a href="base64.html">Base64 编码解码</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var rows=[];
+function parse(){
+  var v=document.getElementById('in').value.trim();
+  var base=document.getElementById('base');
+  if(!v){base.textContent='请先输入 URL';return}
+  var full=v;
+  if(!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(v))full='http://'+v;
+  var u;
+  try{u=new URL(full)}catch(e){base.textContent='URL 格式不正确：'+e.message;return}
+  base.textContent='协议：'+u.protocol.replace(':','')+'\n域名：'+u.hostname+(u.port?':'+u.port:'')+'\n路径：'+(u.pathname||'/')+(u.hash?'\n锚点：'+u.hash:'')+'\n参数个数：'+[...u.searchParams.keys()].length;
+  rows=[];
+  u.searchParams.forEach(function(val,k){rows.push([k,val])});
+  render();
+}
+function render(){
+  var tbl=document.getElementById('tbl');
+  if(!rows.length){tbl.innerHTML='<div style="padding:16px;color:var(--muted);font-size:14px">这个 URL 没有查询参数</div>';return}
+  var h='<table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:var(--bg2)"><th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);width:38%">参数名</th><th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)">值</th><th style="width:40px"></th></tr></thead><tbody>';
+  rows.forEach(function(r,i){
+    h+='<tr><td style="padding:4px 8px;border-bottom:1px solid #f5f5f5"><input data-i="'+i+'" data-f="0" value="'+esc(r[0])+'" style="width:100%;border:1px solid transparent;padding:6px 8px;border-radius:4px;font-size:13px;font-family:ui-monospace,monospace"></td>';
+    h+='<td style="padding:4px 8px;border-bottom:1px solid #f5f5f5"><input data-i="'+i+'" data-f="1" value="'+esc(r[1])+'" style="width:100%;border:1px solid transparent;padding:6px 8px;border-radius:4px;font-size:13px;font-family:ui-monospace,monospace"></td>';
+    h+='<td style="padding:4px 8px;border-bottom:1px solid #f5f5f5;text-align:center"><span class="del" data-i="'+i+'" style="cursor:pointer;color:#bbb;font-size:16px">×</span></td></tr>';
+  });
+  h+='</tbody></table>';
+  tbl.innerHTML=h;
+  tbl.querySelectorAll('input').forEach(function(inp){
+    inp.oninput=function(){rows[+inp.dataset.i][+inp.dataset.f]=inp.value};
+    inp.onfocus=function(){inp.style.borderColor='var(--brand)'};
+    inp.onblur=function(){inp.style.borderColor='transparent'};
+  });
+  tbl.querySelectorAll('.del').forEach(function(el){
+    el.onclick=function(){rows.splice(+el.dataset.i,1);render()};
+  });
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function rebuild(){
+  var v=document.getElementById('in').value.trim();
+  if(!v){alert('请先输入 URL');return}
+  var full=/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(v)?v:'http://'+v;
+  var u;
+  try{u=new URL(full)}catch(e){alert('URL 格式不正确');return}
+  var q=new URLSearchParams();
+  rows.forEach(function(r){if(r[0])q.append(r[0],r[1])});
+  var qs=q.toString();
+  var out=u.origin+u.pathname+(qs?'?'+qs:'')+u.hash;
+  document.getElementById('in').value=out;
+  document.getElementById('base').textContent='已重新生成：\n'+out;
+  parse();
+}
+document.getElementById('go').onclick=parse;
+document.getElementById('rebuild').onclick=rebuild;
+document.getElementById('cp').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('in').value).then(function(){
+    var b=document.getElementById('cp'),o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+parse();
+
+</script></body></html>

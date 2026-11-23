@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>curl 转代码 - 万能工具箱</title>
+<meta name="description" content="把 curl 命令一键转成 fetch、axios、Python requests、Go、PHP 代码。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / curl 转代码</div>
+  <div class="panel">
+    <h2>💻 curl 转代码</h2>
+    <p class="desc">把 curl 命令一键转成 fetch、axios、Python requests、Go、PHP 代码。</p>
+    <label>curl 命令</label>
+    <textarea id="in" style="min-height:120px;font-family:ui-monospace,Consolas,monospace">curl 'https://api.example.com/v1/users' -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer abc123' --data-raw '{"name":"张三","age":28}'</textarea>
+    <label>目标语言</label>
+    <select id="lang">
+      <option value="fetch">JavaScript (fetch)</option>
+      <option value="axios">JavaScript (axios)</option>
+      <option value="py">Python (requests)</option>
+      <option value="go">Go (net/http)</option>
+      <option value="php">PHP (cURL)</option>
+    </select>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">转换</button>
+      <button class="btn ghost" id="cp">复制代码</button>
+    </div>
+    <label>生成的代码</label>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace">等待转换</div>
+    <p class="hint">支持 -X、-H、-d/--data/--data-raw/--data-binary、-u、-b。从浏览器 Network 面板「Copy as cURL」复制过来即可。</p>
+  </div>
+<section class="seo">
+<p class="lead">curl 转代码工具把浏览器 Network 面板复制出来的 curl 命令，直接翻译成可以直接跑的请求代码。调试接口时在浏览器里抓到一个请求，想搬到后端代码里重放，手抄 header 和 body 很容易出错，用这个一键生成就没有遗漏。</p>
+<h2>适用场景</h2><ul><li>从浏览器「Copy as cURL」得到的请求，转成后端代码</li><li>调第三方 API 时把文档里的 curl 示例转成项目语言</li><li>抓包分析后快速复现请求</li><li>学习不同语言发 HTTP 请求的写法差异</li></ul>
+<h2>使用方法</h2><ol><li>把 curl 命令粘到输入框</li><li>选择目标语言（fetch / axios / Python / Go / PHP）</li><li>点「转换」</li><li>复制生成的代码，按需改动变量名</li></ol>
+<h2>常见问题</h2><details><summary>支持哪些 curl 参数？</summary><p>-X 方法、-H 请求头、-d/--data/--data-raw/--data-binary 请求体、-u 基础认证、-b  Cookie、-A UA、-e Referer。其他参数会被忽略。</p></details><details><summary>multipart 表单（-F）支持吗？</summary><p>暂不支持。带文件的 -F 上传建议手写，或者用 Postman 生成代码。</p></details><details><summary>生成的 Python 代码里 json= 和 data= 有什么区别？</summary><p>请求体是合法 JSON 时用 json=payload（requests 会自动设置 Content-Type 并序列化），否则用 data= 原样发送。</p></details><details><summary>Windows 下的 curl 命令带 ^ 转义怎么办？</summary><p>先去掉 ^ 符号，或者从浏览器的 Copy as cURL (bash) 复制，那种格式能直接用。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="jwt.html">JWT 解码器</a><a href="useragent.html">UA 解析</a><a href="regex.html">正则表达式测试</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+function tokenize(s){
+  var out=[],cur='',q=null;
+  for(var i=0;i<s.length;i++){
+    var c=s[i];
+    if(q){
+      if(c===q)q=null;
+      else if(c==='\\'&&q==='"'){i++;cur+=s[i]||''}
+      else cur+=c;
+    }
+    else if(c==='"'||c==="'")q=c;
+    else if(/\s/.test(c)){if(cur){out.push(cur);cur=''}}
+    else cur+=c;
+  }
+  if(cur)out.push(cur);
+  return out;
+}
+function parseCurl(cmd){
+  var t=tokenize(cmd.replace(/\\\r?\n/g,' '));
+  var r={url:'',method:'GET',headers:{},body:null,user:null,cookie:null};
+  for(var i=0;i<t.length;i++){
+    var a=t[i];
+    if(a==='curl')continue;
+    if(a==='-X'||a==='--request'){r.method=(t[++i]||'GET').toUpperCase();continue}
+    if(a==='-H'||a==='--header'){
+      var h=t[++i]||'',p=h.indexOf(':');
+      if(p>0)r.headers[h.slice(0,p).trim()]=h.slice(p+1).trim();
+      continue;
+    }
+    if(a==='-d'||a==='--data'||a==='--data-raw'||a==='--data-binary'||a==='--data-urlencode'){
+      r.body=t[++i]||'';
+      if(r.method==='GET')r.method='POST';
+      continue;
+    }
+    if(a==='-u'||a==='--user'){r.user=t[++i]||'';continue}
+    if(a==='-b'||a==='--cookie'){r.cookie=t[++i]||'';continue}
+    if(a==='-A'||a==='--user-agent'){r.headers['User-Agent']=t[++i]||'';continue}
+    if(a==='-e'||a==='--referer'){r.headers['Referer']=t[++i]||'';continue}
+    if(/^https?:\/\//.test(a)){r.url=a;continue}
+    if(a==='--compressed'||a==='-s'||a==='-k'||a==='-L'||a==='-v'||a==='-i')continue;
+    if(!a.startsWith('-')&&!r.url&&/^[\w.-]+\.[a-z]{2,}/i.test(a)){r.url='https://'+a;continue}
+  }
+  return r;
+}
+function q(v){return "'"+String(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"'"}
+function gen(r,lang){
+  var body=r.body,isJson=false;
+  if(body){try{JSON.parse(body);isJson=true}catch(e){}}
+  var hs=r.headers;
+  if(r.user&&!hs['Authorization']){
+    hs['Authorization']='Basic '+btoa(r.user);
+  }
+  if(r.cookie)hs['Cookie']=r.cookie;
+  if(lang==='fetch'){
+    var hd=Object.keys(hs).map(function(k){return '    '+q(k)+': '+q(hs[k])}).join(',\n');
+    var s='const res = await fetch('+q(r.url)+', {\n  method: '+q(r.method)+',\n  headers: {\n'+hd+'\n  }';
+    if(body){
+      s+=',\n  body: '+(isJson?'JSON.stringify('+JSON.stringify(JSON.parse(body),null,2).replace(/\n/g,'\n  ')+')':q(body));
+    }
+    s+='\n});\n\nconst data = await res.json();\nconsole.log(data);';
+    return s;
+  }
+  if(lang==='axios'){
+    var hd2=Object.keys(hs).map(function(k){return '    '+q(k)+': '+q(hs[k])}).join(',\n');
+    var s2='const res = await axios({\n  url: '+q(r.url)+',\n  method: '+q(r.method.toLowerCase())+',\n  headers: {\n'+hd2+'\n  }';
+    if(body)s2+=',\n  data: '+(isJson?JSON.stringify(JSON.parse(body),null,2).replace(/\n/g,'\n  '):q(body));
+    s2+='\n});\n\nconsole.log(res.data);';
+    return s2;
+  }
+  if(lang==='py'){
+    var lines=['import requests','','headers = {'];
+
+    Object.keys(hs).forEach(function(k){lines.push('    '+q(k)+': '+q(hs[k])+',')});
+    lines.push('}');
+    if(body){
+      if(isJson){
+        lines.push('');
+        lines.push('payload = '+JSON.stringify(JSON.parse(body),null,2).replace(/true/g,'True').replace(/false/g,'False').replace(/null/g,'None'));
+        lines.push('res = requests.'+r.method.toLowerCase()+'('+q(r.url)+', headers=headers, json=payload)');
+      }else{
+        lines.push('data = '+q(body));
+        lines.push('res = requests.'+r.method.toLowerCase()+'('+q(r.url)+', headers=headers, data=data)');
+      }
+    }else{
+      lines.push('res = requests.'+r.method.toLowerCase()+'('+q(r.url)+', headers=headers)');
+    }
+    lines.push('');
+    lines.push('print(res.status_code)');
+    lines.push('print(res.text)');
+    return lines.join('\n');
+  }
+  if(lang==='go'){
+    var L=['package main','','import (','\t"fmt"','\t"io"'];
+    if(body)L.push('\t"strings"');
+    L.push('\t"net/http"','','func main() {');
+    if(body)L.push('\tpayload := strings.NewReader('+JSON.stringify(body)+')');
+    L.push('\treq, _ := http.NewRequest('+JSON.stringify(r.method)+', '+JSON.stringify(r.url)+', '+(body?'payload':'nil')+')');
+    Object.keys(hs).forEach(function(k){L.push('\treq.Header.Set('+JSON.stringify(k)+', '+JSON.stringify(hs[k])+')')});
+    L.push('\tres, _ := http.DefaultClient.Do(req)','\tdefer res.Body.Close()','\tbody, _ := io.ReadAll(res.Body)','\tfmt.Println(string(body))','}');
+    return L.join('\n');
+  }
+  if(lang==='php'){
+    var P=['<?php','$ch = curl_init();','curl_setopt($ch, CURLOPT_URL, '+q(r.url)+');','curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);','curl_setopt($ch, CURLOPT_CUSTOMREQUEST, '+q(r.method)+');'];
+    if(Object.keys(hs).length){
+      P.push('curl_setopt($ch, CURLOPT_HTTPHEADER, [');
+      Object.keys(hs).forEach(function(k){P.push('    '+q(k+': '+hs[k])+',')});
+      P.push(']);');
+    }
+    if(body)P.push('curl_setopt($ch, CURLOPT_POSTFIELDS, '+q(body)+');');
+    P.push('$response = curl_exec($ch);','curl_close($ch);','','echo $response;');
+    return P.join('\n');
+  }
+  return '';
+}
+function run(){
+  var cmd=document.getElementById('in').value.trim();
+  if(!cmd){document.getElementById('out').textContent='请先输入 curl 命令';return}
+  try{
+    var r=parseCurl(cmd);
+    if(!r.url){document.getElementById('out').textContent='没解析到 URL，请检查命令是否完整';return}
+    document.getElementById('out').textContent=gen(r,document.getElementById('lang').value);
+  }catch(e){document.getElementById('out').textContent='转换失败：'+e.message}
+}
+document.getElementById('go').onclick=run;
+document.getElementById('lang').onchange=run;
+document.getElementById('cp').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('out').textContent).then(function(){
+    var b=document.getElementById('cp'),o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+run();
+
+</script></body></html>

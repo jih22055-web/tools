@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>键盘符号表 - 万能工具箱</title>
+<meta name="description" content="常用特殊符号大全：数学、箭头、货币、序号、希腊字母等，点击即复制。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 键盘符号速查</div>
+  <div class="panel">
+    <h2>⌨️ 键盘符号速查</h2>
+    <p class="desc">常用特殊符号大全：数学、箭头、货币、序号、希腊字母等，点击即复制。</p>
+    <label>搜索符号名称</label>
+    <input type="text" id="q" placeholder="例如 箭头、货币、数学、版权">
+    <div id="box" style="margin-top:18px"></div>
+    <p class="hint">点击任意符号直接复制到剪贴板。</p>
+  </div>
+<section class="seo">
+<p class="lead">键盘符号表把那些键盘上打不出来、又经常要用的符号集中起来。数学的 ± ≈ ≤、箭头 → ⇒、货币 € £ ₽、序号 ① ② ③、希腊字母 α β π，都是写文档、做表格、发消息时突然需要的。按分类找，或者直接搜名称，点一下就复制。</p>
+<h2>适用场景</h2><ul><li>写文档需要插入特殊符号</li><li>做表格时用序号或箭头增强可读性</li><li>发消息想用打勾打叉、星星爱心</li><li>写技术文档需要希腊字母和数学符号</li></ul>
+<h2>使用方法</h2><ol><li>在搜索框输入分类名称（如「箭头」「货币」）</li><li>或者翻分类自己找</li><li>点击符号即复制到剪贴板</li><li>粘贴到需要的地方</li></ol>
+<h2>常见问题</h2><details><summary>为什么有的符号显示成方框？</summary><p>当前字体不含这个字形。换一种字体（如 Segoe UI Symbol、Noto Sans Symbols）通常能解决。</p></details><details><summary>复制到 Excel 里会乱码吗？</summary><p>Unicode 符号在 Excel 里一般正常。个别旧版 Excel 对 emoji 支持不好，纯符号没问题。</p></details><details><summary>这些符号有快捷键吗？</summary><p>Windows 可以按 Win + . 调出表情符号面板；macOS 按 Ctrl + Cmd + 空格调出字符检视器。</p></details><details><summary>能一次复制多个吗？</summary><p>当前是单个复制。需要组合多个符号建议逐个复制，或直接在文档里打出来。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="htmlentity.html">HTML 特殊字符表</a><a href="asciitable.html">ASCII 码表</a><a href="wordcount.html">字数统计</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var GROUPS=[
+ ['常用标点',['、','。','，','；','：','？','！','“','”','‘','’','（','）','【','】','《','》','〈','〉','…','—','～','·','「','」','『','』']],
+ ['数学符号',['+','−','×','÷','±','∓','＝','≠','≈','≡','≤','≥','＜','＞','∞','√','∛','∑','∏','∫','∬','∂','∇','%','‰','∠','⊥','∥','△','○','□','π','°','′','″','∴','∵']],
+ ['箭头',['←','↑','→','↓','↔','↕','⇐','⇑','⇒','⇓','⇔','⟵','⟶','↖','↗','↘','↙','↺','↻','⇄','⇅','➜','➤','▶','◀','▲','▼','●','○','◆','◇']],
+ ['货币',['¥','$','€','£','¢','₩','₽','₹','₺','₴','₦','฿','₫','₱','₡','₪','₿']],
+ ['特殊符号',['©','®','™','§','¶','†','‡','•','※','№','℡','℅','℃','℉','µ','Ω','ℏ','ℓ','№','‼','⁇','⁈','⁉']],
+ ['序号',['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ','Ⅶ','Ⅷ','Ⅸ','Ⅹ','❶','❷','❸','❹','❺','➀','➁','➂','➃','➄']],
+ ['打勾打叉',['✓','✔','✗','✘','☑','☒','☐','◯','✅','❌','⭕','❎','⭐','★','☆','♠','♥','♦','♣']],
+ ['边框线条',['─','│','┌','┐','└','┘','├','┤','┬','┴','┼','━','┃','┏','┓','┗','┛','╔','╗','╚','╝','║','═','▁','▂','▃','▄','▅','▆','▇','█','░','▒','▓']],
+ ['上下标',['⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹','⁺','⁻','⁼','⁽','⁾','₀','₁','₂','₃','₄','₅','₆','₇','₈','₉','₊','₋','₌','₍','₎']],
+ ['希腊字母',['α','β','γ','δ','ε','ζ','η','θ','ι','κ','λ','μ','ν','ξ','ο','π','ρ','σ','τ','υ','φ','χ','ψ','ω','Α','Β','Γ','Δ','Ε','Ζ','Η','Θ','Λ','Μ','Ξ','Π','Σ','Φ','Ψ','Ω']]
+];
+function render(list){
+  var box=document.getElementById('box');
+  if(!list.length){box.innerHTML='<p style="color:var(--muted)">没有匹配的符号</p>';return}
+  var h='';
+  list.forEach(function(g){
+    h+='<div style="margin-bottom:22px"><div style="font-size:13px;color:var(--muted);margin-bottom:8px">'+g[0]+'（'+g[1].length+'）</div><div style="display:flex;flex-wrap:wrap;gap:6px">';
+    g[1].forEach(function(ch){
+      h+='<span class="sym" data-c="'+encodeURIComponent(ch)+'" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--line);border-radius:8px;font-size:20px;cursor:pointer;background:#fff;transition:.12s" onmouseover="this.style.borderColor=\'var(--brand)\';this.style.background=\'#fff8f6\'" onmouseout="this.style.borderColor=\'var(--line)\';this.style.background=\'#fff\'">'+ch+'</span>';
+    });
+    h+='</div></div>';
+  });
+  box.innerHTML=h;
+  box.querySelectorAll('.sym').forEach(function(el){
+    el.onclick=function(){
+      var ch=decodeURIComponent(el.getAttribute('data-c'));
+      navigator.clipboard.writeText(ch).then(function(){
+        var old=el.textContent;el.textContent='✓';el.style.color='var(--brand)';
+        setTimeout(function(){el.textContent=old;el.style.color=''},700);
+      });
+    };
+  });
+}
+function search(){
+  var q=document.getElementById('q').value.trim().toLowerCase();
+  if(!q){render(GROUPS);return}
+  var list=GROUPS.filter(function(g){
+    return g[0].toLowerCase().indexOf(q)>=0||q.split('').every(function(ch){return g[1].join('').indexOf(ch)>=0});
+  });
+  render(list);
+}
+document.getElementById('q').addEventListener('input',search);
+render(GROUPS);
+
+</script></body></html>

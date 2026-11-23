@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YAML 转换 - 万能工具箱</title>
+<meta name="description" content="YAML 与 JSON 双向转换，支持嵌套结构与数组，语法错误带行号提示。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / YAML 与 JSON 互转</div>
+  <div class="panel">
+    <h2>🧾 YAML 与 JSON 互转</h2>
+    <p class="desc">YAML 与 JSON 双向转换，支持嵌套结构与数组，语法错误带行号提示。</p>
+    <label>输入内容（YAML 或 JSON）</label>
+    <textarea id="in" spellcheck="false" style="font-family:ui-monospace,Consolas,monospace;min-height:180px">name: my-app
+version: 1.0.0
+services:
+  - name: web
+    port: 8080
+    env:
+      DEBUG: false
+  - name: db
+    port: 5432</textarea>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="y2j">YAML 转 JSON</button>
+      <button class="btn" id="j2y">JSON 转 YAML</button>
+      <button class="btn ghost" id="cp">复制结果</button>
+    </div>
+    <label>转换结果</label>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace">结果将在这里显示</div>
+    <p class="hint">写 Docker Compose、K8s 配置时互相转换很方便。YAML 语法错误会提示具体行号。</p>
+  </div>
+<section class="seo">
+<p class="lead">YAML 转换工具负责在 YAML 和 JSON 之间互转。YAML 靠缩进表达层级，写配置文件很舒服但不好程序处理；JSON 结构清晰但写起来啰嗦。这个工具两边都能转：把 YAML 配置转成 JSON 看完整结构，或者把接口返回的 JSON 转成 YAML 塞进配置文件。</p>
+<h2>适用场景</h2><ul><li>把 Docker Compose、K8s 的 YAML 转成 JSON 便于程序读取</li><li>把接口返回的 JSON 转成 YAML 写进配置</li><li>检查 YAML 缩进是否写错（语法错误会提示行号）</li><li>给不熟悉 YAML 的同事看结构时转成 JSON</li></ul>
+<h2>使用方法</h2><ol><li>把 YAML 或 JSON 粘贴到输入框</li><li>点「YAML 转 JSON」或「JSON 转 YAML」</li><li>结果里检查结构是否符合预期</li><li>点「复制」拿走</li></ol>
+<h2>常见问题</h2><details><summary>为什么不支持 YAML 的多文档（--- 分隔）？</summary><p>当前只解析第一个文档。多文档场景建议拆开分别转换。</p></details><details><summary>锚点、别名（&a / *a）会展开吗？</summary><p>会展开成实际内容，转换后不再保留锚点定义。</p></details><details><summary>YAML 里的日期会被转成什么？</summary><p>会被 JavaScript 解析成日期对象，输出成 ISO 格式的字符串（如 2026-11-23T00:00:00.000Z）。</p></details><details><summary>缩进用几个空格？</summary><p>输出统一用 2 空格，这是社区最常见的约定。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="jsonformat.html">JSON 格式化</a><a href="xmlformat.html">XML 格式化</a><a href="sqlformat.html">SQL 格式化</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script src="js-yaml.min.js?v=1"></script>
+<script>
+
+function show(t){document.getElementById('out').textContent=t}
+function errText(e){
+  var m=String(e.message||e);
+  if(e.mark&&e.mark.line!=null)m+='（第 '+(e.mark.line+1)+' 行）';
+  return '解析失败：'+m;
+}
+document.getElementById('y2j').onclick=function(){
+  var v=document.getElementById('in').value;
+  if(!v.trim()){show('请先输入 YAML');return}
+  try{
+    var obj=jsyaml.load(v);
+    show(JSON.stringify(obj,null,2));
+  }catch(e){show(errText(e))}
+};
+document.getElementById('j2y').onclick=function(){
+  var v=document.getElementById('in').value;
+  if(!v.trim()){show('请先输入 JSON');return}
+  try{
+    var obj=JSON.parse(v);
+    show(jsyaml.dump(obj,{indent:2,lineWidth:-1,noRefs:true,sortKeys:false}));
+  }catch(e){show('解析失败：'+e.message)}
+};
+document.getElementById('cp').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('out').textContent).then(function(){
+    var b=document.getElementById('cp'),o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+document.getElementById('y2j').click();
+
+</script></body></html>

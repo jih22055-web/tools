@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML 美化压缩 - 万能工具箱</title>
+<meta name="description" content="HTML 代码美化缩进或压缩，script/style/pre 内容原样保护。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / HTML 美化与压缩</div>
+  <div class="panel">
+    <h2>📐 HTML 美化与压缩</h2>
+    <p class="desc">HTML 代码美化缩进或压缩，script/style/pre 内容原样保护。</p>
+    <label>输入 HTML</label>
+    <textarea id="in" spellcheck="false" style="font-family:ui-monospace,Consolas,monospace;min-height:170px">&lt;div class="card"&gt;&lt;h3&gt;标题&lt;/h3&gt;&lt;p&gt;这是&lt;strong&gt;正文&lt;/strong&gt;内容。&lt;/p&gt;&lt;ul&gt;&lt;li&gt;第一项&lt;/li&gt;&lt;li&gt;第二项&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</textarea>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="fmt">美化缩进</button>
+      <button class="btn" id="min">压缩</button>
+      <button class="btn ghost" id="cp">复制结果</button>
+    </div>
+    <label>结果</label>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace">结果将在这里显示</div>
+    <p class="hint">script、style、pre、textarea 内部内容不会被改动，避免破坏代码。</p>
+  </div>
+<section class="seo">
+<p class="lead">HTML 美化压缩工具把一长串 HTML 按标签层级重新缩进，或者反过来去掉所有多余空白压成一行。关键在于保护 script、style、pre、textarea 这四个标签的内部内容——浏览器对它们里面的空白敏感，随便压缩会把 JavaScript 代码或预格式化文本搞坏，工具会先把这些整段摘出来，排版完再放回去。</p>
+<h2>适用场景</h2><ul><li>看别人的 HTML 源码，先格式化理清层级</li><li>发布前压缩 HTML 减少体积</li><li>检查标签嵌套有没有写错（缩进错乱通常意味着标签不配对）</li><li>把压缩过的 HTML 还原成可读格式</li></ul>
+<h2>使用方法</h2><ol><li>粘贴 HTML 到输入框</li><li>点「美化缩进」看层级结构</li><li>或点「压缩」得到单行版本并显示压缩率</li><li>点「复制」拿走</li></ol>
+<h2>常见问题</h2><details><summary>为什么 script 里的代码没被压缩？</summary><p>故意保留的。压缩 JS 代码需要专门的语法分析，简单去空白可能破坏字符串和正则表达式，所以整段原样保留。</p></details><details><summary>inline 元素换行会不会影响显示？</summary><p>美化只在标签之间加换行和缩进，浏览器渲染 HTML 时标签间空白通常折叠成一个空格，极少数依赖精确空白的场景（如 inline-block 排版）需要人工检查。</p></details><details><summary>支持 JSX / Vue 模板吗？</summary><p>只按标准 HTML 标签规则处理。JSX 的自闭合写法和 Vue 的指令不会被特殊处理，但通常也不会出错。</p></details><details><summary>表格压缩后还能正常显示吗？</summary><p>能。table/tr/td 之间的空白对渲染没有影响。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="cssformat.html">CSS 美化压缩</a><a href="html-markdown.html">HTML 转 Markdown</a><a href="xmlformat.html">XML 格式化</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+function protectHtml(s){
+  var store=[];
+  function put(m){store.push(m);return '\u0002'+(store.length-1)+'\u0002'}
+  s=s.replace(/<!--[\s\S]*?-->/g,put)
+     .replace(/<(script|style|pre|textarea)\b[\s\S]*?<\/\1>/gi,put);
+  return {t:s,s:store};
+}
+function restoreHtml(s,store){
+  return s.replace(/\u0002(\d+)\u0002/g,function(_,i){return store[+i]});
+}
+var VOID=/^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr|!doctype|!DOCTYPE)$/i;
+function htmlFmt(src){
+  var p=protectHtml(src);
+  var s=p.t.replace(/>\s+</g,'><').replace(/</g,'\n<');
+  var lines=s.split('\n').map(function(x){return x.trim()}).filter(Boolean);
+  var ind=0,out=[];
+  lines.forEach(function(l){
+    var close=l.match(/^<\/([a-zA-Z0-9-]+)/);
+    if(close){ind=Math.max(0,ind-1);out.push(new Array(ind+1).join('  ')+l);return}
+    var nameM=l.match(/^<([a-zA-Z0-9-!]+)/);
+    var name=nameM?nameM[1]:'';
+    var self=/\/>$/.test(l)||VOID.test(name)||!(/^<\/?[a-zA-Z!]/.test(l));
+    out.push(new Array(ind+1).join('  ')+l);
+    if(!self&&/^<[a-zA-Z]/.test(l)&&!/^<\//.test(l))ind++;
+  });
+  return restoreHtml(out.join('\n'),p.s);
+}
+function htmlMin(src){
+  var p=protectHtml(src);
+  var s=p.t.replace(/<!--[\s\S]*?-->/g,'')
+    .replace(/\s+/g,' ')
+    .replace(/>\s+</g,'><')
+    .replace(/\s*>\s*/g,'>')
+    .replace(/\s*<\s*/g,'<')
+    .replace(/\s*=\s*/g,'=')
+    .trim();
+  return restoreHtml(s,p.s);
+}
+function show(t){document.getElementById('out').textContent=t}
+document.getElementById('fmt').onclick=function(){
+  var v=document.getElementById('in').value;
+  show(v.trim()?htmlFmt(v):'请先输入 HTML');
+};
+document.getElementById('min').onclick=function(){
+  var v=document.getElementById('in').value;
+  if(!v.trim()){show('请先输入 HTML');return}
+  var out=htmlMin(v);
+  var b=new Blob([v]).size,a=new Blob([out]).size;
+  show(out+'\n\n<!-- 压缩率：'+(100-Math.round(a/b*100))+'%，'+b+' → '+a+' 字节 -->');
+};
+document.getElementById('cp').onclick=function(){
+  navigator.clipboard.writeText(document.getElementById('out').textContent).then(function(){
+    var b=document.getElementById('cp'),o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+document.getElementById('fmt').click();
+
+</script></body></html>
