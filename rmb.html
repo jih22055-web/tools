@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数字转人民币大写 - 万能工具箱</title>
+<meta name="description" content="在线把阿拉伯数字金额转换成人民币大写，支持角分处理与「整」字结尾，适用于支票、发票、合同填写。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 数字转人民币大写</div>
+  <div class="panel">
+    <h2>💰 数字转人民币大写</h2>
+    <p class="desc">在线把阿拉伯数字金额转换成人民币大写，支持角分处理与「整」字结尾，适用于支票、发票、合同填写。</p>
+    <label>输入金额（数字）</label>
+    <input type="text" id="num" value="1234.56" placeholder="例如 1234.56">
+    <div class="actions">
+      <button class="btn" id="go">转换成大写</button>
+      <button class="btn ghost" id="copy">复制结果</button>
+    </div>
+    <label>大写金额</label>
+    <div class="result" id="out" style="font-size:20px;letter-spacing:2px">结果将在这里显示</div>
+    <p class="hint">支持负数（显示「负」字）与整数（自动补「整」）。</p>
+  </div>
+<section class="seo">
+<p class="lead">数字转人民币大写工具可以把阿拉伯数字金额转换成财务规范的中文大写，例如 1234.56 转换为「壹仟贰佰叁拾肆元伍角陆分」。这类大写金额用于支票、发票、合同、收据等场合，可以防止金额被随意涂改。</p>
+<h2>适用场景</h2><ul>
+<li>填写支票、汇票时的大写金额栏</li>
+<li>开具发票、收据时书写大写金额</li>
+<li>合同、借条里的金额防篡改书写</li>
+<li>财务对账时快速核对大写是否正确</li>
+</ul><h2>使用方法</h2><ol>
+<li>在输入框填入数字金额，可以带小数点</li>
+<li>点击「转换成大写」</li>
+<li>结果自动处理角分：有角无分带「零」，无角无分补「整」</li>
+<li>点「复制结果」粘贴到需要的地方</li>
+</ol><h2>常见问题</h2>
+<details><summary>小数超过两位怎么办？</summary><p>工具会自动四舍五入到分（两位小数）。如果是计算过程中的中间值，建议先自己确定好精度再转换。</p></details>
+<details><summary>为什么有的金额中间会出现「零」？</summary><p>人民币大写规范要求：数字中间连续有零时只写一个「零」，例如 10005 写作「壹万零伍元整」。本工具已按规范处理。</p></details>
+<details><summary>负数金额怎么表示？</summary><p>负数会在最前面加「负」字，例如 -100 显示为「负壹佰元整」，适用于记账冲抵场景。</p></details>
+<details><summary>和银行要求一致吗？</summary><p>规则与《正确填写票据和结算凭证的基本规定》一致。个别银行网点有更严格的内规，正式票据建议再核对一次。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="rmb.html">数字转大写</a>
+<a href="unitconvert.html">单位转换</a>
+<a href="tax.html">个税计算器</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var DIGIT='零壹贰叁肆伍陆柒捌玖';
+var UNIT1=['','拾','佰','仟'];
+var UNIT2=['','万','亿','万亿'];
+
+function section(s){
+  var r='',zero=false;
+  for(var i=0;i<s.length;i++){
+    var d=+s[i];
+    var pos=s.length-1-i;
+    if(d===0){zero=true}
+    else{
+      if(zero&&r!=='')r+='零';
+      zero=false;
+      r+=DIGIT[d]+UNIT1[pos];
+    }
+  }
+  return r;
+}
+
+function intToCn(s){
+  s=s.replace(/^0+/,'');
+  if(s==='')return '零';
+  var groups=[];
+  while(s.length>0){groups.unshift(s.slice(-4));s=s.slice(0,-4)}
+  var out='';
+  for(var i=0;i<groups.length;i++){
+    var g=section(groups[i]);
+    var unit=UNIT2[groups.length-1-i];
+    if(g===''){
+      if(out!==''&&i<groups.length-1){
+        if(!/零$/.test(out))out+='零';
+      }
+    }else{
+      if(out!==''&&groups[i].length===4&&groups[i][0]==='0'&&!/零$/.test(out))out+='零';
+      out+=g+unit;
+    }
+  }
+  return out.replace(/零+$/,'').replace(/零+/g,'零')||'零';
+}
+
+function toRMB(input){
+  var v=String(input).trim().replace(/[,，\s]/g,'').replace(/^¥|^￥/,'');
+  if(!/^-?\d+(\.\d+)?$/.test(v))return null;
+  var num=parseFloat(v);
+  if(!isFinite(num))return null;
+  if(Math.abs(num)>=1e16)return '金额过大，超出可处理范围';
+  var neg=num<0;
+  num=Math.abs(num);
+  var fixed=num.toFixed(2);
+  var p=fixed.split('.');
+  var intPart=p[0],dec=p[1];
+  var jiao=+dec[0],fen=+dec[1];
+  var s=intToCn(intPart)+'元';
+  if(jiao===0&&fen===0){s+='整'}
+  else{
+    if(jiao===0){s+='零'}
+    else{s+=DIGIT[jiao]+'角'}
+    if(fen!==0)s+=DIGIT[fen]+'分';
+  }
+  s=s.replace(/零+/g,'零').replace(/零整$/,'元整');
+  if(s.indexOf('元')>0&&s.split('元')[0]==='')s='零元'+s.split('元')[1];
+  return (neg?'负':'')+s;
+}
+
+function run(){
+  var v=document.getElementById('num').value;
+  var r=toRMB(v);
+  document.getElementById('out').textContent=r===null?'请输入有效的数字金额':r;
+}
+document.getElementById('go').onclick=run;
+document.getElementById('copy').onclick=function(){
+  var t=document.getElementById('out').textContent;
+  if(!t||t==='结果将在这里显示')return;
+  navigator.clipboard.writeText(t).then(function(){
+    var b=document.getElementById('copy');var o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+run();
+</script></body></html>

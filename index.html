@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>万能工具箱 - 免费在线工具集合</title>
 <meta name="description" content="免费在线实用工具集合：图片压缩、二维码生成、Base64编码、时间戳转换、密码生成、字数统计等，无需注册，打开即用。">
-<link rel="stylesheet" href="style.css?v=20261123d">
+<link rel="stylesheet" href="style.css?v=20261123e">
 </head>
 <body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
@@ -27,7 +27,7 @@
 
   <section class="seo" id="about">
     <h2>关于万能工具箱</h2>
-    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、网络工具等 29 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
+    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、查询计算、网络工具等 49 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
     <h2>为什么选择我们</h2>
     <ul>
       <li><strong>完全免费</strong>：所有工具永久免费使用，不设会员、不看广告也能用</li>
@@ -78,6 +78,26 @@ const TOOLS = [
   {name:'时间戳转换',desc:'时间戳与日期时间互转，支持毫秒/秒',icon:'🕐',color:'#7a5a2e',file:'timestamp.html',tag:'时间戳 日期 时间',cat:'生活工具'},
   {name:'密码生成器',desc:'生成高强度随机密码，自定义长度与字符',icon:'🔐',color:'#6a3a5a',file:'password.html',tag:'密码 随机 强密码',cat:'生活工具'},
   {name:'随机抽取',desc:'从名单随机抽奖、点名、分组',icon:'🎲',color:'#8c3a6a',file:'random.html',tag:'随机 抽奖 点名 抽签',cat:'生活工具'},
+  {name:'条形码生成器',desc:'生成 CODE128、EAN13 等标准条码，可下载',icon:'▮▯',color:'#2e6a8c',file:'barcode.html',tag:'条形码 条码 barcode 生成',cat:'图片工具'},
+  {name:'图片格式转换',desc:'PNG、JPG、WEBP 互转，可调质量与尺寸',icon:'🔄',color:'#2e7a5a',file:'imgconvert.html',tag:'图片 格式 转换 png jpg webp',cat:'图片工具'},
+  {name:'图片转 Base64',desc:'图片转 Base64 内嵌代码，也支持反向还原',icon:'🖼️',color:'#4a6a3a',file:'imgbase64.html',tag:'图片 base64 内嵌 转换',cat:'图片工具'},
+  {name:'占位图生成',desc:'按尺寸生成占位图片，可自定义颜色和文字',icon:'⬜',color:'#5a5a6a',file:'placeholder.html',tag:'占位图 placeholder 占位 图片',cat:'图片工具'},
+  {name:'Favicon 制作',desc:'输入文字或上传图片，生成多尺寸网站图标',icon:'🔖',color:'#8c3a6a',file:'favicon.html',tag:'favicon 图标 网站 ico',cat:'开发工具'},
+  {name:'Linux 命令速查',desc:'60 条常用命令速查，附用例，支持搜索',icon:'⌨️',color:'#3a4a6a',file:'linuxcmd.html',tag:'linux 命令 shell 速查',cat:'开发工具'},
+  {name:'文件类型识别',desc:'读文件头判断真实格式，改后缀也骗不过',icon:'🔬',color:'#2e6a5a',file:'magicbytes.html',tag:'文件类型 魔数 后缀 识别',cat:'开发工具'},
+  {name:'文件哈希计算',desc:'算文件 MD5、SHA-256 校验值，验证完整性',icon:'🧮',color:'#6a4a2e',file:'filehash.html',tag:'哈希 md5 sha256 校验 文件',cat:'开发工具'},
+  {name:'HTML 特殊字符表',desc:'常用 HTML 实体速查，点击即可复制',icon:'&amp;',color:'#4a4a5a',file:'htmlentity.html',tag:'html 实体 特殊字符 转义',cat:'开发工具'},
+  {name:'汉字转拼音',desc:'中文转拼音，支持声调、数字和首字母',icon:'🈶',color:'#2e5a8c',file:'pinyin.html',tag:'拼音 汉字 注音 转换',cat:'文本处理'},
+  {name:'中文简繁转换',desc:'简体繁体互转，含台湾正体与香港繁体',icon:'🀄',color:'#8c4a2e',file:'zhconvert.html',tag:'简繁 繁体 简体 转换',cat:'文本处理'},
+  {name:'摩斯电码翻译',desc:'文本与摩斯电码互转，可播放嘀嗒声',icon:'📡',color:'#3a6a4a',file:'morse.html',tag:'摩斯 电码 morse 密码',cat:'文本处理'},
+  {name:'多通道计时器',desc:'多个倒计时同时运行，结束有声音提示',icon:'⏱️',color:'#8c6a2e',file:'timer.html',tag:'计时器 倒计时 番茄钟',cat:'生活工具'},
+  {name:'个税计算器',desc:'按税前工资算个税和税后到手工资',icon:'🧾',color:'#7a3a3a',file:'tax.html',tag:'个税 工资 税后 计算',cat:'查询计算'},
+  {name:'贷款计算器',desc:'算房贷车贷月供、总利息与还款明细',icon:'🏦',color:'#2e5a7a',file:'loan.html',tag:'贷款 房贷 月供 利息',cat:'查询计算'},
+  {name:'日期计算器',desc:'算日期间隔天数、工作日，或推算日期',icon:'📅',color:'#5a4a8c',file:'datecalc.html',tag:'日期 天数 间隔 计算',cat:'查询计算'},
+  {name:'人民币大写',desc:'数字金额转财务大写，写支票发票用',icon:'💰',color:'#8c4a2e',file:'rmb.html',tag:'人民币 大写 金额 财务',cat:'查询计算'},
+  {name:'生肖星座查询',desc:'查生肖、天干地支与星座，附对照表',icon:'🐉',color:'#8c5a2e',file:'zodiac.html',tag:'生肖 星座 属相 查询',cat:'查询计算'},
+  {name:'单位转换',desc:'长度、重量、温度等八大类单位实时换算',icon:'📐',color:'#2e7a7a',file:'unitconvert.html',tag:'单位 换算 长度 重量 温度',cat:'查询计算'},
+  {name:'纸张尺寸查询',desc:'A/B/C 系列与开本尺寸速查，含英寸换算',icon:'📄',color:'#5a6a2e',file:'papersize.html',tag:'纸张 a4 尺寸 开本 打印',cat:'查询计算'},
 ];
 
 const CATS = ['全部', ...new Set(TOOLS.map(t=>t.cat))];

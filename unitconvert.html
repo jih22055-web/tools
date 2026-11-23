@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>单位转换 - 万能工具箱</title>
+<meta name="description" content="在线单位换算，支持长度、重量、面积、体积、温度、速度、数据存储、时间八大类，实时换算常用单位。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 单位转换</div>
+  <div class="panel">
+    <h2>📐 单位转换</h2>
+    <p class="desc">在线单位换算，支持长度、重量、面积、体积、温度、速度、数据存储、时间八大类，实时换算常用单位。</p>
+    <div class="row">
+      <div><label>换算类别</label>
+        <select id="cat">
+          <option value="len">长度</option>
+          <option value="wt">重量</option>
+          <option value="area">面积</option>
+          <option value="vol">体积</option>
+          <option value="temp">温度</option>
+          <option value="speed">速度</option>
+          <option value="data">数据存储</option>
+          <option value="time">时间</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div><label>数值</label><input type="number" id="v" value="1"></div>
+      <div><label>从</label><select id="from"></select></div>
+      <div><label>到</label><select id="to"></select></div>
+    </div>
+    <div class="actions"><button class="btn" id="go">换算</button><button class="btn ghost" id="swap">交换单位</button></div>
+    <div class="result" id="out" style="font-size:22px;font-weight:700">结果将在这里显示</div>
+    <div id="all" style="margin-top:16px"></div>
+  </div>
+<section class="seo">
+<p class="lead">单位转换工具支持长度、重量、面积、体积、温度、速度、数据存储、时间八大类单位的实时换算，包含市斤市尺等中国常用单位，换算时同时列出该数值在所有相关单位下的结果，方便一次对比。</p>
+<h2>适用场景</h2><ul>
+<li>看国外资料时把英寸、磅、英里换算成公制</li>
+<li>买地、装修时把亩和平方米互算</li>
+<li>算硬盘容量，区分 GB 和 GiB 的实际大小</li>
+<li>做菜、烘焙时换算盎司和毫升</li>
+</ul><h2>使用方法</h2><ol>
+<li>选择换算类别，例如长度、重量、温度</li>
+<li>填入数值，选择「从」和「到」的单位</li>
+<li>结果会实时显示，下方还会列出该数值在所有单位下的换算结果</li>
+<li>点「交换单位」可以快速反转换算方向</li>
+</ol><h2>常见问题</h2>
+<details><summary>数据存储里 KB 为什么是 1024？</summary><p>严格说 1 KB 在十进制下是 1000 字节，但操作系统普遍按 1024 计算（严格叫 KiB）。本工具按操作系统的习惯用 1024，所以 1 GB 硬盘在电脑上显示约 0.93 GB，这是厂商按 1000 计算导致的正常现象。</p></details>
+<details><summary>温度和别的单位算法一样吗？</summary><p>不一样。温度换算有零点偏移，不能简单乘系数，例如摄氏度转华氏度是 ×1.8+32，本工具已单独处理。</p></details>
+<details><summary>「亩」是怎么定义的？</summary><p>1 亩约等于 666.67 平方米，是中国的市制面积单位，15 亩等于 1 公顷。</p></details>
+<details><summary>算出的结果精度够吗？</summary><p>显示最多 6 位小数，超出范围会用科学计数法。日常使用完全够用，精密计算建议用专业工具。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="rmb.html">人民币大写</a>
+<a href="papersize.html">纸张尺寸</a>
+<a href="base-convert.html">进制转换</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var DATA={
+  len:{name:'长度',base:'m',u:{'毫米 mm':0.001,'厘米 cm':0.01,'米 m':1,'千米 km':1000,'英寸 in':0.0254,'英尺 ft':0.3048,'码 yd':0.9144,'英里 mi':1609.344,'海里 nmi':1852,'市尺':1/3,'市寸':1/30}},
+  wt:{name:'重量',base:'kg',u:{'毫克 mg':1e-6,'克 g':0.001,'千克 kg':1,'吨 t':1000,'市斤':0.5,'市两':0.05,'盎司 oz':0.028349523125,'磅 lb':0.45359237}},
+  area:{name:'面积',base:'m2',u:{'平方毫米 mm²':1e-6,'平方厘米 cm²':1e-4,'平方米 m²':1,'公顷 ha':10000,'平方千米 km²':1e6,'亩':666.6666667,'平方英尺 ft²':0.09290304,'平方英里 mi²':2589988.11}},
+  vol:{name:'体积',base:'l',u:{'毫升 mL':0.001,'升 L':1,'立方米 m³':1000,'立方厘米 cm³':0.001,'加仑(美) gal':3.785411784,'夸脱(美) qt':0.946352946,'品脱(美) pt':0.473176473,'液量盎司(美) fl oz':0.0295735296}},
+  speed:{name:'速度',base:'m/s',u:{'米/秒 m/s':1,'千米/小时 km/h':1/3.6,'英里/小时 mph':0.44704,'节 kn':0.514444,'英尺/秒 ft/s':0.3048,'马赫 Ma':340.3}},
+  data:{name:'数据存储',base:'B',u:{'字节 B':1,'千字节 KB':1024,'兆字节 MB':1048576,'吉字节 GB':1073741824,'太字节 TB':1099511627776,'比特 bit':0.125,'千比特 Kb':128,'兆比特 Mb':131072}},
+  time:{name:'时间',base:'s',u:{'毫秒 ms':0.001,'秒 s':1,'分钟 min':60,'小时 h':3600,'天 d':86400,'周':604800,'月(30天)':2592000,'年(365天)':31536000}}
+};
+var TEMP={'摄氏度 °C':1,'华氏度 °F':1,'开尔文 K':1};
+
+function fillUnits(){
+  var cat=document.getElementById('cat').value;
+  var from=document.getElementById('from'),to=document.getElementById('to');
+  var units=cat==='temp'?Object.keys(TEMP):Object.keys(DATA[cat].u);
+  from.innerHTML=units.map(function(u){return '<option>'+u+'</option>'}).join('');
+  to.innerHTML=from.innerHTML;
+  if(units.length>1)to.selectedIndex=1;
+  calc();
+}
+
+function toBase(cat,v,u){
+  if(cat==='temp'){
+    if(u.indexOf('摄氏度')===0)return v;
+    if(u.indexOf('华氏度')===0)return (v-32)*5/9;
+    return v-273.15;
+  }
+  return v*DATA[cat].u[u];
+}
+function fromBase(cat,v,u){
+  if(cat==='temp'){
+    if(u.indexOf('摄氏度')===0)return v;
+    if(u.indexOf('华氏度')===0)return v*9/5+32;
+    return v+273.15;
+  }
+  return v/DATA[cat].u[u];
+}
+function fmt(n){
+  if(!isFinite(n))return '—';
+  var a=Math.abs(n);
+  if(a!==0&&(a<1e-6||a>=1e12))return n.toExponential(4);
+  var s=n.toFixed(6);
+  s=s.replace(/0+$/,'').replace(/\.$/,'');
+  return s;
+}
+function calc(){
+  var cat=document.getElementById('cat').value;
+  var v=parseFloat(document.getElementById('v').value);
+  var fu=document.getElementById('from').value;
+  var tu=document.getElementById('to').value;
+  var out=document.getElementById('out');
+  var all=document.getElementById('all');
+  if(isNaN(v)){out.textContent='请输入数值';all.innerHTML='';return}
+  var b=toBase(cat,v,fu);
+  var r=fromBase(cat,b,tu);
+  out.textContent=v+' '+fu+' = '+fmt(r)+' '+tu;
+  var units=cat==='temp'?Object.keys(TEMP):Object.keys(DATA[cat].u);
+  all.innerHTML='<div style="font-size:13px;color:var(--muted);margin-bottom:8px">换算成其他单位</div><div class="stat-grid">'+
+    units.map(function(u){
+      return '<div class="stat"><div class="num" style="font-size:18px">'+fmt(fromBase(cat,b,u))+'</div><div class="lbl">'+u+'</div></div>';
+    }).join('')+'</div>';
+}
+document.getElementById('cat').onchange=fillUnits;
+document.getElementById('go').onclick=calc;
+document.getElementById('v').addEventListener('input',calc);
+document.getElementById('from').onchange=calc;
+document.getElementById('to').onchange=calc;
+document.getElementById('swap').onclick=function(){
+  var f=document.getElementById('from'),t=document.getElementById('to');
+  var tmp=f.value;f.value=t.value;t.value=tmp;calc();
+};
+fillUnits();
+</script></body></html>

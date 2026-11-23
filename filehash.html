@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文件哈希计算 - 万能工具箱</title>
+<meta name="description" content="在线计算文件 MD5、SHA-1、SHA-256、SHA-512 校验值，用于验证下载文件完整性，文件不上传本地计算。">
+<script src="crypto-js.min.js"></script>
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 文件哈希计算</div>
+  <div class="panel">
+    <h2>🧮 文件哈希计算</h2>
+    <p class="desc">在线计算文件 MD5、SHA-1、SHA-256、SHA-512 校验值，用于验证下载文件完整性，文件不上传本地计算。</p>
+    <label>选择文件</label>
+    <div class="dropzone" id="drop">点击选择文件，或拖进来</div>
+    <input type="file" id="file" style="display:none">
+    <p class="hint" id="tip">支持任意类型文件，大文件需要稍等几秒。</p>
+    <div id="out" style="margin-top:16px"></div>
+  </div>
+<section class="seo">
+<p class="lead">文件哈希计算工具可以算出文件的 MD5、SHA-1、SHA-256 和 SHA-512 校验值。下载完系统镜像、软件安装包后，把这里的计算结果和官网公布的校验值对比，一致就说明文件完整未被篡改。</p>
+<h2>适用场景</h2><ul>
+<li>下载系统镜像后核对官网公布的 SHA256</li>
+<li>验证软件安装包有没有被植入恶意代码</li>
+<li>给文件生成唯一指纹用于去重或比对</li>
+<li>提交样本给安全平台时附带哈希值</li>
+</ul><h2>使用方法</h2><ol>
+<li>把文件拖进虚线框</li>
+<li>等待几秒，工具会同时算出四种哈希值</li>
+<li>复制结果，和官方公布的校验值逐字符对比</li>
+<li>完全一致说明文件完整；不一致则重新下载</li>
+</ol><h2>常见问题</h2>
+<details><summary>四种算法有什么区别？</summary><p>MD5 最快但已被证明存在碰撞，不适合安全场景；SHA-1 也已不推荐；SHA-256 是目前主流推荐；SHA-512 更长更安全但速度稍慢。校验文件完整性用 SHA-256 足够。</p></details>
+<details><summary>大文件要算多久？</summary><p>取决于文件大小和电脑性能。几百 MB 的镜像通常在几秒到十几秒；几 GB 的文件可能要几十秒。计算期间页面不要关闭。</p></details>
+<details><summary>文件会被上传吗？</summary><p>不会。文件通过浏览器的本地接口读取，全程在你电脑内存里计算，没有任何数据发送到服务器。</p></details>
+<details><summary>为什么和官网结果不一致？</summary><p>常见原因：下载中断导致文件不完整、网站公布的是另一种算法、或者文件确实被篡改。建议重新下载后再对比一次。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="magicbytes.html">文件类型识别</a>
+<a href="md5.html">MD5 加密</a>
+<a href="base64.html">Base64 编码</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var ALGO=[['MD5','md5'],['SHA-1','SHA-1'],['SHA-256','SHA-256'],['SHA-512','SHA-512']];
+
+function buf2hex(buf){
+  var b=new Uint8Array(buf),s='';
+  for(var i=0;i<b.length;i++)s+=('0'+b[i].toString(16)).slice(-2);
+  return s;
+}
+
+function handle(f){
+  if(!f)return;
+  var out=document.getElementById('out');
+  var tip=document.getElementById('tip');
+  var sizeTxt=f.size<1048576?(f.size/1024).toFixed(1)+' KB':(f.size/1048576).toFixed(2)+' MB';
+  tip.textContent='正在读取 '+f.name+'（'+sizeTxt+'）…';
+  out.innerHTML=ALGO.map(function(a){
+    return '<div style="margin-bottom:12px"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">'+a[0]+'</div>'+
+      '<div id="h_'+a[1].replace(/[^A-Za-z0-9]/g,'')+'" style="font-family:ui-monospace,Consolas,monospace;font-size:12px;background:var(--bg2);border-radius:6px;padding:10px;word-break:break-all">计算中…</div></div>';
+  }).join('');
+
+  var rd=new FileReader();
+  rd.onload=function(e){
+    var buf=e.target.result;
+    var done=0;
+    function finish(){
+      done++;
+      if(done===ALGO.length)tip.textContent='计算完成：'+f.name;
+    }
+    ALGO.forEach(function(a){
+      var id='h_'+a[1].replace(/[^A-Za-z0-9]/g,'');
+      var el=document.getElementById(id);
+      if(a[1]==='md5'){
+        var w=new Uint8Array(buf);
+        var words=[];
+        for(var i=0;i<w.length;i++)words.push(String.fromCharCode(w[i]));
+        el.textContent=CryptoJS.MD5(words.join('')).toString();
+        finish();
+      }else{
+        crypto.subtle.digest(a[1],buf).then(function(d){
+          el.textContent=buf2hex(d);finish();
+        }).catch(function(){
+          el.textContent='当前环境不支持该算法';finish();
+        });
+      }
+    });
+  };
+  rd.readAsArrayBuffer(f);
+}
+
+var drop=document.getElementById('drop');
+var input=document.getElementById('file');
+drop.onclick=function(){input.click()};
+input.onchange=function(){handle(input.files[0])};
+drop.ondragover=function(e){e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=function(){drop.classList.remove('over')};
+drop.ondrop=function(e){e.preventDefault();drop.classList.remove('over');handle(e.dataTransfer.files[0])};
+</script></body></html>

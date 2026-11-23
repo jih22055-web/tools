@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>摩斯电码翻译 - 万能工具箱</title>
+<meta name="description" content="在线摩斯电码翻译，中英文文本与国际摩斯电码双向互转，支持音频播放嘀嗒声，可复制结果。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 摩斯电码翻译</div>
+  <div class="panel">
+    <h2>📡 摩斯电码翻译</h2>
+    <p class="desc">在线摩斯电码翻译，中英文文本与国际摩斯电码双向互转，支持音频播放嘀嗒声，可复制结果。</p>
+    <label>输入内容（文本或摩斯电码）</label>
+    <textarea id="in" placeholder="输入文字，或粘贴用空格分隔的摩斯电码，例如：.... . .-.. .-.. ---"></textarea>
+    <div class="actions">
+      <button class="btn" id="toMorse">文本 → 摩斯电码</button>
+      <button class="btn ghost" id="toText">摩斯电码 → 文本</button>
+      <button class="btn ghost" id="play">播放声音</button>
+      <button class="btn ghost" id="copy">复制结果</button>
+    </div>
+    <label>结果</label>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace;line-height:1.9;word-break:break-all">结果将在这里显示</div>
+    <p class="hint">规则：字母之间用空格分隔，单词之间用 / 分隔。</p>
+  </div>
+<section class="seo">
+<p class="lead">摩斯电码翻译工具可以在英文文本和国际摩斯电码之间双向转换，支持字母、数字和常用标点，还能用浏览器直接播放嘀嗒声音。常用于业余无线电、解谜游戏、科普演示。</p>
+<h2>适用场景</h2><ul>
+<li>解谜游戏、密室逃脱里的摩斯密码</li>
+<li>业余无线电通联练习</li>
+<li>给孩子做科学课演示，听真正的嘀嗒声</li>
+<li>把短句编码成摩斯电码写在礼物卡片上</li>
+</ul><h2>使用方法</h2><ol>
+<li>在输入框输入文字，点「文本 → 摩斯电码」</li>
+<li>或者粘贴摩斯电码（字母间空格、单词间斜杠），点「摩斯电码 → 文本」</li>
+<li>点「播放声音」听标准的嘀嗒节奏</li>
+<li>点「复制结果」把结果带走</li>
+</ol><h2>常见问题</h2>
+<details><summary>中文能转吗？</summary><p>国际摩斯电码只编码拉丁字母、数字和标点，中文需要先转成拼音或电报码。本工具会跳过无法编码的字符。</p></details>
+<details><summary>摩斯电码的间隔规则是什么？</summary><p>点（·）为 1 个时间单位，划（—）为 3 个单位；同一字母内符号间隔 1 个单位，字母之间 3 个单位，单词之间 7 个单位。本工具用空格和斜杠来表示这些层级。</p></details>
+<details><summary>播放的声音标准吗？</summary><p>播放使用 650Hz 正弦波，符合业余无线电常用侧音频率，节奏按标准比例生成，可以当作学习参考。</p></details>
+<details><summary>能解码手写的摩斯吗？</summary><p>不能。手写或录音识别需要专门设备，本工具只处理文本格式的电码。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="textcipher.html">文字加密解密</a>
+<a href="asciitable.html">ASCII 码表</a>
+<a href="unicode.html">Unicode 编码</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var MAP={'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..','J':'.---','K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.','S':'...','T':'-','U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..','0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','.':'.-.-.-',',':'--..--','?':'..--..','!':'-.-.--','/':'-..-.','(':'-.--.',')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-','+':'.-.-.','-':'-....-','_':'..--.-','"':'.-..-.','@':'.--.-.','\'':'.----.'};
+var REV={};
+for(var k in MAP)REV[MAP[k]]=k;
+
+function textToMorse(t){
+  return t.toUpperCase().split('').map(function(ch){
+    if(ch==='\n')return '\n';
+    if(ch===' ')return '/';
+    return MAP[ch]||ch;
+  }).join(' ').replace(/ \/ /g,' / ').replace(/ +/g,' ').trim();
+}
+function morseToText(t){
+  return t.trim().split(/\s*\/\s*|\n/).map(function(word){
+    return word.trim().split(/\s+/).map(function(code){
+      return REV[code]!==undefined?REV[code]:'';
+    }).join('');
+  }).join(' ');
+}
+
+document.getElementById('toMorse').onclick=function(){
+  var v=document.getElementById('in').value;
+  if(!v.trim()){document.getElementById('out').textContent='请先输入文本';return}
+  document.getElementById('out').textContent=textToMorse(v);
+};
+document.getElementById('toText').onclick=function(){
+  var v=document.getElementById('in').value;
+  if(!v.trim()){document.getElementById('out').textContent='请先输入摩斯电码';return}
+  var r=morseToText(v);
+  document.getElementById('out').textContent=r||'无法识别，检查电码格式';
+};
+document.getElementById('copy').onclick=function(){
+  var t=document.getElementById('out').textContent;
+  if(!t||t==='结果将在这里显示')return;
+  navigator.clipboard.writeText(t).then(function(){
+    var b=document.getElementById('copy');var o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+document.getElementById('play').onclick=function(){
+  var t=document.getElementById('out').textContent;
+  if(!t||t==='结果将在这里显示')return;
+  var AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC){alert('当前浏览器不支持音频播放');return}
+  var ctx=new AC();
+  var unit=0.09;
+  var time=ctx.currentTime+0.1;
+  for(var i=0;i<t.length;i++){
+    var ch=t[i];
+    if(ch==='.'||ch==='-'){
+      var dur=(ch==='.'?1:3)*unit;
+      var osc=ctx.createOscillator();
+      var g=ctx.createGain();
+      osc.frequency.value=650;
+      osc.type='sine';
+      g.gain.setValueAtTime(0,time);
+      g.gain.linearRampToValueAtTime(0.25,time+0.005);
+      g.gain.setValueAtTime(0.25,time+dur-0.005);
+      g.gain.linearRampToValueAtTime(0,time+dur);
+      osc.connect(g);g.connect(ctx.destination);
+      osc.start(time);osc.stop(time+dur);
+      time+=dur+unit;
+    }else if(ch===' '){
+      time+=2*unit;
+    }else if(ch==='/'){
+      time+=4*unit;
+    }
+  }
+  setTimeout(function(){ctx.close()},(time-ctx.currentTime)*1000+800);
+};
+</script></body></html>

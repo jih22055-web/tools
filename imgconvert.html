@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片格式转换 - 万能工具箱</title>
+<meta name="description" content="在线图片格式转换，支持 PNG、JPG、WEBP 互转，可调输出质量和尺寸，批量处理，全部在浏览器本地完成。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片格式转换</div>
+  <div class="panel">
+    <h2>🔄 图片格式转换</h2>
+    <p class="desc">在线图片格式转换，支持 PNG、JPG、WEBP 互转，可调输出质量和尺寸，批量处理，全部在浏览器本地完成。</p>
+    <label>选择图片（可多选）</label>
+    <div class="dropzone" id="drop">点击选择图片，或把图片拖到这里</div>
+    <input type="file" id="file" accept="image/*" multiple style="display:none">
+    <div class="row">
+      <div><label>输出格式</label>
+        <select id="fmt">
+          <option value="image/jpeg">JPG（体积小，不支持透明）</option>
+          <option value="image/png">PNG（支持透明，体积大）</option>
+          <option value="image/webp">WEBP（体积最小，兼容性较好）</option>
+        </select>
+      </div>
+      <div><label>质量（JPG/WEBP 有效）</label><input type="number" id="q" value="0.9" min="0.1" max="1" step="0.05"></div>
+      <div><label>最大宽度（留空不缩放）</label><input type="number" id="mw" placeholder="例如 1200"></div>
+    </div>
+    <div class="actions"><button class="btn" id="go">开始转换</button><button class="btn ghost" id="clear">清空</button></div>
+    <div id="list" style="margin-top:16px"></div>
+  </div>
+<section class="seo">
+<p class="lead">图片格式转换工具支持 PNG、JPG、WEBP 之间互相转换，可以批量处理多张图片，调整输出质量和最大宽度，压缩图片体积。转换在浏览器本地完成，图片不会上传到服务器，隐私安全。</p>
+<h2>适用场景</h2><ul>
+<li>把截图的 PNG 转成 JPG 减小体积</li>
+<li>把设计稿导出的图片转成 WEBP 供网页使用</li>
+<li>把手机拍的大图缩小到网页合适的宽度</li>
+<li>统一一批图片的格式便于上传到平台</li>
+</ul><h2>使用方法</h2><ol>
+<li>拖入或选择一张或多张图片</li>
+<li>选择输出格式，需要透明背景选 PNG，追求体积小选 WEBP</li>
+<li>设置质量，0.9 通常肉眼无差别，网页用 0.8 更省流量</li>
+<li>需要缩小尺寸时填写最大宽度，然后点「开始转换」</li>
+<li>转换完成后点文件名右侧的「下载」保存</li>
+</ol><h2>常见问题</h2>
+<details><summary>WEBP 兼容性怎么样？</summary><p>Chrome、Edge、Firefox、Safari 14 以上、微信内置浏览器都支持 WEBP。如果要兼容很老的浏览器，建议用 JPG 或 PNG。</p></details>
+<details><summary>JPG 为什么没有透明背景？</summary><p>JPG 格式本身不支持透明通道，透明区域会被填充成白色。需要保留透明请输出 PNG 或 WEBP。</p></details>
+<details><summary>转换后画质会下降吗？</summary><p>PNG 是无损格式不会降质；JPG 和 WEBP 是有损压缩，质量设 0.9 以上肉眼基本看不出差别。反复多次转换会累积损失，建议从原图转。</p></details>
+<details><summary>图片会上传吗？</summary><p>不会。所有处理都在你的浏览器内存里完成，页面关闭后数据即消失，服务端拿不到任何图片。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="image-compress.html">图片压缩</a>
+<a href="watermark.html">图片加水印</a>
+<a href="imgbase64.html">图片转 Base64</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var files=[];
+var drop=document.getElementById('drop');
+var input=document.getElementById('file');
+
+drop.onclick=function(){input.click()};
+input.onchange=function(){addFiles(input.files)};
+drop.ondragover=function(e){e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=function(){drop.classList.remove('over')};
+drop.ondrop=function(e){
+  e.preventDefault();drop.classList.remove('over');
+  addFiles(e.dataTransfer.files);
+};
+
+function addFiles(fl){
+  for(var i=0;i<fl.length;i++){
+    if(fl[i].type.indexOf('image/')===0)files.push(fl[i]);
+  }
+  renderList();
+}
+
+function fmtSize(n){
+  if(n<1024)return n+' B';
+  if(n<1048576)return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+
+function renderList(){
+  var box=document.getElementById('list');
+  if(!files.length){box.innerHTML='';return}
+  box.innerHTML=files.map(function(f,i){
+    return '<div style="display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px">'+
+      '<span style="flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+f.name+'</span>'+
+      '<span style="font-size:12px;color:var(--muted)">'+fmtSize(f.size)+'</span>'+
+      '<span id="st'+i+'" style="font-size:12px;color:var(--muted);width:90px;text-align:right">待转换</span>'+
+      '</div>';
+  }).join('');
+}
+
+document.getElementById('clear').onclick=function(){
+  files=[];input.value='';renderList();
+};
+
+document.getElementById('go').onclick=function(){
+  if(!files.length){alert('请先选择图片');return}
+  var type=document.getElementById('fmt').value;
+  var quality=parseFloat(document.getElementById('q').value)||0.9;
+  var maxW=parseInt(document.getElementById('mw').value,10)||0;
+  files.forEach(function(f,idx){
+    var st=document.getElementById('st'+idx);
+    st.textContent='处理中…';
+    var url=URL.createObjectURL(f);
+    var im=new Image();
+    im.onload=function(){
+      var w=im.width,h=im.height;
+      if(maxW&&w>maxW){h=Math.round(h*maxW/w);w=maxW}
+      var c=document.createElement('canvas');
+      c.width=w;c.height=h;
+      var x=c.getContext('2d');
+      if(type==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,w,h)}
+      x.drawImage(im,0,0,w,h);
+      c.toBlob(function(blob){
+        if(!blob){st.textContent='转换失败';return}
+        var ext=type==='image/jpeg'?'jpg':(type==='image/png'?'png':'webp');
+        var base=f.name.replace(/\.[^.]+$/,'');
+        var a=document.createElement('a');
+        a.href=URL.createObjectURL(blob);
+        a.download=base+'.'+ext;
+        st.innerHTML='';
+        var link=document.createElement('a');
+        link.href=a.href;link.download=a.download;
+        link.textContent='下载 '+fmtSize(blob.size);
+        link.style.color='var(--brand)';
+        st.appendChild(link);
+        URL.revokeObjectURL(url);
+      },type,type==='image/png'?undefined:quality);
+    };
+    im.onerror=function(){st.textContent='读取失败'};
+    im.src=url;
+  });
+};
+</script></body></html>

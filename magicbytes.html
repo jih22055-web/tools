@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文件类型识别 - 万能工具箱</title>
+<meta name="description" content="通过文件头字节识别真实文件格式，不管后缀被改成什么都能看出它到底是什么文件，附十六进制查看。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 文件类型识别</div>
+  <div class="panel">
+    <h2>🔬 文件类型识别</h2>
+    <p class="desc">通过文件头字节识别真实文件格式，不管后缀被改成什么都能看出它到底是什么文件，附十六进制查看。</p>
+    <label>选择文件</label>
+    <div class="dropzone" id="drop">点击选择文件，或拖进来</div>
+    <input type="file" id="file" style="display:none">
+    <div class="stat-grid" id="out"></div>
+    <div id="hex" style="margin-top:16px"></div>
+  </div>
+<section class="seo">
+<p class="lead">文件类型识别工具通过读取文件开头的特征字节（Magic Bytes）判断真实格式，不受文件后缀影响。把 .exe 改成 .jpg 这类伪装文件也能一眼看穿，同时显示前 32 字节的十六进制内容。</p>
+<h2>适用场景</h2><ul>
+<li>下载到的文件后缀可疑，想确认真实类型</li>
+<li>排查「图片打不开」是不是后缀被改错了</li>
+<li>安全分析时快速判断文件真实格式</li>
+<li>确认 Office 文件是不是真的 docx/xlsx</li>
+</ul><h2>使用方法</h2><ol>
+<li>把文件拖进虚线框，或点击选择文件</li>
+<li>工具会显示识别出的格式、当前后缀和文件大小</li>
+<li>下方列出文件头前 32 字节的十六进制值</li>
+<li>对照结果判断后缀是否与实际格式一致</li>
+</ol><h2>常见问题</h2>
+<details><summary>为什么能识别出真实类型？</summary><p>不同格式的文件开头有固定特征字节，例如 PNG 一定以 89 50 4E 47 开头，PDF 一定以 25 50 44 46（即 %PDF）开头。改后缀不会改变这些字节。</p></details>
+<details><summary>文件会上传吗？</summary><p>不会。工具只读取文件开头的 512 字节，而且读取和处理全在你本地浏览器完成，文件内容不会离开你的电脑。</p></details>
+<details><summary>识别成「未知格式」怎么办？</summary><p>说明该格式的特征不在收录表内，或者文件已损坏、被加密。可以看下方的十六进制值，去网上查对应格式的签名。</p></details>
+<details><summary>能识别加壳或加密的文件吗？</summary><p>不能。加密后的文件头通常是随机数据，无法从字节特征判断原始类型。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="filehash.html">文件哈希计算</a>
+<a href="imgconvert.html">图片格式转换</a>
+<a href="index.html">在线工具首页</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var SIGS=[
+['89 50 4E 47','PNG 图片'],
+['FF D8 FF','JPEG 图片'],
+['47 49 46 38','GIF 图片'],
+['42 4D','BMP 图片'],
+['49 49 2A 00','TIFF 图片（小端）'],
+['4D 4D 00 2A','TIFF 图片（大端）'],
+['00 00 01 00','ICO 图标'],
+['25 50 44 46','PDF 文档'],
+['50 4B 03 04','ZIP 压缩包 / DOCX / XLSX / PPTX / APK / JAR'],
+['50 4B 05 06','ZIP 空压缩包'],
+['50 4B 07 08','ZIP 分卷压缩包'],
+['1F 8B','GZIP 压缩包'],
+['42 5A 68','BZIP2 压缩包'],
+['FD 37 7A 58 5A 00','XZ 压缩包'],
+['52 61 72 21 1A 07','RAR 压缩包'],
+['37 7A BC AF 27 1C','7Z 压缩包'],
+['75 73 74 61 72','TAR 归档'],
+['7F 45 4C 46','ELF 可执行文件（Linux）'],
+['4D 5A','EXE / DLL 可执行文件（Windows）'],
+['CA FE BA BE','Java Class / Mach-O 通用二进制'],
+['4D 34 41 20','M4A 音频'],
+['49 44 33','MP3 音频（含 ID3 标签）'],
+['FF FB','MP3 音频'],
+['4F 67 67 53','OGG 音频'],
+['66 4C 61 43','FLAC 无损音频'],
+['52 49 46 46','RIFF 容器（WAV / AVI / WEBP）'],
+['1A 45 DF A3','MKV / WEBM 视频'],
+['00 00 00','MP4 / MOV 视频（见下方品牌字段）'],
+['47 40 11 10','MPEG-TS 视频'],
+['3C 3F 78 6D 6C','XML 文档'],
+['3C 21 44 4F 43 54 59 50 45','HTML 文档'],
+['3C 68 74 6D 6C','HTML 文档'],
+['7B 5C 72 74 66','RTF 文档'],
+['D0 CF 11 E0 A1 B1 1A E1','旧版 Office（DOC / XLS / PPT）'],
+['25 21 50 53','PostScript 文档'],
+['00 01 00 00 00','TrueType 字体'],
+['77 4F 46 32','WOFF 字体'],
+['77 4F 46 46','WOFF2 字体'],
+['4F 54 54 4F','OpenType 字体'],
+['53 51 4C 69 74 65','SQLite 数据库'],
+['00 05 16 07','PGP 加密文件'],
+['43 44 30 30 31','ISO 光盘镜像'],
+['4B 44 4D','VMDK 虚拟磁盘'],
+['51 46 49 FB','QCOW2 虚拟磁盘'],
+['78 9C','zlib 压缩数据']
+];
+
+function hex2(b){return ('0'+b.toString(16).toUpperCase()).slice(-2)}
+
+function identify(bytes){
+  var hex=[];for(var i=0;i<Math.min(bytes.length,32);i++)hex.push(hex2(bytes[i]));
+  var head=hex.slice(0,16).join(' ');
+  var hits=[];
+  SIGS.forEach(function(s){
+    var sig=s[0].split(' ');
+    var ok=true;
+    for(var i=0;i<sig.length;i++){
+      if(sig[i]!==hex[i]){ok=false;break}
+    }
+    if(ok)hits.push(s);
+  });
+
+  var best=hits.length?hits[hits.length-1][1]:'未知或未收录的格式';
+  if(head.indexOf('52 49 46 46')===0){
+    var brand=String.fromCharCode.apply(null,bytes.slice(8,12));
+    if(brand==='WEBP')best='WEBP 图片';
+    else if(brand==='AVI ')best='AVI 视频';
+    else if(brand==='WAVE')best='WAV 音频';
+  }
+  if(head.indexOf('00 00 00')===0&&bytes.length>11){
+    var fb=String.fromCharCode.apply(null,bytes.slice(4,8));
+    if(fb==='ftyp'){
+      var br=String.fromCharCode.apply(null,bytes.slice(8,12));
+      if(/qt/.test(br))best='MOV 视频';
+      else if(/heic|mif1/.test(br))best='HEIC 图片';
+      else best='MP4 / M4V 视频（品牌 '+br+'）';
+    }
+  }
+  if(head.indexOf('50 4B 03 04')===0){
+    var tail=String.fromCharCode.apply(null,bytes.slice(0,Math.min(bytes.length,200)));
+    if(tail.indexOf('word/')>=0)best='DOCX 文档（本质是 ZIP）';
+    else if(tail.indexOf('xl/')>=0)best='XLSX 表格（本质是 ZIP）';
+    else if(tail.indexOf('ppt/')>=0)best='PPTX 演示（本质是 ZIP）';
+    else if(tail.indexOf('AndroidManifest')>=0)best='APK 安卓安装包';
+  }
+  return {best:best,head:head,hex:hex};
+}
+
+function handle(f){
+  if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(e){
+    var bytes=new Uint8Array(e.target.result);
+    var r=identify(bytes);
+    document.getElementById('out').innerHTML=
+      '<div class="stat"><div class="num" style="font-size:17px;line-height:1.4">'+r.best+'</div><div class="lbl">识别结果</div></div>'+
+      '<div class="stat"><div class="num" style="font-size:14px;font-family:ui-monospace,monospace">'+(f.name.split('.').pop().toLowerCase()||'无后缀')+'</div><div class="lbl">实际后缀</div></div>'+
+      '<div class="stat"><div class="num" style="font-size:14px">'+(f.size<1024?f.size+' B':(f.size/1024).toFixed(1)+' KB')+'</div><div class="lbl">文件大小</div></div>';
+    document.getElementById('hex').innerHTML=
+      '<div style="font-size:13px;color:var(--muted);margin-bottom:8px">文件头前 32 字节（十六进制）</div>'+
+      '<div style="font-family:ui-monospace,Consolas,monospace;background:var(--bg2);border-radius:8px;padding:12px;font-size:13px;line-height:1.9;word-break:break-all">'+
+      r.hex.join(' ')+'</div>';
+  };
+  rd.readAsArrayBuffer(f.slice(0,512));
+}
+
+var drop=document.getElementById('drop');
+var input=document.getElementById('file');
+drop.onclick=function(){input.click()};
+input.onchange=function(){handle(input.files[0])};
+drop.ondragover=function(e){e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=function(){drop.classList.remove('over')};
+drop.ondrop=function(e){e.preventDefault();drop.classList.remove('over');handle(e.dataTransfer.files[0])};
+</script></body></html>

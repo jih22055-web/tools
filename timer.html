@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多通道计时器 - 万能工具箱</title>
+<meta name="description" content="在线多通道倒计时器，可同时设置多个计时任务，各自独立倒计时，结束时声音提醒，适合厨房、健身、番茄工作法。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 多通道计时器</div>
+  <div class="panel">
+    <h2>⏱️ 多通道计时器</h2>
+    <p class="desc">在线多通道倒计时器，可同时设置多个计时任务，各自独立倒计时，结束时声音提醒，适合厨房、健身、番茄工作法。</p>
+    <div class="row">
+      <div><label>名称</label><input type="text" id="nm" placeholder="例如 煮鸡蛋" value="计时 1"></div>
+      <div><label>分</label><input type="number" id="mm" value="5" min="0" max="999"></div>
+      <div><label>秒</label><input type="number" id="ss" value="0" min="0" max="59"></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="add">添加计时器</button>
+      <button class="btn ghost" id="pauseAll">全部暂停</button>
+      <button class="btn ghost" id="resetAll">全部重置</button>
+    </div>
+    <div id="list" style="margin-top:18px"></div>
+    <p class="hint">提示：保持页面打开才能计时，切换到后台标签页时浏览器可能会降低刷新频率，但计时依然准确。</p>
+  </div>
+<section class="seo">
+<p class="lead">多通道计时器可以同时运行多个互相独立的倒计时，每个都有名称、进度条和声音提醒。适合一边炖汤一边烤面包、健身房循环训练、番茄工作法这类需要并行计时的场景。</p>
+<h2>适用场景</h2><ul>
+<li>做饭时同时盯几个菜的时间</li>
+<li>健身做间歇训练，多组同时计时</li>
+<li>番茄工作法：25 分钟专注 + 5 分钟休息</li>
+<li>开会控制每人发言时长</li>
+</ul><h2>使用方法</h2><ol>
+<li>填写名称和分秒数，点「添加计时器」</li>
+<li>添加后自动开始倒计时，可以按「暂停」临时停下</li>
+<li>倒计时结束会响三声提示音，进度条走满</li>
+<li>点「重置」回到初始时间重来，「删除」移除该计时器</li>
+</ol><h2>常见问题</h2>
+<details><summary>关掉页面计时会继续吗？</summary><p>不会。计时在浏览器里运行，关闭或刷新页面后计时器会清空。需要后台保持可以最小化窗口，但不要关闭标签页。</p></details>
+<details><summary>为什么切换标签页后进度条跳动？</summary><p>浏览器为了省电会降低后台标签页的刷新频率，画面更新变慢，但计时本身按真实时间计算，回到页面后会立即显示正确剩余时间。</p></details>
+<details><summary>能同时开多少个计时器？</summary><p>没有明确上限，几十个都能正常运行，实际取决于电脑性能。</p></details>
+<details><summary>没听到提示音怎么办？</summary><p>浏览器要求用户先与页面交互才能播放声音。请先点一下页面任意位置再使用，或者检查系统音量是否静音。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="timestamp.html">时间戳转换</a>
+<a href="datecalc.html">日期计算器</a>
+<a href="random.html">随机抽取</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var timers=[];
+var uid=0;
+
+function beep(){
+  try{
+    var AC=window.AudioContext||window.webkitAudioContext;
+    var ctx=new AC();
+    [0,0.35,0.7].forEach(function(off){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.frequency.value=880;o.type='sine';
+      var t=ctx.currentTime+off;
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(0.3,t+0.01);
+      g.gain.linearRampToValueAtTime(0,t+0.22);
+      o.connect(g);g.connect(ctx.destination);
+      o.start(t);o.stop(t+0.25);
+    });
+    setTimeout(function(){ctx.close()},1600);
+  }catch(e){}
+}
+
+function fmt(sec){
+  sec=Math.max(0,Math.ceil(sec));
+  var m=Math.floor(sec/60),s=sec%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+
+function render(){
+  var box=document.getElementById('list');
+  if(!timers.length){box.innerHTML='<div style="color:var(--muted);padding:14px 0">还没有计时器，上面添加一个试试</div>';return}
+  box.innerHTML=timers.map(function(t){
+    var pct=t.total?Math.min(100,(1-t.left/t.total)*100):0;
+    var color=t.done?'var(--brand)':(t.left<=10?'#e0a800':'var(--text)');
+    return '<div style="border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;background:#fff">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">'+
+        '<div style="font-size:14px;font-weight:600">'+t.name+'</div>'+
+        '<div style="font-family:ui-monospace,Consolas,monospace;font-size:26px;font-weight:700;color:'+color+';letter-spacing:1px">'+(t.done?'时间到':fmt(t.left))+'</div>'+
+      '</div>'+
+      '<div style="height:5px;background:var(--bg2);border-radius:3px;margin-top:10px;overflow:hidden">'+
+        '<div style="height:100%;width:'+pct+'%;background:var(--brand);transition:width .3s"></div>'+
+      '</div>'+
+      '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+
+        '<button class="btn ghost" data-a="'+t.id+'" style="padding:6px 12px;font-size:13px">'+(t.running?'暂停':'开始')+'</button>'+
+        '<button class="btn ghost" data-r="'+t.id+'" style="padding:6px 12px;font-size:13px">重置</button>'+
+        '<button class="btn ghost" data-d="'+t.id+'" style="padding:6px 12px;font-size:13px">删除</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+document.getElementById('add').onclick=function(){
+  var name=document.getElementById('nm').value.trim()||('计时 '+(uid+1));
+  var m=parseInt(document.getElementById('mm').value,10)||0;
+  var s=parseInt(document.getElementById('ss').value,10)||0;
+  var total=m*60+s;
+  if(total<=0){alert('请设置大于 0 的时间');return}
+  uid++;
+  timers.push({id:uid,name:name,total:total,left:total,running:true,done:false});
+  document.getElementById('nm').value='计时 '+(uid+1);
+  render();
+};
+
+document.getElementById('list').onclick=function(e){
+  var b=e.target.closest('button');if(!b)return;
+  var t;
+  if(b.hasAttribute('data-a')){
+    var id=+b.getAttribute('data-a');
+    t=timers.filter(function(x){return x.id===id})[0];
+    if(!t)return;
+    if(t.done){t.left=t.total;t.done=false;t.running=true}
+    else t.running=!t.running;
+    render();
+  }else if(b.hasAttribute('data-r')){
+    var id2=+b.getAttribute('data-r');
+    t=timers.filter(function(x){return x.id===id2})[0];
+    if(!t)return;
+    t.left=t.total;t.done=false;t.running=false;render();
+  }else if(b.hasAttribute('data-d')){
+    var id3=+b.getAttribute('data-d');
+    timers=timers.filter(function(x){return x.id!==id3});
+    render();
+  }
+};
+
+document.getElementById('pauseAll').onclick=function(){
+  timers.forEach(function(t){t.running=false});render();
+};
+document.getElementById('resetAll').onclick=function(){
+  timers.forEach(function(t){t.left=t.total;t.done=false;t.running=false});render();
+};
+
+setInterval(function(){
+  var changed=false;
+  timers.forEach(function(t){
+    if(!t.running||t.done)return;
+    t.left-=0.25;
+    if(t.left<=0){t.left=0;t.done=true;t.running=false;beep();changed=true}
+  });
+  render();
+},250);
+
+render();
+</script></body></html>

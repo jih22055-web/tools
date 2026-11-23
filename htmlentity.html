@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML 特殊字符表 - 万能工具箱</title>
+<meta name="description" content="HTML 实体字符速查表，收录常用符号的名称、十进制和十六进制编码，点击即可复制，写网页必备。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / HTML 特殊字符表</div>
+  <div class="panel">
+    <h2>&amp; HTML 特殊字符表</h2>
+    <p class="desc">HTML 实体字符速查表，收录常用符号的名称、十进制和十六进制编码，点击即可复制，写网页必备。</p>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" id="q" placeholder="搜索符号或名称，如 版权、箭头、&lt; …">
+    </div>
+    <p class="hint" id="tip">共 0 个字符，点击任意一行复制该字符</p>
+    <div id="box" style="margin-top:12px"></div>
+  </div>
+<section class="seo">
+<p class="lead">HTML 特殊字符表收录了网页开发中最常用的实体字符，包括转义字符、货币符号、数学符号、箭头、标点和常用图标，每条都列出命名实体、十进制与十六进制三种写法，点击即可复制。</p>
+<h2>适用场景</h2><ul>
+<li>写 HTML 时不知道 &lt; 和 &amp; 该怎么转义</li>
+<li>找箭头的实体编码</li>
+<li>给页面加对勾、星星等符号又不想用图片</li>
+<li>核对某个符号的 Unicode 码点</li>
+</ul><h2>使用方法</h2><ol>
+<li>在搜索框输入符号本身或中文名称，例如「版权」「箭头」</li>
+<li>表格里查看三种写法：命名实体、&#十进制;、&#x十六进制;</li>
+<li>点击任意一行即可把该字符复制到剪贴板</li>
+<li>按需选择写法：命名实体可读性好，数字实体兼容性更广</li>
+</ol><h2>常见问题</h2>
+<details><summary>命名实体和数字实体有什么区别？</summary><p>命名实体如 &amp;copy; 可读性好，但不是所有符号都有命名；数字实体如 &amp;#169; 任何字符都能表示，兼容性最广。HTML5 支持绝大多数命名实体。</p></details>
+<details><summary>什么时候必须转义？</summary><p>在 HTML 里直接出现 &lt;、&gt;、&amp; 会被当成标签或实体开头，必须转义。写在 script 或 style 里的内容另有规则，不能简单套用。</p></details>
+<details><summary>为什么有的字符显示成方块？</summary><p>说明当前字体缺少该字符的字形。可以换用支持更全的字体，或者直接用图标库替代。</p></details>
+<details><summary>&amp;nbsp; 有什么坑？</summary><p>它是不换行空格，宽度固定，过多使用会导致对齐混乱，也不利于屏幕阅读器。排版间距建议用 CSS 的 margin 或 padding。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="unicode.html">Unicode 编码</a>
+<a href="html-markdown.html">HTML 转 Markdown</a>
+<a href="asciitable.html">ASCII 码表</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var E=[
+['&','&amp;','&amp;','&amp;','和号'],
+['<','&lt;','&lt;','&lt;','小于号'],
+['>','&gt;','&gt;','&gt;','大于号'],
+['"','&quot;','&quot;','&quot;','双引号'],
+["'",'&apos;','&apos;','&apos;','单引号'],
+[' ','&nbsp;','&nbsp;','&nbsp;','不换行空格'],
+['©','&copy;','&copy;','&copy;','版权'],
+['®','&reg;','&reg;','&reg;','注册商标'],
+['™','&trade;','&trade;','&trade;','商标'],
+['€','&euro;','&euro;','&euro;','欧元'],
+['£','&pound;','&pound;','&pound;','英镑'],
+['¥','&yen;','&yen;','&yen;','日元/人民币'],
+['¢','&cent;','&cent;','&cent;','美分'],
+['§','&sect;','&sect;','&sect;','章节'],
+['¶','&para;','&para;','&para;','段落'],
+['°','&deg;','&deg;','&deg;','度'],
+['±','&plusmn;','&plusmn;','&plusmn;','正负'],
+['×','&times;','&times;','&times;','乘号'],
+['÷','&divide;','&divide;','&divide;','除号'],
+['≠','&ne;','&ne;','&ne;','不等于'],
+['≤','&le;','&le;','&le;','小于等于'],
+['≥','&ge;','&ge;','&ge;','大于等于'],
+['∞','&infin;','&infin;','&infin;','无穷'],
+['√','&radic;','&radic;','&radic;','根号'],
+['∑','&sum;','&sum;','&sum;','求和'],
+['π','&pi;','&pi;','&pi;','圆周率'],
+['µ','&micro;','&micro;','&micro;','微'],
+['←','&larr;','&larr;','&larr;','左箭头'],
+['↑','&uarr;','&uarr;','&uarr;','上箭头'],
+['→','&rarr;','&rarr;','&rarr;','右箭头'],
+['↓','&darr;','&darr;','&darr;','下箭头'],
+['↔','&harr;','&harr;','&harr;','左右箭头'],
+['⇐','&lArr;','&lArr;','&lArr;','双线左箭头'],
+['⇒','&rArr;','&rArr;','&rArr;','双线右箭头'],
+['•','&bull;','&bull;','&bull;','圆点'],
+['…','&hellip;','&hellip;','&hellip;','省略号'],
+['—','&mdash;','&mdash;','&mdash;','长破折号'],
+['–','&ndash;','&ndash;','&ndash;','短破折号'],
+['“','&ldquo;','&ldquo;','&ldquo;','左双引号'],
+['”','&rdquo;','&rdquo;','&rdquo;','右双引号'],
+['‘','&lsquo;','&lsquo;','&lsquo;','左单引号'],
+['’','&rsquo;','&rsquo;','&rsquo;','右单引号'],
+['†','&dagger;','&dagger;','&dagger;','剑号'],
+['‡','&Dagger;','&Dagger;','&Dagger;','双剑号'],
+['♠','&spades;','&spades;','&spades;','黑桃'],
+['♣','&clubs;','&clubs;','&clubs;','梅花'],
+['♥','&hearts;','&hearts;','&hearts;','红桃'],
+['♦','&diams;','&diams;','&diams;','方块'],
+['★','&#9733;','&#9733;','&#9733;','实心星'],
+['☆','&#9734;','&#9734;','&#9734;','空心星'],
+['✓','&#10003;','&#10003;','&#10003;','对勾'],
+['✔','&#10004;','&#10004;','&#10004;','粗对勾'],
+['✗','&#10007;','&#10007;','&#10007;','叉'],
+['⌘','&#8984;','&#8984;','&#8984;','Command 键'],
+['⏎','&#9166;','&#9166;','&#9166;','回车符'],
+['☎','&#9742;','&#9742;','&#9742;','电话'],
+['✉','&#9993;','&#9993;','&#9993;','信封'],
+['⚠','&#9888;','&#9888;','&#9888;','警告'],
+['⏰','&#9200;','&#9200;','&#9200;','闹钟'],
+['☀','&#9728;','&#9728;','&#9728;','太阳'],
+['☂','&#9730;','&#9730;','&#9730;','雨伞'],
+['☕','&#9749;','&#9749;','&#9749;','咖啡'],
+['☺','&#9786;','&#9786;','&#9786;','笑脸'],
+['♀','&female;','&female;','&female;','女性符号'],
+['♂','&male;','&male;','&male;','男性符号']
+];
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function render(){
+  var q=(document.getElementById('q').value||'').trim().toLowerCase();
+  var list=E.filter(function(e){
+    if(!q)return true;
+    return (e[0]+' '+e[4]+' '+e[1]+' '+e[2]).toLowerCase().indexOf(q)>=0;
+  });
+  document.getElementById('tip').textContent='共 '+list.length+' 个字符，点击任意一行复制该字符';
+  var html='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">';
+  html+='<thead><tr style="background:var(--bg2)">'+['字符','名称','命名实体','十进制','十六进制'].map(function(h){
+    return '<th style="text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap">'+h+'</th>';
+  }).join('')+'</tr></thead><tbody>';
+  list.forEach(function(e){
+    html+='<tr class="row-copy" data-ch="'+esc(e[0])+'" style="cursor:pointer">'+
+      '<td style="padding:9px 10px;border-bottom:1px solid var(--line);font-size:20px;font-weight:600">'+esc(e[0])+'</td>'+
+      '<td style="padding:9px 10px;border-bottom:1px solid var(--line);color:var(--muted)">'+e[4]+'</td>'+
+      '<td style="padding:9px 10px;border-bottom:1px solid var(--line);font-family:ui-monospace,monospace;color:var(--brand)">'+esc(e[1])+'</td>'+
+      '<td style="padding:9px 10px;border-bottom:1px solid var(--line);font-family:ui-monospace,monospace;color:var(--muted)">'+esc(e[2])+'</td>'+
+      '<td style="padding:9px 10px;border-bottom:1px solid var(--line);font-family:ui-monospace,monospace;color:var(--muted)">'+esc(e[3])+'</td>'+
+      '</tr>';
+  });
+  html+='</tbody></table></div>';
+  document.getElementById('box').innerHTML=html;
+}
+
+document.getElementById('box').onclick=function(e){
+  var tr=e.target.closest('tr.row-copy');if(!tr)return;
+  var ch=tr.getAttribute('data-ch');
+  navigator.clipboard.writeText(ch).then(function(){
+    var tip=document.getElementById('tip');
+    var o=tip.textContent;
+    tip.textContent='已复制：「'+ch+'」';
+    setTimeout(function(){tip.textContent=o},1200);
+  });
+};
+document.getElementById('q').addEventListener('input',render);
+render();
+</script></body></html>

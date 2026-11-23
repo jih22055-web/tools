@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>条形码生成器 - 万能工具箱</title>
+<meta name="description" content="在线生成条形码，支持 CODE128、CODE39、EAN13、EAN8、UPC、ITF14 等格式，可调尺寸并下载 PNG 图片。">
+<script src="jsbarcode.min.js"></script>
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 条形码生成器</div>
+  <div class="panel">
+    <h2>▮▯ 条形码生成器</h2>
+    <p class="desc">在线生成条形码，支持 CODE128、CODE39、EAN13、EAN8、UPC、ITF14 等格式，可调尺寸并下载 PNG 图片。</p>
+    <label>条码内容</label>
+    <input type="text" id="val" value="123456789012">
+    <div class="row">
+      <div><label>条码类型</label>
+        <select id="fmt">
+          <option value="CODE128">CODE128（通用，支持字母数字）</option>
+          <option value="CODE39">CODE39（字母数字）</option>
+          <option value="EAN13">EAN13（12 或 13 位数字）</option>
+          <option value="EAN8">EAN8（7 或 8 位数字）</option>
+          <option value="UPC">UPC（11 或 12 位数字）</option>
+          <option value="ITF14">ITF14（14 位数字）</option>
+        </select>
+      </div>
+      <div><label>线条宽度</label><input type="number" id="w" value="2" min="1" max="6"></div>
+      <div><label>高度</label><input type="number" id="h" value="90" min="30" max="200"></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="go">生成条形码</button>
+      <button class="btn ghost" id="dl">下载 PNG</button>
+    </div>
+    <div class="preview" id="pv" style="text-align:center;padding:16px;min-height:120px"><svg id="svg"></svg></div>
+    <p class="hint" id="tip"></p>
+  </div>
+<section class="seo">
+<p class="lead">条形码生成器可以免费在线生成标准一维条码，支持 CODE128、CODE39、EAN13、EAN8、UPC、ITF14 等常用格式，可自定义线条宽度和高度，生成后可直接下载 PNG 图片用于印刷或贴标。</p>
+<h2>适用场景</h2><ul>
+<li>商品标签、库存管理需要打印条码</li>
+<li>给内部资产编号生成条码便于扫码盘点</li>
+<li>制作会员卡、工牌上的识别码</li>
+<li>电商发货标签需要条码图</li>
+</ul><h2>使用方法</h2><ol>
+<li>在内容框输入条码数据，字母数字都可以（取决于格式）</li>
+<li>选择条码类型，日常商品最常用 CODE128</li>
+<li>调整线条宽度和高度，宽度 2 适合屏幕，印刷建议 3 以上</li>
+<li>点击「生成条形码」，确认无误后点「下载 PNG」</li>
+</ol><h2>常见问题</h2>
+<details><summary>CODE128 和 EAN13 有什么区别？</summary><p>CODE128 最通用，能编码任意字母数字组合，长度灵活。EAN13 是国际商品条码标准，固定 13 位纯数字，最后一位是校验位，用于零售商品。</p></details>
+<details><summary>EAN13 提示生成失败怎么办？</summary><p>EAN13 需要 12 位数字（工具会自动补校验位），或者你提供的 13 位数字校验位必须正确。请检查位数和是否有非数字字符。</p></details>
+<details><summary>下载的图片能直接印刷吗？</summary><p>可以。下载的是 3 倍放大的高清 PNG，300dpi 下宽度约 2 厘米以上就足够清晰。印刷时注意保留条码两侧的空白区，不要裁掉。</p></details>
+<details><summary>生成的条码能扫出来吗？</summary><p>只要内容合法，生成的条码符合国际标准，常见的手机扫码软件和扫码枪都能识别。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="qrcode.html">二维码生成器</a>
+<a href="favicon.html">Favicon 制作</a>
+<a href="placeholder.html">占位图生成</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function gen(){
+  var v=document.getElementById('val').value.trim();
+  var fmt=document.getElementById('fmt').value;
+  var w=parseInt(document.getElementById('w').value,10)||2;
+  var h=parseInt(document.getElementById('h').value,10)||90;
+  var tip=document.getElementById('tip');
+  if(!v){tip.textContent='请先输入条码内容';return}
+  try{
+    JsBarcode('#svg',v,{format:fmt,width:w,height:h,displayValue:true,fontSize:16,margin:10});
+    tip.textContent='已生成 '+fmt+' 条码';
+    document.getElementById('svg').setAttribute('data-ok','1');
+  }catch(e){
+    tip.textContent='生成失败：'+e.message+'（检查内容是否符合该格式要求）';
+    document.getElementById('svg').innerHTML='';
+    document.getElementById('svg').removeAttribute('data-ok');
+  }
+}
+document.getElementById('go').onclick=gen;
+
+document.getElementById('dl').onclick=function(){
+  var svg=document.getElementById('svg');
+  if(!svg.hasAttribute('data-ok')){document.getElementById('tip').textContent='请先生成条码再下载';return}
+  var s=new XMLSerializer().serializeToString(svg);
+  var im=new Image();
+  var scale=3;
+  var vb=svg.viewBox.baseVal;
+  var bw=(vb&&vb.width)?vb.width:svg.getBoundingClientRect().width;
+  var bh=(vb&&vb.height)?vb.height:svg.getBoundingClientRect().height;
+  im.onload=function(){
+    var c=document.createElement('canvas');
+    c.width=bw*scale;c.height=bh*scale;
+    var x=c.getContext('2d');
+    x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+    x.drawImage(im,0,0,c.width,c.height);
+    var a=document.createElement('a');
+    a.download='barcode.png';a.href=c.toDataURL('image/png');a.click();
+  };
+  im.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(s)));
+};
+gen();
+</script></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>日期计算器 - 万能工具箱</title>
+<meta name="description" content="在线日期计算器，计算两个日期相差多少天、多少周、多少个月，也可以从某个日期加减天数推算新日期。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 日期计算器</div>
+  <div class="panel">
+    <h2>📅 日期计算器</h2>
+    <p class="desc">在线日期计算器，计算两个日期相差多少天、多少周、多少个月，也可以从某个日期加减天数推算新日期。</p>
+    <h3 style="margin:22px 0 0;font-size:15px">两个日期相差多久</h3>
+    <div class="row">
+      <div><label>开始日期</label><input type="date" id="d1"></div>
+      <div><label>结束日期</label><input type="date" id="d2"></div>
+    </div>
+    <div class="actions"><button class="btn" id="go1">计算间隔</button></div>
+    <div class="stat-grid" id="out1"></div>
+
+    <h3 style="margin:30px 0 0;font-size:15px">从某天往后（前）推算</h3>
+    <div class="row">
+      <div><label>基准日期</label><input type="date" id="d3"></div>
+      <div><label>相差天数（负数表示往前推）</label><input type="number" id="days" value="30"></div>
+    </div>
+    <div class="actions"><button class="btn" id="go2">计算日期</button></div>
+    <div class="result" id="out2">结果将在这里显示</div>
+  </div>
+<section class="seo">
+<p class="lead">日期计算器可以算出两个日期之间相差多少天、多少周、多少个月，也能统计其中的工作日天数，还支持从指定日期加减若干天推算新日期。常用于计算项目工期、纪念日天数、合同到期日、倒计时等场景。</p>
+<h2>适用场景</h2><ul>
+<li>算项目还有多少天到期、已经过去多少天</li>
+<li>推算 90 天后的日期，例如签证停留期、退货期限</li>
+<li>算恋爱纪念日、宝宝出生天数</li>
+<li>计算合同起止日期间隔与工作日数量</li>
+</ul><h2>使用方法</h2><ol>
+<li>在「两个日期相差多久」里选开始和结束日期</li>
+<li>点击「计算间隔」，会同时给出天数、年月、周数和工作日数</li>
+<li>在下方「从某天推算」里填基准日期和天数，负数表示往前推</li>
+<li>点击「计算日期」得到具体日期和星期</li>
+</ol><h2>常见问题</h2>
+<details><summary>工作日是怎么算的？</summary><p>工作日统计排除了周六和周日，但没有排除法定节假日和调休，所以实际工作日可能更少，仅供参考。</p></details>
+<details><summary>天数包含首尾吗？</summary><p>相差天数按"结束日期减开始日期"计算。例如今天到明天是 1 天，同一天则是 0 天。</p></details>
+<details><summary>能算往前推的日期吗？</summary><p>可以。把天数填成负数，例如 -30 就是往前推 30 天。</p></details>
+<details><summary>支持多少年前的日期？</summary><p>浏览器日期的有效范围非常大，从公元 1 年到 9999 年都能计算。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="timestamp.html">时间戳转换</a>
+<a href="tax.html">个税计算器</a>
+<a href="zodiac.html">生肖查询</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function today(){var d=new Date();return d.toISOString().slice(0,10)}
+document.getElementById('d1').value=today();
+document.getElementById('d3').value=today();
+var t=new Date();t.setDate(t.getDate()+30);
+document.getElementById('d2').value=t.toISOString().slice(0,10);
+
+function diff(){
+  var a=document.getElementById('d1').value,b=document.getElementById('d2').value;
+  var o=document.getElementById('out1');
+  if(!a||!b){o.innerHTML='<div class="stat"><div class="num">—</div><div class="lbl">请选择两个日期</div></div>';return}
+  var d1=new Date(a+'T00:00:00'),d2=new Date(b+'T00:00:00');
+  var ms=d2-d1;
+  var days=Math.round(ms/86400000);
+  var abs=Math.abs(days);
+  var months=(d2.getFullYear()-d1.getFullYear())*12+(d2.getMonth()-d1.getMonth());
+  if(d2.getDate()<d1.getDate())months--;
+  var years=Math.floor(Math.abs(months)/12);
+  var mm=Math.abs(months)%12;
+  var weekdays=0;
+  var s=Math.min(d1,d2),e=Math.max(d1,d2);
+  for(var d=new Date(s);d<e;d.setDate(d.getDate()+1)){
+    var w=d.getDay(); if(w!==0&&w!==6)weekdays++;
+  }
+  var dir=days<0?'（结束日期早于开始日期）':'';
+  o.innerHTML=
+    '<div class="stat"><div class="num">'+abs+'</div><div class="lbl">相差天数 '+dir+'</div></div>'+
+    '<div class="stat"><div class="num">'+years+' 年 '+(mm?mm+' 个月':'')+'</div><div class="lbl">相差年月</div></div>'+
+    '<div class="stat"><div class="num">'+(abs/7).toFixed(1)+'</div><div class="lbl">相差周数</div></div>'+
+    '<div class="stat"><div class="num">'+weekdays+'</div><div class="lbl">其中工作日</div></div>';
+}
+document.getElementById('go1').onclick=diff;
+
+document.getElementById('go2').onclick=function(){
+  var base=document.getElementById('d3').value;
+  var n=parseInt(document.getElementById('days').value,10);
+  var o=document.getElementById('out2');
+  if(!base||isNaN(n)){o.textContent='请填写基准日期和天数';return}
+  var d=new Date(base+'T00:00:00');
+  d.setDate(d.getDate()+n);
+  var wk=['日','一','二','三','四','五','六'][d.getDay()];
+  var pad=function(x){return x<10?'0'+x:''+x};
+  o.textContent=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' 星期'+wk;
+};
+diff();
+</script></body></html>

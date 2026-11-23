@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>中文简繁转换 - 万能工具箱</title>
+<meta name="description" content="在线简体繁体转换，支持简体转繁体、台湾正体、香港繁体，以及繁体转简体，按词转换比单字替换更准确。">
+<script src="opencc-full.js"></script>
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 中文简繁转换</div>
+  <div class="panel">
+    <h2>🀄 中文简繁转换</h2>
+    <p class="desc">在线简体繁体转换，支持简体转繁体、台湾正体、香港繁体，以及繁体转简体，按词转换比单字替换更准确。</p>
+    <label>输入文本</label>
+    <textarea id="in" placeholder="输入要转换的中文内容…">这个软件的后台开发很有意思，头发都掉了。</textarea>
+    <div class="row">
+      <div><label>转换方向</label>
+        <select id="dir">
+          <option value="cn2t">简体 → 繁体（通用）</option>
+          <option value="cn2tw">简体 → 台湾正体</option>
+          <option value="cn2hk">简体 → 香港繁体</option>
+          <option value="t2cn">繁体 → 简体</option>
+        </select>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="go">开始转换</button>
+      <button class="btn ghost" id="copy">复制结果</button>
+    </div>
+    <label>转换结果</label>
+    <div class="result" id="out">结果将在这里显示</div>
+  </div>
+<section class="seo">
+<p class="lead">中文简繁转换工具支持简体和繁体互转，并提供台湾正体与香港繁体两个地区变体。转换采用词级对照字典，能正确处理「头发」与「出發」这类一字多义的常见情况，比简单的单字替换准确得多。</p>
+<h2>适用场景</h2><ul>
+<li>给港台读者准备繁体版文案</li>
+<li>把繁体资料转成简体方便阅读</li>
+<li>校对简繁混排的文档</li>
+<li>发行台湾版、香港版内容时做本地化</li>
+</ul><h2>使用方法</h2><ol>
+<li>把中文粘贴到输入框</li>
+<li>选择转换方向：简体转繁体、转台湾正体、转香港繁体，或繁体转简体</li>
+<li>点击「开始转换」</li>
+<li>点「复制结果」把结果复制到剪贴板</li>
+</ol><h2>常见问题</h2>
+<details><summary>简体转繁体后有的字没变？</summary><p>部分汉字简繁同形，例如「人」「山」「水」在简体和繁体里写法一样，所以转换后不变是正确的。</p></details>
+<details><summary>台湾正体和通用繁体有什么区别？</summary><p>部分用词不同。例如「软件」在通用繁体里是「軟件」，台湾正体会写成「軟體」；「出租车」对应「計程車」。本工具已内置这些词汇差异。</p></details>
+<details><summary>会出现转换错误吗？</summary><p>一简对多繁的情况（例如「发」对应「發」和「髮」）已按词语上下文处理，但生僻搭配仍可能出错，正式发布前建议人工通读一遍。</p></details>
+<details><summary>一次能转多少字？</summary><p>几万字的长文都可以，受浏览器内存限制，通常十万字以内都没问题。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="pinyin.html">汉字转拼音</a>
+<a href="wordcount.html">字数统计</a>
+<a href="unicode.html">Unicode 编码</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var cfgs={
+  cn2t:{from:'cn',to:'t'},
+  cn2tw:{from:'cn',to:'tw'},
+  cn2hk:{from:'cn',to:'hk'},
+  t2cn:{from:'t',to:'cn'}
+};
+var cache={};
+function conv(){
+  var v=document.getElementById('in').value;
+  var out=document.getElementById('out');
+  if(!v.trim()){out.textContent='请先输入内容';return}
+  var dir=document.getElementById('dir').value;
+  try{
+    if(!cache[dir])cache[dir]=OpenCC.Converter(cfgs[dir]);
+    out.textContent=cache[dir](v);
+  }catch(e){
+    out.textContent='转换失败：'+e.message;
+  }
+}
+document.getElementById('go').onclick=conv;
+document.getElementById('copy').onclick=function(){
+  var t=document.getElementById('out').textContent;
+  if(!t||t==='结果将在这里显示')return;
+  navigator.clipboard.writeText(t).then(function(){
+    var b=document.getElementById('copy');var o=b.textContent;b.textContent='已复制';
+    setTimeout(function(){b.textContent=o},1200);
+  });
+};
+</script></body></html>

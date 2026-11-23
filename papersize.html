@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>纸张尺寸查询 - 万能工具箱</title>
+<meta name="description" content="A、B、C 系列纸张尺寸速查表，含 A0-A10、B0-B10、开本尺寸，提供毫米与英寸对照，打印排版必备。">
+<link rel="stylesheet" href="style.css?v=20261123e"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 纸张尺寸查询</div>
+  <div class="panel">
+    <h2>📄 纸张尺寸查询</h2>
+    <p class="desc">A、B、C 系列纸张尺寸速查表，含 A0-A10、B0-B10、开本尺寸，提供毫米与英寸对照，打印排版必备。</p>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" id="q" placeholder="搜索规格，如 A4、16开、B5…">
+    </div>
+    <div id="box" style="margin-top:16px"></div>
+  </div>
+<section class="seo">
+<p class="lead">纸张尺寸查询表收录了国际标准 A 系列（A0 到 A10）、B 系列、C 系列信封尺寸，以及中国常用的 16 开、32 开、正度大度开本和证件照、名片尺寸，同时给出毫米、英寸和长宽比，方便打印排版和设计出图。</p>
+<h2>适用场景</h2><ul>
+<li>打印文件前确认 A4 的实际尺寸</li>
+<li>设计海报、画册时选对开本</li>
+<li>做信封、名片、证件照排版</li>
+<li>买相框或文件夹时核对内页尺寸</li>
+</ul><h2>使用方法</h2><ol>
+<li>在搜索框输入规格名称，如 A4、B5、16开</li>
+<li>表格给出宽×高（毫米）、英寸和长宽比</li>
+<li>A 系列对折一次就是下一个规格，例如 A3 对折是 A4</li>
+<li>长宽比约 1.41 的规格都是 A 系列，视觉上接近黄金比例</li>
+</ol><h2>常见问题</h2>
+<details><summary>A4 到底多大？</summary><p>210 × 297 毫米，也就是 21 × 29.7 厘米，约 8.27 × 11.69 英寸。这是全球最常用的办公纸张尺寸。</p></details>
+<details><summary>16 开和 A4 一样吗？</summary><p>不一样。大 16 开是 210 × 285 毫米，比 A4 短 12 毫米；正 16 开是 185 × 260 毫米，明显更小。印刷厂说"16 开"通常指正度，需要确认。</p></details>
+<details><summary>B5 有几种？</summary><p>有两种。国际标准 B5 是 176 × 250 毫米，中国旧标准 16 开本 B5 是 182 × 257 毫米，买本子或打印时要看清。</p></details>
+<details><summary>这些尺寸是含出血的吗？</summary><p>不是。表格给的是成品尺寸。印刷文件需要在四周各加 3 毫米出血，设计时画布要相应放大。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="unitconvert.html">单位转换</a>
+<a href="imgconvert.html">图片格式转换</a>
+<a href="image-compress.html">图片压缩</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var SIZES=[
+['A0',841,1189,'A'],['A1',594,841,'A'],['A2',420,594,'A'],['A3',297,420,'A'],['A4',210,297,'A'],['A5',148,210,'A'],['A6',105,148,'A'],['A7',74,105,'A'],['A8',52,74,'A'],['A9',37,52,'A'],['A10',26,37,'A'],
+['B0',1000,1414,'B'],['B1',707,1000,'B'],['B2',500,707,'B'],['B3',353,500,'B'],['B4',250,353,'B'],['B5',176,250,'B'],['B6',125,176,'B'],['B7',88,125,'B'],['B8',62,88,'B'],['B9',44,62,'B'],['B10',31,44,'B'],
+['C4',229,324,'C'],['C5',162,229,'C'],['C6',114,162,'C'],['DL 信封',110,220,'C'],
+['16 开',185,260,'开本'],['大 16 开',210,285,'开本'],['32 开',130,185,'开本'],['大 32 开',140,203,'开本'],['64 开',92,130,'开本'],
+['正度全开',787,1092,'开本'],['大度全开',889,1194,'开本'],['名片（国内）',90,54,'其它'],['名片（欧美）',89,51,'其它'],
+['证件照 一寸',25,35,'其它'],['证件照 二寸',35,49,'其它'],['证件照 小二寸',33,48,'其它'],
+['发票（增值税专票）',240,140,'其它']
+];
+
+function inch(mm){return (mm/25.4).toFixed(2)}
+
+function render(){
+  var q=(document.getElementById('q').value||'').trim().toLowerCase();
+  var list=SIZES.filter(function(s){
+    if(!q)return true;
+    return (s[0]+' '+s[3]).toLowerCase().indexOf(q)>=0;
+  });
+  var groups={};
+  list.forEach(function(s){(groups[s[3]]=groups[s[3]]||[]).push(s)});
+  var order=['A','B','C','开本','其它'];
+  var html='';
+  order.forEach(function(g){
+    if(!groups[g])return;
+    html+='<div style="font-size:13px;color:var(--muted);margin:18px 0 8px">'+g+' 系列</div>';
+    html+='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">';
+    html+='<thead><tr style="background:var(--bg2)">'+['规格','尺寸（毫米）','尺寸（英寸）','长宽比'].map(function(h){
+      return '<th style="text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap">'+h+'</th>';
+    }).join('')+'</tr></thead><tbody>';
+    groups[g].forEach(function(s){
+      var ratio=s[1]?(Math.max(s[1],s[2])/Math.min(s[1],s[2])).toFixed(2):'—';
+      var mm=s[1]?Math.min(s[1],s[2])+' × '+Math.max(s[1],s[2]):'—';
+      var ic=s[1]?inch(Math.min(s[1],s[2]))+' × '+inch(Math.max(s[1],s[2])):'—';
+      html+='<tr><td style="padding:9px 10px;border-bottom:1px solid var(--line);font-weight:600">'+s[0]+'</td>'+
+        '<td style="padding:9px 10px;border-bottom:1px solid var(--line)">'+mm+'</td>'+
+        '<td style="padding:9px 10px;border-bottom:1px solid var(--line);color:var(--muted)">'+ic+'</td>'+
+        '<td style="padding:9px 10px;border-bottom:1px solid var(--line);color:var(--muted)">'+ratio+'</td></tr>';
+    });
+    html+='</tbody></table></div>';
+  });
+  document.getElementById('box').innerHTML=html||'<div style="color:var(--muted);padding:20px 0">没有匹配的规格</div>';
+}
+document.getElementById('q').addEventListener('input',render);
+render();
+</script></body></html>
