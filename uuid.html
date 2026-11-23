@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UUID 生成器 - 万能工具箱</title>
+<meta name="description" content="批量生成 UUID/GUID（v4），可选数量、大小写、是否带连字符。基于浏览器加密级随机数。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / UUID 生成器</div>
+  <div class="panel">
+    <h2>🆔 UUID 生成器</h2>
+    <p class="desc">批量生成 UUID/GUID（v4），可选数量、大小写、是否带连字符。基于浏览器加密级随机数。</p>
+    <label>生成数量</label>
+    <input type="number" id="num" value="10" min="1" max="1000">
+    <div class="row" style="margin-top:16px">
+      <label style="margin:0"><input type="checkbox" id="upper" style="width:auto"> 大写</label>
+      <label style="margin:0"><input type="checkbox" id="dash" checked style="width:auto"> 带连字符</label>
+      <label style="margin:0"><input type="checkbox" id="brace" style="width:auto"> 加花括号</label>
+    </div>
+    <div class="actions"><button class="btn" id="gen">生成 UUID</button><button class="btn ghost" id="copy">复制全部</button></div>
+    <label>结果</label>
+    <div class="result" id="out">点「生成 UUID」开始…</div>
+  </div>
+  <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">UUID（通用唯一识别码）是软件开发里最常用的唯一 ID 格式。这个工具一次批量生成最多 1000 个标准 v4 UUID，可切换大小写、连字符、花括号格式，全部基于浏览器加密级随机数。</p>
+<h2>UUID 长什么样</h2>
+<p>标准 UUID 是 32 个十六进制字符，分成 5 段，形如 550e8400-e29b-41d4-a716-446655440000，共 36 个字符（含 4 个连字符）。第 3 段开头固定是 4 表示版本 4，第 4 段开头是 8/9/a/b 表示变体。</p>
+<h2>v4 UUID 的随机性</h2>
+<p>版本 4 的 UUID 完全由随机数生成，122 位随机空间，碰撞概率低到可以忽略——即使每秒生成 10 亿个，也要约 100 年才可能重复。所以它可以放心用作数据库主键、会话 ID、请求追踪号。</p>
+<h2>适用场景</h2><ul>
+<li>给数据库记录生成不会冲突的主键</li>
+<li>做压测、造测试数据需要一批唯一 ID</li>
+<li>生成分布式系统里的请求追踪号 traceId</li>
+<li>需要 guid 格式的配置文件</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>设定要生成的数量（1-1000）</li>
+<li>按需勾选格式选项：大写、连字符、花括号</li>
+<li>点生成，再点「复制全部」</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>UUID 会重复吗？</summary><p>v4 UUID 有 122 位随机数，碰撞概率极低，实践中可视为永不重复。本工具用浏览器的 crypto.randomUUID（加密级随机源）。</p></details>
+<details><summary>UUID 和 GUID 有区别吗？</summary><p>基本是一回事。UUID 是国际标准名称，GUID 是微软对它的叫法，格式完全相同。</p></details>
+<details><summary>带不带连字符影响什么？</summary><p>只是显示格式不同，值是一样的。数据库、不同语言的库对格式偏好不同，按你的使用场景选。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="jwt.html">JWT 解码</a><a href="regex.html">正则测试</a><a href="uuid.html">UUID 生成</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function uuidv4(){
+  if(crypto&&crypto.randomUUID)return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16)});
+}
+function gen(){
+  let n=Math.min(1000,Math.max(1,parseInt(document.getElementById('num').value)||10));
+  const up=document.getElementById('upper').checked,dash=document.getElementById('dash').checked,brace=document.getElementById('brace').checked;
+  let arr=[];for(let i=0;i<n;i++){
+    let u=uuidv4();if(!dash)u=u.replace(/-/g,'');if(up)u=u.toUpperCase();if(brace)u='{'+u+'}';arr.push(u);
+  }
+  document.getElementById('out').textContent=arr.join('\n');
+}
+document.getElementById('gen').onclick=gen;
+document.getElementById('copy').onclick=()=>{navigator.clipboard.writeText(document.getElementById('out').textContent);alert('已复制')};
+gen();
+</script></body></html>

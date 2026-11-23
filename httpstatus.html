@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTTP 状态码速查 - 万能工具箱</title>
+<meta name="description" content="完整的 HTTP 状态码对照表，涵盖 1xx 到 5xx，含含义、常见场景和排查建议。开发和运维速查手册。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / HTTP 状态码速查</div>
+  <div class="panel">
+    <h2>🌐 HTTP 状态码速查</h2>
+    <p class="desc">完整的 HTTP 状态码对照表，涵盖 1xx 到 5xx，含含义、常见场景和排查建议。开发和运维速查手册。</p>
+    <label>搜索状态码或关键词</label>
+    <input type="text" id="q" placeholder="如 404、403、500、重定向…">
+    <div class="stat-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="stat"><div class="num" style="font-size:18px;color:#5b8cff">1xx</div><div class="lbl">信息</div></div>
+      <div class="stat"><div class="num" style="font-size:18px;color:var(--ok)">2xx</div><div class="lbl">成功</div></div>
+      <div class="stat"><div class="num" style="font-size:18px;color:#f0a030">3xx</div><div class="lbl">重定向</div></div>
+      <div class="stat"><div class="num" style="font-size:18px;color:#ff9050">4xx</div><div class="lbl">客户端错</div></div>
+      <div class="stat"><div class="num" style="font-size:18px;color:var(--danger)">5xx</div><div class="lbl">服务端错</div></div>
+    </div>
+    <div class="result" id="list" style="max-height:520px;overflow:auto"></div>
+  </div>
+  <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">调试接口、排查网站故障时，第一眼看到的就是 HTTP 状态码。这份速查表把 1xx 到 5xx 的常见状态码、含义、典型场景和排查方向整理在一起，输入数字或关键词即可筛选。</p>
+<h2>状态码的五大类</h2>
+<p>第一位数字定义类别：1xx 是信息提示；2xx 表示成功；3xx 是重定向；4xx 是客户端错误（请求方的问题）；5xx 是服务端错误（服务器的问题）。记住这个分类，看到状态码就能先判断问题出在哪一侧。</p>
+<h2>最常见的几个码</h2>
+<p>200 成功、301/302 跳转、404 页面不存在、403 没权限、500 服务端崩了、502 网关背后出问题、503 服务暂时不可用。这八个占了日常排障的绝大多数场景。</p>
+<h2>适用场景</h2><ul>
+<li>调试前后端接口，快速确认状态码含义</li>
+<li>排查网站打不开、接口报错的原因</li>
+<li>配置 SEO 重定向时确认该用 301 还是 302</li>
+<li>学习 HTTP 协议时查阅参考</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>在搜索框输入状态码数字（如 404）或关键词（如"重定向"）</li>
+<li>查看该码的英文名称、中文含义</li>
+<li>参考典型场景和排查方向定位问题</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>301 和 302 有什么区别？</summary><p>301 是永久重定向，告诉搜索引擎把旧地址的权重转移到新地址；302 是临时重定向，权重仍留在原地址。永久搬迁用 301，临时维护用 302。</p></details>
+<details><summary>403 和 401 有什么不同？</summary><p>401 是"你还没登录/凭证无效"，服务器不知道你是谁；403 是"我知道你是谁，但你没权限"，服务器明确拒绝。</p></details>
+<details><summary>500 错误一定是服务器坏了吗？</summary><p>不一定。500 是服务端代码抛异常，可能是 bug、配置错误、数据库连接失败等。需要看服务端日志才能确定具体原因。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="jwt.html">JWT 解码</a><a href="regex.html">正则测试</a><a href="uuid.html">UUID 生成</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+const DATA=[
+[200,'OK','请求成功','服务器正常返回了请求的内容'],[201,'Created','已创建','POST/PUT 成功创建了新资源'],[204,'No Content','无内容','成功但没有返回体，常见于 DELETE'],
+[301,'Moved Permanently','永久重定向','资源已永久搬迁，搜索引擎会更新索引'],[302,'Found','临时重定向','临时跳转，搜索引擎保留原地址'],[304,'Not Modified','未修改','缓存命中，内容没变，无需重新传输'],
+[400,'Bad Request','请求错误','请求语法或参数有误'],[401,'Unauthorized','未授权','需要登录认证，缺少或无效的凭证'],[403,'Forbidden','禁止访问','服务器理解请求但拒绝，权限不足'],[404,'Not Found','未找到','资源不存在或路径错误'],[405,'Method Not Allowed','方法不允许','请求方法（如 POST）不被支持'],[408,'Request Timeout','请求超时','客户端请求太久没发完'],[409,'Conflict','冲突','请求与当前资源状态冲突'],[429,'Too Many Requests','请求过多','触发限流，需降低频率'],
+[500,'Internal Server Error','服务器内部错误','服务端代码异常，最常见的服务端错误'],[501,'Not Implemented','未实现','服务器不支持该功能'],[502,'Bad Gateway','网关错误','上游服务器返回了无效响应'],[503,'Service Unavailable','服务不可用','服务器过载或维护中'],[504,'Gateway Timeout','网关超时','上游服务器响应超时']];
+function render(q){
+ q=(q||'').trim().toLowerCase();
+ const rows=DATA.filter(x=>!q||x.join(' ').toLowerCase().includes(q));
+ document.getElementById('list').innerHTML=rows.map(x=>'<div style="padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--brand);display:inline-block;width:56px">'+x[0]+'</b><b>'+x[1]+'</b> <span style="color:var(--muted)">— '+x[2]+'</span><div style="color:var(--muted);font-size:13px;margin-left:56px">'+x[3]+'</div></div>').join('')||'没有匹配的状态码';
+}
+document.getElementById('q').addEventListener('input',e=>render(e.target.value));render();
+</script></body></html>

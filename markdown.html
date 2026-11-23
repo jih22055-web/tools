@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markdown 预览 - 万能工具箱</title>
+<meta name="description" content="左边写 Markdown，右边实时预览渲染效果。支持标题、加粗、列表、链接、代码块、表格等常用语法。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / Markdown 预览</div>
+  <div class="panel">
+    <h2>📝 Markdown 预览</h2>
+    <p class="desc">左边写 Markdown，右边实时预览渲染效果。支持标题、加粗、列表、链接、代码块、表格等常用语法。</p>
+    <div class="row">
+      <textarea id="md" placeholder="# 标题&#10;&#10;这是一段 **加粗** 文字" style="min-height:360px"># Markdown 预览示例
+
+这是一个 **加粗** 和 *斜体* 的例子。
+
+## 功能列表
+- 标题、段落
+- 加粗、斜体
+- 链接与图片
+- 代码块
+- 表格
+
+访问 [万能工具箱](index.html) 查看更多工具。
+
+> 引用文字会显示成这样。
+
+`行内代码` 也能识别。
+</textarea>
+      <div class="result" id="prev" style="min-height:360px;white-space:normal"></div>
+    </div>
+  </div>
+  <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">写 Markdown 时想看看渲染出来是什么样？这个工具让你左边写、右边实时预览，支持标题、加粗斜体、列表、链接、代码块、引用等常用语法，写完直接复制。</p>
+<h2>Markdown 是什么</h2>
+<p>Markdown 是一种轻量级标记语言，用简单的符号（# 表示标题、** 表示加粗）就能排出漂亮的文档。GitHub、掘金、知乎、各类博客后台都支持它，是写技术文档和文章的主流方式。</p>
+<h2>为什么需要预览</h2>
+<p>Markdown 的符号规则需要记，写的时候很难确定最终效果。实时预览让你边写边看，发现格式不对立刻调整，避免发布后才发现排版乱了。</p>
+<h2>适用场景</h2><ul>
+<li>写 GitHub README 前预览排版效果</li>
+<li>发博客、论坛帖子前确认格式</li>
+<li>学习 Markdown 语法时即时看到每个符号的作用</li>
+<li>快速把 Markdown 转成可复制的内容</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>在左侧输入或粘贴 Markdown 文本</li>
+<li>右侧实时显示渲染后的效果</li>
+<li>确认无误后复制使用</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>支持表格吗？</summary><p>基础语法支持标题、加粗、列表、链接、代码块、引用等。复杂语法（如表格、任务列表）各平台实现不同，本工具聚焦最常用的部分。</p></details>
+<details><summary>我写的内容会上传吗？</summary><p>不会，渲染完全在浏览器本地进行，你的文字不会离开设备。</p></details>
+<details><summary>代码块里的特殊字符会被转义吗？</summary><p>会。代码块内的 < > & 等会安全转义，不会当成 HTML 执行，预览是安全的。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="jwt.html">JWT 解码</a><a href="regex.html">正则测试</a><a href="uuid.html">UUID 生成</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function md2html(s){
+ let lines=s.split('\n'),out=[],inCode=false,codeBuf=[];
+ const inline=t=>esc(t).replace(/`([^`]+)`/g,'<code style="background:var(--bg2);padding:2px 6px;border-radius:4px">$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" style="color:var(--brand)">$1</a>');
+ for(const ln of lines){
+  if(/^```/.test(ln)){if(inCode){out.push('<pre style="background:var(--bg2);padding:14px;border-radius:8px;overflow:auto"><code>'+esc(codeBuf.join('\n'))+'</code></pre>');codeBuf=[];inCode=false}else inCode=true;continue}
+  if(inCode){codeBuf.push(ln);continue}
+  if(/^### /.test(ln))out.push('<h3>'+inline(ln.slice(4))+'</h3>');
+  else if(/^## /.test(ln))out.push('<h2 style="margin:16px 0 8px">'+inline(ln.slice(3))+'</h2>');
+  else if(/^# /.test(ln))out.push('<h1 style="font-size:26px;margin:0 0 12px">'+inline(ln.slice(2))+'</h1>');
+  else if(/^> /.test(ln))out.push('<blockquote style="border-left:3px solid var(--brand);padding-left:14px;color:var(--muted);margin:10px 0">'+inline(ln.slice(2))+'</blockquote>');
+  else if(/^[-*] /.test(ln))out.push('<div style="margin-left:16px">• '+inline(ln.slice(2))+'</div>');
+  else if(/^\d+\. /.test(ln))out.push('<div style="margin-left:16px">'+inline(ln)+'</div>');
+  else if(ln.trim()==='')out.push('<div style="height:10px"></div>');
+  else out.push('<p style="margin:8px 0">'+inline(ln)+'</p>');
+ }
+ if(inCode)out.push('<pre>'+esc(codeBuf.join('\n'))+'</pre>');
+ return out.join('');
+}
+function run(){document.getElementById('prev').innerHTML=md2html(document.getElementById('md').value)}
+document.getElementById('md').addEventListener('input',run);run();
+</script></body></html>

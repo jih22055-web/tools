@@ -21,6 +21,29 @@
     <div class="result" id="tsOut">—</div>
   </div>
   <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">Unix 时间戳与日期时间的双向转换工具，支持秒级、毫秒级，兼容北京时间与各时区。日志分析、接口调试必备。</p>
+<h2>什么是 Unix 时间戳</h2>
+<p>Unix 时间戳是从 1970 年 1 月 1 日 00:00:00 UTC 起经过的秒数（或毫秒数）。它不受时区影响，是程序里表示时间最通用的方式。秒级是 10 位数字，毫秒级是 13 位。</p>
+<h2>时间戳换算的坑</h2>
+<p>同一个时间戳，在不同时区显示成本地时间是不同的。国内一般用东八区（UTC+8）。另外秒和毫秒别搞混——差 1000 倍，最常见的 bug 就是把毫秒当秒用。</p>
+<h2>适用场景</h2><ul>
+<li>查服务器日志里那一串数字到底是什么时间</li>
+<li>调试接口时把日期转成时间戳当参数</li>
+<li>数据库里存的是时间戳，想知道对应日期</li>
+<li>计算两个时间点之间隔了多少秒</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>输入 10 位秒级或 13 位毫秒级时间戳</li>
+<li>工具自动识别并显示对应的本地时间</li>
+<li>反过来输入日期，也能得到时间戳</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>为什么显示的时间和预期差 8 小时？</summary><p>时区问题。本工具按浏览器本地时区（通常是北京时间 UTC+8）显示。如果需要 UTC 时间，注意区分。</p></details>
+<details><summary>10 位和 13 位有什么区别？</summary><p>10 位是秒级，13 位是毫秒级，数值差 1000 倍。程序里两种都在用，填之前先确认接口要哪种。</p></details>
+<details><summary>时间戳能表示 1970 年以前的日期吗？</summary><p>标准 Unix 时间戳用有符号整数，可以表示 1970 年前后的时间（负值），但部分系统和语言不支持负时间戳。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="image-compress.html">图片压缩</a><a href="qrcode.html">二维码生成</a><a href="password.html">密码生成</a></div>
+</section>
 </div>
 <footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
 <script>

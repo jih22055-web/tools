@@ -33,10 +33,22 @@
   <h2 class="section-title" id="tools"><span class="dot"></span> 全部工具 <span id="count" style="color:var(--muted);font-size:14px;font-weight:400"></span></h2>
   <div class="grid" id="grid"></div>
 
-  <section id="about" style="padding-bottom:60px;color:var(--muted);font-size:14px">
-    <h2 class="section-title"><span class="dot"></span> 关于本站</h2>
-    <p>万能工具箱提供完全免费的在线工具，所有计算都在你的浏览器本地完成，不上传任何数据，安全隐私有保障。</p>
+  <section class="seo" id="about">
+    <h2>关于万能工具箱</h2>
+    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码转换、开发调试等 20 款实用工具。无需注册、无需下载，打开网页就能用，所有计算都在你的浏览器本地完成。</p>
+    <h2>为什么选择我们</h2>
+    <ul>
+      <li><strong>完全免费</strong>：所有工具永久免费使用，不设会员、不看广告也能用</li>
+      <li><strong>隐私安全</strong>：纯本地处理，你的文件、文字、数据不会上传到任何服务器</li>
+      <li><strong>打开即用</strong>：无需注册登录，没有繁琐步骤，点开工具就能开始</li>
+      <li><strong>覆盖全面</strong>：从图片压缩、二维码到 JWT 解码、正则测试，工作生活场景都覆盖</li>
+    </ul>
+    <h2>常见问题</h2>
+    <details><summary>使用这些工具需要付费吗？</summary><p>完全不需要。所有工具永久免费，没有隐藏收费，也不需要注册账号。我们的目标是做一个真正好用的免费工具站。</p></details>
+    <details><summary>我的文件和数据会被保存吗？</summary><p>不会。所有工具都在你的浏览器本地运行，文件、文字、图片都不会上传到服务器，关闭页面后数据即消失，隐私有保障。</p></details>
+    <details><summary>手机上能用吗？</summary><p>可以。本站采用响应式设计，手机、平板、电脑浏览器都能正常使用，界面会自动适配屏幕大小。</p></details>
   </section>
+  <div style="padding-bottom:40px"></div>
 </div>
 
 <footer>
@@ -55,6 +67,16 @@ const TOOLS = [
   {name:'JSON 格式化',desc:'美化压缩校验 JSON，语法高亮',icon:'📦',color:'#7a5a2e',file:'jsonformat.html',tag:'json 格式化 美化 校验'},
   {name:'文字大小写转换',desc:'大小写、驼峰、下划线等格式互转',icon:'Aa',color:'#4a6a3a',file:'caseconvert.html',tag:'大小写 驼峰 下划线'},
   {name:'文本去重',desc:'去除重复行，保留顺序，支持区分大小写',icon:'📋',color:'#6a3a3a',file:'dedupe.html',tag:'去重 重复行 文本'},
+  {name:'JWT 解码器',desc:'解析 Token 的 Header 与 Payload，查看过期时间',icon:'🔑',color:'#8c6a2e',file:'jwt.html',tag:'jwt token 解码 解析'},
+  {name:'正则表达式测试',desc:'实时测试正则，高亮匹配结果与分组',icon:'🔍',color:'#2e5a8c',file:'regex.html',tag:'正则 regex 测试 匹配'},
+  {name:'UUID 生成器',desc:'批量生成 UUID/GUID，可设数量与格式',icon:'🆔',color:'#5a2e8c',file:'uuid.html',tag:'uuid guid 唯一id 生成'},
+  {name:'颜色转换',desc:'HEX、RGB、HSL 互转，带取色器与预览',icon:'🎨',color:'#8c2e5a',file:'color.html',tag:'颜色 hex rgb hsl 转换'},
+  {name:'图片加水印',desc:'给图片添加文字水印，可调透明度位置',icon:'💧',color:'#2e7a7a',file:'watermark.html',tag:'水印 图片 版权'},
+  {name:'文本对比',desc:'逐行对比两段文本，高亮新增与删除',icon:'📑',color:'#7a3a2e',file:'diff.html',tag:'对比 diff 差异 文本'},
+  {name:'HTTP 状态码',desc:'1xx 到 5xx 状态码速查，含含义与排查',icon:'🌐',color:'#2e8c6a',file:'httpstatus.html',tag:'http 状态码 404 500'},
+  {name:'Markdown 预览',desc:'边写边预览 Markdown 渲染效果',icon:'📝',color:'#6a5a2e',file:'markdown.html',tag:'markdown md 预览 编辑器'},
+  {name:'进制转换',desc:'二/八/十/十六进制互相转换',icon:'🔢',color:'#3a4a8c',file:'base-convert.html',tag:'进制 二进制 十六进制 转换'},
+  {name:'随机抽取',desc:'从名单随机抽奖、点名、分组',icon:'🎲',color:'#8c3a6a',file:'random.html',tag:'随机 抽奖 点名 抽签'},
 ];
 
 const grid = document.getElementById('grid');

@@ -17,6 +17,29 @@
     <div class="result" id="output">结果将显示在这里…</div>
   </div>
   <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">Base64 是一种把二进制数据转成文本的编码方式，常用于在网页、JSON、URL 中安全传输数据。这个工具让你在本地瞬间完成文本与 Base64 的相互转换，完美支持中文和 Emoji，不上传服务器。</p>
+<h2>什么是 Base64 编码</h2>
+<p>Base64 用 64 个可打印字符（A-Z、a-z、0-9、+、/）表示二进制数据，把每 3 个字节拆成 4 个 6 位组再映射成字符。它不是加密，只是编码——任何人都能解码，所以不要用它存密码。编码后数据体积会增加约 33%。</p>
+<h2>为什么需要 Base64</h2>
+<p>早期邮件协议只能传文本，图片等二进制文件需要经过编码才能附上，Base64  thus 诞生。今天它广泛用于：网页内嵌小图片（data URI）、在 JSON 中传二进制、HTTP Basic 认证、前端 localStorage 存少量数据等场景。</p>
+<h2>适用场景</h2><ul>
+<li>在 HTML/CSS 里内嵌小图标，写成 data:image/png;base64,... 免额外请求</li>
+<li>调试接口时把返回的字符串解开来读内容</li>
+<li>把中文文本编码后放进只接受 ASCII 的配置项</li>
+<li>验证一段字符串是不是合法的 Base64</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>切到「编码」或「解码」模式</li>
+<li>把文本粘贴到输入框（支持中文、Emoji）</li>
+<li>结果实时显示在下方，点「复制结果」即可</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>Base64 是加密吗？</summary><p>不是。Base64 只是编码，任何人都能一行代码解回来。它不提供任何保密性，切勿用来"加密"密码或敏感信息。</p></details>
+<details><summary>为什么中文编码后是一串乱码似的字符？</summary><p>中文 UTF-8 是多字节，Base64 按字节编码，所以结果看起来是字母数字组合，这是正常的。解码时本工具会还原成中文。</p></details>
+<details><summary>解码失败提示错误是怎么回事？</summary><p>通常是输入里混入了空格、换行或非法字符，或这段文本本身不是 Base64。检查输入后重试。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="image-compress.html">图片压缩</a><a href="qrcode.html">二维码生成</a><a href="password.html">密码生成</a></div>
+</section>
 </div>
 <footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
 <script>

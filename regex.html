@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>正则表达式测试 - 万能工具箱</title>
+<meta name="description" content="实时测试正则表达式，高亮匹配结果，显示匹配数量与分组。支持 g/i/m/s 等标志，调试正则的神器。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 正则表达式测试</div>
+  <div class="panel">
+    <h2>🔍 正则表达式测试</h2>
+    <p class="desc">实时测试正则表达式，高亮匹配结果，显示匹配数量与分组。支持 g/i/m/s 等标志，调试正则的神器。</p>
+    <label>正则表达式</label>
+    <div class="row">
+      <input type="text" id="pat" placeholder="输入正则，如 \d+" style="flex:4">
+      <input type="text" id="flags" value="g" placeholder="标志" style="flex:1" title="标志：g全局 i忽略大小写 m多行 s点匹配换行">
+    </div>
+    <label>测试文本</label>
+    <textarea id="text" placeholder="输入要匹配的文本">hello 123 world 456</textarea>
+    <div class="stat-grid">
+      <div class="stat"><div class="num" id="cnt">0</div><div class="lbl">匹配数量</div></div>
+      <div class="stat"><div class="num" id="valid">-</div><div class="lbl">正则状态</div></div>
+    </div>
+    <label>匹配结果</label>
+    <div class="result" id="out">结果将显示在这里…</div>
+  </div>
+  <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">写正则表达式时最头疼的就是"到底能不能匹配上"。这个工具让你边写边测：输入正则和测试文本，匹配结果实时高亮显示，还能看到每个捕获分组的内容。</p>
+<h2>正则表达式是什么</h2>
+<p>正则（Regex）是一种描述字符串模式的语言，用来查找、替换、校验文本。比如 \d+ 匹配一个或多个数字，^[a-z]+$ 匹配纯小写字母。它强大但语法晦涩，几乎没人能一次写对，所以需要一个在线工具反复调试。</p>
+<h2>常用标志说明</h2>
+<p>g（global）全局匹配，找出所有结果而不是第一个；i（ignore case）忽略大小写；m（multiline）让 ^ 和 $ 匹配每一行的首尾；s（dotAll）让点号也能匹配换行符。灵活组合这些标志能满足大多数场景。</p>
+<h2>适用场景</h2><ul>
+<li>写表单校验规则（手机号、邮箱、身份证）前先验证</li>
+<li>从一大段日志里提取特定格式的内容</li>
+<li>批量替换文本前确认正则匹配范围</li>
+<li>学习正则时观察每个语法的效果</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>在第一行输入正则表达式（不要写前后的 / 斜杠）</li>
+<li>设置标志，常用 g 全局 + i 忽略大小写</li>
+<li>在测试文本里粘贴内容，结果实时显示匹配数和位置</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>为什么开启了 g 标志结果反而少了？</summary><p>全局匹配下正则对象会记住上次的位置（lastIndex）。本工具每次输入都重新创建正则，不会有这个问题。</p></details>
+<details><summary>怎么写匹配中文的正则？</summary><p>用 Unicode 范围 [\u4e00-\u9fa5] 匹配常用汉字，或在新版浏览器用 \p{Script=Han} 配合 u 标志。</p></details>
+<details><summary>正则里有特殊字符要转义吗？</summary><p>要。像 . * + ? ( ) [ ] { } ^ $ | \ 这些是元字符，想匹配它们的字面值需要在前面加反斜杠转义。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="jwt.html">JWT 解码</a><a href="regex.html">正则测试</a><a href="uuid.html">UUID 生成</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+const pat=document.getElementById('pat'),flags=document.getElementById('flags'),text=document.getElementById('text'),out=document.getElementById('out'),cnt=document.getElementById('cnt'),valid=document.getElementById('valid');
+function run(){
+  try{
+    const re=new RegExp(pat.value,flags.value);valid.textContent='✓';valid.style.color='var(--ok)';
+    let m,arr=[],guard=0;
+    if(re.global){while((m=re.exec(text.value))!==null&&guard++<1000){arr.push(m)}}
+    else{m=re.exec(text.value);if(m)arr.push(m)}
+    cnt.textContent=arr.length;
+    out.textContent=arr.length?arr.map((x,i)=>'['+i+'] 匹配: '+x[0]+(x.length>1?'\n    分组: '+JSON.stringify(x.slice(1)):'')+'\n    位置: '+x.index).join('\n\n'):'没有匹配到内容';
+  }catch(e){valid.textContent='✗';valid.style.color='var(--danger)';cnt.textContent='0';out.textContent='❌ 正则语法错误: '+e.message}
+}
+[pat,flags,text].forEach(el=>el.addEventListener('input',run));run();
+</script></body></html>
