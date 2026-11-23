@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>坐标转换 - 万能工具箱</title>
+<meta name="description" content="WGS84、GCJ-02、BD-09 三种坐标系互转，解决地图点位偏移问题。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 地图坐标转换</div>
+  <div class="panel">
+    <h2>🗺️ 地图坐标转换</h2>
+    <p class="desc">WGS84、GCJ-02、BD-09 三种坐标系互转，解决地图点位偏移问题。</p>
+    <label>输入坐标（纬度, 经度）</label>
+    <input type="text" id="in" value="39.9042, 116.4074">
+    <label>原始坐标系</label>
+    <select id="from">
+      <option value="wgs84">WGS84（GPS 原始坐标）</option>
+      <option value="gcj02">GCJ-02（火星坐标，高德/腾讯）</option>
+      <option value="bd09">BD-09（百度坐标）</option>
+    </select>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">转换</button>
+    </div>
+    <div class="result" id="out" style="font-family:ui-monospace,Consolas,monospace">等待转换</div>
+    <p class="hint">GPS 设备给的是 WGS84，高德腾讯用 GCJ-02，百度用 BD-09。地图上位置偏移几百米，多半是坐标系没对上。</p>
+  </div>
+<section class="seo">
+<p class="lead">地图坐标转换解决中国特有的坐标系问题。GPS 设备输出的 WGS84 坐标直接放到高德地图上会偏几百米，因为国内地图用的是加密后的 GCJ-02（俗称火星坐标），百度又在此基础上再加密成 BD-09。拿到的坐标和地图对不上，八成就是没做转换。</p>
+<h2>适用场景</h2><ul><li>GPS 设备点位在高德地图上偏移几百米</li><li>把百度坐标系的点位迁到高德或腾讯地图</li><li>爬取的地图数据与 GPS 实际位置对不上</li><li>开发地图功能时统一坐标系</li></ul>
+<h2>使用方法</h2><ol><li>输入纬度和经度（逗号分隔）</li><li>选择原始坐标系</li><li>点「转换」</li><li>复制对应坐标系的经纬度</li></ol>
+<h2>常见问题</h2><details><summary>为什么会偏移？</summary><p>国家规定公开地图必须使用加密后的 GCJ-02 坐标，算法不公开。所以 WGS84 直接标注会在 GCJ-02 地图上偏移，通常几百米。</p></details><details><summary>转换精度如何？</summary><p>用的是业界通用的近似算法，误差通常在 1-2 米以内，日常使用足够。高精度测绘需求请用专业服务。</p></details><details><summary>港澳台和境外怎么算？</summary><p>境外坐标不做偏移，工具会自动判断范围，境外输入直接原样返回。</p></details><details><summary>坐标顺序是纬度在前吗？</summary><p>是的，本工具输入和输出都是「纬度, 经度」，和国内地图 API 的习惯一致。谷歌地图习惯是「纬度, 经度」但 URL 里常是「纬度,经度」。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="iplocation.html">IP 归属地查询</a><a href="netmask.html">子网掩码计算</a><a href="unitconvert.html">单位转换</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var PI=Math.PI,A=6378245.0,EE=0.00669342162296594323;
+function outOfChina(lng,lat){
+  return !(lng>73.66&&lng<135.05&&lat>3.86&&lat<53.55);
+}
+function transLat(x,y){
+  var r=-100+2*x+3*y+0.2*y*y+0.1*x*y+0.2*Math.sqrt(Math.abs(x));
+  r+=(20*Math.sin(6*x*PI)+20*Math.sin(2*x*PI))*2/3;
+  r+=(20*Math.sin(y*PI)+40*Math.sin(y/3*PI))*2/3;
+  r+=(160*Math.sin(y/12*PI)+320*Math.sin(y*PI/30))*2/3;
+  return r;
+}
+function transLng(x,y){
+  var r=300+x+2*y+0.1*x*x+0.1*x*y+0.1*Math.sqrt(Math.abs(x));
+  r+=(20*Math.sin(6*x*PI)+20*Math.sin(2*x*PI))*2/3;
+  r+=(20*Math.sin(x*PI)+40*Math.sin(x/3*PI))*2/3;
+  r+=(150*Math.sin(x/12*PI)+300*Math.sin(x/30*PI))*2/3;
+  return r;
+}
+function wgs2gcj(lng,lat){
+  if(outOfChina(lng,lat))return [lng,lat];
+  var dlat=transLat(lng-105,lat-35),dlng=transLng(lng-105,lat-35);
+  var radlat=lat/180*PI,magic=Math.sin(radlat);
+  magic=1-EE*magic*magic;
+  var sqrtmagic=Math.sqrt(magic);
+  dlat=(dlat*180)/((A*(1-EE))/(magic*sqrtmagic)*PI);
+  dlng=(dlng*180)/(A/sqrtmagic*Math.cos(radlat)*PI);
+  return [lng+dlng,lat+dlat];
+}
+function gcj2wgs(lng,lat){
+  var g=wgs2gcj(lng,lat);
+  return [lng*2-g[0],lat*2-g[1]];
+}
+function gcj2bd(lng,lat){
+  var z=Math.sqrt(lng*lng+lat*lat)+0.00002*Math.sin(lat*PI*3000/180);
+  var th=Math.atan2(lat,lng)+0.000003*Math.cos(lng*PI*3000/180);
+  return [z*Math.cos(th)+0.0065,z*Math.sin(th)+0.006];
+}
+function bd2gcj(lng,lat){
+  var x=lng-0.0065,y=lat-0.006;
+  var z=Math.sqrt(x*x+y*y)-0.00002*Math.sin(y*PI*3000/180);
+  var th=Math.atan2(y,x)-0.000003*Math.cos(x*PI*3000/180);
+  return [z*Math.cos(th),z*Math.sin(th)];
+}
+function toWgs(lng,lat,from){
+  if(from==='wgs84')return [lng,lat];
+  if(from==='gcj02')return gcj2wgs(lng,lat);
+  return gcj2wgs.apply(null,bd2gcj(lng,lat));
+}
+function fromWgs(lng,lat,to){
+  if(to==='wgs84')return [lng,lat];
+  var g=wgs2gcj(lng,lat);
+  if(to==='gcj02')return g;
+  return gcj2bd(g[0],g[1]);
+}
+function run(){
+  var v=document.getElementById('in').value.trim();
+  var out=document.getElementById('out');
+  var m=v.split(/[,，\s]+/).map(parseFloat);
+  if(m.length<2||isNaN(m[0])||isNaN(m[1])){out.textContent='格式应为「纬度, 经度」，例如 39.9042, 116.4074';return}
+  var lat=m[0],lng=m[1];
+  if(Math.abs(lat)>90||Math.abs(lng)>180){out.textContent='纬度范围 -90~90，经度范围 -180~180，请检查';return}
+  var from=document.getElementById('from').value;
+  var w=toWgs(lng,lat,from);
+  var g=fromWgs(w[0],w[1],'gcj02');
+  var b=fromWgs(w[0],w[1],'bd09');
+  function f(p){return p[1].toFixed(6)+', '+p[0].toFixed(6)}
+  out.textContent=[
+    'WGS84（GPS 原始）',
+    '  纬度, 经度：'+f(w),
+    '',
+    'GCJ-02（高德 / 腾讯）',
+    '  纬度, 经度：'+f(g),
+    '',
+    'BD-09（百度）',
+    '  纬度, 经度：'+f(b)
+  ].join('\n');
+}
+document.getElementById('go').onclick=run;
+document.getElementById('in').addEventListener('keydown',function(e){if(e.key==='Enter')run()});
+document.getElementById('from').onchange=run;
+run();
+
+</script></body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>尺码对照 - 万能工具箱</title>
+<meta name="description" content="男女装、裤子、鞋码、童装尺码对照表，输入身高或尺码自动匹配。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 衣服鞋码对照</div>
+  <div class="panel">
+    <h2>👕 衣服鞋码对照</h2>
+    <p class="desc">男女装、裤子、鞋码、童装尺码对照表，输入身高或尺码自动匹配。</p>
+    <label>选择类型</label>
+    <select id="cat">
+      <option value="men">男装上衣</option>
+      <option value="women">女装上衣</option>
+      <option value="pants">裤子（腰围）</option>
+      <option value="shoes">鞋码</option>
+      <option value="kids">童装</option>
+    </select>
+    <label>输入身高 / 尺码 / 脚长（厘米）</label>
+    <input type="text" id="q" placeholder="例如 175 或 M 或 42 或 25.5">
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">查询</button>
+    </div>
+    <div class="result" id="out" style="padding:0;background:#fff;overflow:auto">选择类型后输入数值查询</div>
+    <p class="hint">数据为国内常见品牌通用参考，不同品牌版型差异较大，购买前以商家尺码表为准。</p>
+  </div>
+<section class="seo">
+<p class="lead">尺码对照表把身高、胸围、腰围和 S/M/L/XL 这些标号对应起来，鞋码则把脚长和中国码、欧洲码、美国码、英国码摆在一张表里。网购看不到实物，尺码选错退换货很麻烦，量一下自己再查表比凭感觉猜靠谱得多。</p>
+<h2>适用场景</h2><ul><li>网购衣服前确认自己该选哪个尺码</li><li>海淘鞋子时换算欧码美码</li><li>给孩子买衣服对照身高年龄</li><li>整理衣橱时统一尺码记录</li></ul>
+<h2>使用方法</h2><ol><li>选择类型（男装/女装/裤子/鞋码/童装）</li><li>输入身高、尺码或脚长</li><li>点「查询」，匹配的行会高亮</li><li>对照完整表格确认</li></ol>
+<h2>常见问题</h2><details><summary>为什么我 175 却要穿 L 不穿 XL？</summary><p>尺码只是参考，版型影响很大。修身款、宽松款、欧美版型、日韩版型同样标 L 实际尺寸差很多，务必看商家的具体尺寸表。</p></details><details><summary>鞋码为什么各国不一样？</summary><p>各国用的度量体系不同。中国码和欧洲码数字接近但不完全等同，美国码分男女两套，英国码又比美国码小半码到一码。</p></details><details><summary>脚长怎么量？</summary><p>下午或晚上站立时量（脚会略微胀大），脚跟贴墙，量到最长脚趾的距离。两只脚都量，取大的那个。</p></details><details><summary>童装按年龄还是身高选？</summary><p>按身高更准。同龄孩子身高差异很大，商家标的年龄只是参考。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="kinship.html">亲戚称谓</a><a href="unitconvert.html">单位转换</a><a href="zodiac.html">生肖星座查询</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var DATA={
+ men:{title:'男装上衣',head:['尺码','身高(cm)','胸围(cm)','腰围(cm)','肩宽(cm)'],rows:[
+   ['S','160-165','84-88','72-76','42-43'],['M','165-170','88-92','76-80','43-44'],
+   ['L','170-175','92-96','80-84','44-45'],['XL','175-180','96-100','84-88','45-46'],
+   ['XXL','180-185','100-104','88-92','46-47'],['3XL','185-190','104-110','92-98','47-48']]},
+ women:{title:'女装上衣',head:['尺码','身高(cm)','胸围(cm)','腰围(cm)','肩宽(cm)'],rows:[
+   ['XS','150-155','76-80','60-64','35-36'],['S','155-160','80-84','64-68','36-37'],
+   ['M','160-165','84-88','68-72','37-38'],['L','165-170','88-92','72-76','38-39'],
+   ['XL','170-175','92-96','76-80','39-40'],['XXL','175-180','96-100','80-84','40-41']]},
+ pants:{title:'裤子腰围',head:['尺码','腰围(cm)','市尺','英寸','对应身高(cm)'],rows:[
+   ['28','72','2.2','28','155-160'],['29','74','2.2','29','160-165'],
+   ['30','76','2.3','30','165-170'],['31','80','2.4','31','165-170'],
+   ['32','84','2.5','32','170-175'],['33','87','2.6','33','170-175'],
+   ['34','90','2.7','34','175-180'],['36','94','2.8','36','175-185']]},
+ shoes:{title:'鞋码对照',head:['脚长(cm)','中国码','欧洲码','美国男','美国女','英国码'],rows:[
+   ['23.0','36','36','4','5.5','3.5'],['23.5','37','37','4.5','6','4'],
+   ['24.0','38','38','5','6.5','4.5'],['24.5','39','39','6','7.5','5.5'],
+   ['25.0','40','40','7','8.5','6.5'],['25.5','41','41','8','9.5','7.5'],
+   ['26.0','42','42','9','10.5','8.5'],['26.5','43','43','10','11.5','9.5'],
+   ['27.0','44','44','11','12.5','10.5'],['27.5','45','45','12','13.5','11.5']]},
+ kids:{title:'童装',head:['尺码','身高(cm)','年龄','胸围(cm)','腰围(cm)'],rows:[
+   ['80','75-85','1-2 岁','48-52','47-51'],['90','85-95','2-3 岁','52-56','50-54'],
+   ['100','95-105','3-4 岁','56-60','53-57'],['110','105-115','4-5 岁','60-64','55-59'],
+   ['120','115-125','5-6 岁','64-68','57-61'],['130','125-135','7-8 岁','68-72','60-64'],
+   ['140','135-145','9-10 岁','72-78','63-68'],['150','145-155','11-12 岁','78-84','66-72']]}
+};
+function table(d,highlight){
+  var h='<div style="padding:14px 16px 6px;font-weight:700">'+d.title+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:var(--bg2)">';
+  d.head.forEach(function(x){h+='<th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)">'+x+'</th>'});
+  h+='</tr></thead><tbody>';
+  d.rows.forEach(function(r,ri){
+    var hl=highlight&&highlight.indexOf(ri)>=0;
+    h+='<tr style="background:'+(hl?'#fff4f1':'')+'">';
+    r.forEach(function(c,ci){h+='<td style="padding:7px 10px;border-bottom:1px solid #f2f2f2;'+(hl?'font-weight:600;color:var(--brand)':'')+'">'+c+'</td>'});
+    h+='</tr>';
+  });
+  h+='</tbody></table><div style="height:10px"></div>';
+  return h;
+}
+function findRows(rows,q){
+  var m=[];
+  rows.forEach(function(r,ri){
+    var hit=r.some(function(c){
+      if(c===q)return true;
+      var a=c.split('-');
+      if(a.length===2){
+        var lo=parseFloat(a[0]),hi=parseFloat(a[1]),v=parseFloat(q);
+        if(!isNaN(v)&&v>=lo&&v<=hi)return true;
+      }
+      return false;
+    });
+    if(hit)m.push(ri);
+  });
+  return m;
+}
+function run(){
+  var cat=document.getElementById('cat').value;
+  var q=document.getElementById('q').value.trim();
+  var d=DATA[cat];
+  var out=document.getElementById('out');
+  if(!q){out.innerHTML=table(d,[]);return}
+  var hit=findRows(d.rows,q);
+  var hint=hit.length?'<div style="padding:10px 16px;background:#fff8f6;color:var(--brand);font-size:13px">匹配到 '+hit.length+' 个尺码，已在表中高亮</div>'
+                     :'<div style="padding:10px 16px;color:var(--muted);font-size:13px">没有精确匹配，下面是完整对照表</div>';
+  out.innerHTML=hint+table(d,hit);
+}
+document.getElementById('go').onclick=run;
+document.getElementById('cat').onchange=run;
+document.getElementById('q').addEventListener('keydown',function(e){if(e.key==='Enter')run()});
+run();
+
+</script></body></html>

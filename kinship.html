@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>亲戚称谓 - 万能工具箱</title>
+<meta name="description" content="点选关系链，算出该怎么称呼对方，覆盖爸妈两边三代以内常见亲属。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 亲戚称谓计算器</div>
+  <div class="panel">
+    <h2>👪 亲戚称谓计算器</h2>
+    <p class="desc">点选关系链，算出该怎么称呼对方，覆盖爸妈两边三代以内常见亲属。</p>
+    <label>从「我」出发，一步步选</label>
+    <div class="result" id="path" style="min-height:auto;font-size:15px">我</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px" id="steps">
+      <button class="btn ghost" data-k="f">的父亲</button>
+      <button class="btn ghost" data-k="m">的母亲</button>
+      <button class="btn ghost" data-k="ob">的哥哥</button>
+      <button class="btn ghost" data-k="lb">的弟弟</button>
+      <button class="btn ghost" data-k="os">的姐姐</button>
+      <button class="btn ghost" data-k="ls">的妹妹</button>
+      <button class="btn ghost" data-k="s">的儿子</button>
+      <button class="btn ghost" data-k="d">的女儿</button>
+      <button class="btn ghost" data-k="h">的丈夫</button>
+      <button class="btn ghost" data-k="w">的妻子</button>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn ghost" id="undo">退一步</button>
+      <button class="btn ghost" id="reset">重新开始</button>
+    </div>
+    <label>这个人是我的</label>
+    <div class="result" id="out" style="font-size:22px;font-weight:700;color:var(--brand)">我</div>
+    <p class="hint">支持两到三代以内的常见亲属关系。超出范围的会提示未收录。</p>
+  </div>
+<section class="seo">
+<p class="lead">亲戚称谓计算器解决过年最尴尬的问题：这个长辈到底该叫啥。从「我」出发，一步步点「的父亲」「的哥哥」「的女儿」，工具会告诉你最终该称呼什么。爸爸的哥哥是伯父、妈妈的妹妹是姨妈、爸爸的姐姐的儿子是表哥，这类容易搞混的关系点两下就清楚了。</p>
+<h2>适用场景</h2><ul><li>过年走亲戚前搞清楚称呼</li><li>写小说、剧本时确认人物关系称谓</li><li>教孩子认亲戚关系</li><li>看族谱、家谱时理清代际</li></ul>
+<h2>使用方法</h2><ol><li>从「我」开始</li><li>按实际关系逐层点按钮</li><li>看结果框显示的称呼</li><li>点错了用「退一步」或「重新开始」</li></ol>
+<h2>常见问题</h2><details><summary>为什么有的关系显示「暂未收录」？</summary><p>三代以外的旁系亲属称谓各地差异很大（比如爸爸的表哥的儿子），没有统一标准叫法，所以不做猜测。</p></details><details><summary>堂和表怎么分？</summary><p>父亲兄弟的孩子是「堂」（同姓同宗），父亲姐妹和母亲兄弟姐妹的孩子是「表」。这是传统划分，现代口语里常混用。</p></details><details><summary>各地叫法不一样怎么办？</summary><p>本工具用普通话通用称谓。北方叫「姥姥」南方叫「外婆」这类差异，以你当地习惯为准。</p></details><details><summary>配偶的亲戚怎么算？</summary><p>支持。比如点「的妻子」再点「的哥哥」就是大舅子，「的丈夫」再点「的母亲」就是婆婆。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="sizechart.html">尺码对照</a><a href="zodiac.html">生肖星座查询</a><a href="bloodtype.html">血型遗传</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var NAME={f:'父亲',m:'母亲',ob:'哥哥',lb:'弟弟',os:'姐姐',ls:'妹妹',s:'儿子',d:'女儿',h:'丈夫',w:'妻子'};
+var T={
+ '':'我',
+ f:'爸爸',m:'妈妈',ob:'哥哥',lb:'弟弟',os:'姐姐',ls:'妹妹',s:'儿子',d:'女儿',h:'丈夫',w:'妻子',
+ ff:'爷爷',fm:'奶奶',mf:'外公',mm:'外婆',
+ fob:'伯父',flb:'叔叔',fos:'姑妈',fls:'姑妈',
+ mob:'舅舅',mlb:'舅舅',mos:'姨妈',mls:'姨妈',
+ fobs:'堂兄弟',fobd:'堂姐妹',flbs:'堂兄弟',flbd:'堂姐妹',
+ foss:'表兄弟',fosd:'表姐妹',flss:'表兄弟',flsd:'表姐妹',
+ mobs:'表兄弟',mobd:'表姐妹',mlbs:'表兄弟',mlbd:'表姐妹',
+ moss:'表兄弟',mosd:'表姐妹',mlss:'表兄弟',mlsd:'表姐妹',
+ obs:'侄子',obd:'侄女',lbs:'侄子',lbd:'侄女',
+ oss:'外甥',osd:'外甥女',lss:'外甥',lsd:'外甥女',
+ ss:'孙子',sd:'孙女',ds:'外孙',dd:'外孙女',
+ hf:'公公',hm:'婆婆',wf:'岳父',wm:'岳母',
+ obw:'嫂子',lbw:'弟媳',osh:'姐夫',lsh:'妹夫',
+ wob:'大舅子',wlb:'小舅子',wos:'大姨子',wls:'小姨子',
+ hob:'大伯子',hlb:'小叔子',hos:'大姑子',hls:'小姑子',
+ hw:'我',wh:'我',
+ ffs:'堂兄弟',ffd:'堂姐妹',mfs:'表兄弟',mfd:'表姐妹'
+};
+var path=[];
+function render(){
+  var p=path.join('');
+  document.getElementById('path').textContent='我'+path.map(function(k){return NAME[k]}).join('的')||'我';
+  var display='我';
+  if(path.length)display='我'+path.map(function(k){return '的'+NAME[k]}).join('');
+  var name=T[p];
+  var out=document.getElementById('out');
+  if(p===''){out.textContent='我（起点）';return}
+  if(name==null){
+    out.textContent='暂未收录';
+    out.style.color='var(--muted)';
+  }else{
+    out.textContent='你叫 TA：'+name;
+    out.style.color='var(--brand)';
+  }
+}
+function push(k){
+  if(path.length>=3){alert('最多支持三代关系');return}
+  path.push(k);render();
+}
+document.getElementById('steps').onclick=function(e){
+  var b=e.target.closest('button[data-k]');
+  if(b)push(b.dataset.k);
+};
+document.getElementById('undo').onclick=function(){path.pop();render()};
+document.getElementById('reset').onclick=function(){path=[];render()};
+render();
+
+</script></body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>手持弹幕 - 万能工具箱</title>
+<meta name="description" content="把手机变成滚动大字牌，接机、应援、生日祝福用，可调字号速度颜色。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 手持弹幕</div>
+  <div class="panel">
+    <h2>📢 手持弹幕</h2>
+    <p class="desc">把手机变成滚动大字牌，接机、应援、生日祝福用，可调字号速度颜色。</p>
+    <label>弹幕文字</label>
+    <input type="text" id="txt" value="接机 · 欢迎回家">
+    <div class="row" style="margin-top:16px">
+      <div><label style="margin-top:0">字号</label><input type="range" id="fs" min="40" max="240" value="120" style="width:100%"></div>
+      <div><label style="margin-top:0">速度</label><input type="range" id="sp" min="1" max="10" value="5" style="width:100%"></div>
+      <div><label style="margin-top:0">文字颜色</label>
+        <select id="color"><option value="#ffffff">白色</option><option value="#ffd400">亮黄</option><option value="#ff3b30">红色</option><option value="#34c759">绿色</option><option value="#0a84ff">蓝色</option><option value="#ff2d95">粉色</option></select></div>
+      <div><label style="margin-top:0">背景</label>
+        <select id="bgc"><option value="#000000">黑色</option><option value="#ffffff">白色</option><option value="#111a3a">深蓝</option></select></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="go">开始播放</button>
+    </div>
+    <div id="pv" style="margin-top:16px;background:#000;border-radius:8px;height:150px;overflow:hidden;position:relative">
+      <div id="demo" style="position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;font-weight:900;font-size:56px;color:#fff;left:100%">接机 · 欢迎回家</div>
+    </div>
+    <p class="hint">接机、演唱会应援、生日祝福，把手机横过来全屏显示滚动大字。</p>
+  </div>
+<section class="seo">
+<p class="lead">手持弹幕把手机屏幕变成一块滚动的电子屏。输入文字、调到最大字号、点播放，全屏黑底大字从右往左滚动，举起来就是接机的灯牌、演唱会的手幅、生日的祝福语。不用装 App，浏览器打开就能用。</p>
+<h2>适用场景</h2><ul><li>接机时举牌让家人一眼看到</li><li>演唱会、相声现场的应援灯牌</li><li>生日、求婚现场的氛围道具</li><li>摆摊、店铺门口的滚动宣传语</li></ul>
+<h2>使用方法</h2><ol><li>输入要显示的文字</li><li>调字号、速度、文字颜色和背景</li><li>点「开始播放」进入全屏</li><li>点击屏幕停止</li></ol>
+<h2>常见问题</h2><details><summary>能横屏显示吗？</summary><p>能。进入全屏后把手机横过来效果最好，字号会显得更大。手机需要关闭方向锁定。</p></details><details><summary>为什么文字滚得太快/太慢？</summary><p>拖动速度滑块调整，1 档最慢 10 档最快。也可以用方向键微调。</p></details><details><summary>亮度能调吗？</summary><p>工具控制不了屏幕亮度，请手动把手机亮度调到最高，户外才看得清。</p></details><details><summary>字太多会怎样？</summary><p>会完整滚动一圈再循环。字数太多时建议调小字号，保证一屏内能看完关键信息。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="teleprompter.html">提词器</a><a href="qrcode.html">二维码生成器</a><a href="timer.html">多通道计时器</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var stage=null,timer=null,pos=0,stageInner=null;
+function build(){
+  if(stage)stage.remove();
+  stage=document.createElement('div');
+  stage.style.cssText='position:fixed;inset:0;z-index:9999;display:none;overflow:hidden;align-items:center';
+  stageInner=document.createElement('div');
+  stageInner.style.cssText='position:absolute;white-space:nowrap;font-weight:900;line-height:1';
+  stage.appendChild(stageInner);
+  var tip=document.createElement('div');
+  tip.style.cssText='position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:12px;opacity:.35;color:#fff';
+  tip.textContent='点击屏幕停止';
+  stage.appendChild(tip);
+  stage.onclick=stop;
+  document.body.appendChild(stage);
+}
+function start(){
+  var t=document.getElementById('txt').value||'弹幕';
+  var fs=+document.getElementById('fs').value;
+  var sp=+document.getElementById('sp').value;
+  var color=document.getElementById('color').value;
+  var bg=document.getElementById('bgc').value;
+  build();
+  stage.style.background=bg;
+  stage.style.display='flex';
+  stageInner.textContent=t;
+  stageInner.style.color=color;
+  stageInner.style.fontSize=fs+'px';
+  stage.style.color=color;
+  pos=window.innerWidth;
+  if(stage.requestFullscreen)stage.requestFullscreen().catch(function(){});
+  clearInterval(timer);
+  timer=setInterval(function(){
+    pos-=sp*2;
+    if(pos< -stageInner.offsetWidth)pos=window.innerWidth;
+    stageInner.style.left=pos+'px';
+  },16);
+}
+function stop(){
+  clearInterval(timer);timer=null;
+  if(stage){
+    if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});
+    stage.style.display='none';
+  }
+}
+document.getElementById('go').onclick=start;
+document.getElementById('txt').oninput=function(){
+  var d=document.getElementById('demo');
+  d.textContent=this.value||'弹幕';
+  d.style.color=document.getElementById('color').value;
+  d.style.fontSize=Math.min(72,+document.getElementById('fs').value/2)+'px';
+};
+document.getElementById('color').onchange=function(){
+  document.getElementById('demo').style.color=this.value;
+};
+document.getElementById('bgc').onchange=function(){
+  document.getElementById('pv').style.background=this.value;
+};
+build();
+
+</script></body></html>

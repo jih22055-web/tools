@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片压缩到指定大小 - 万能工具箱</title>
+<meta name="description" content="把图片压缩到指定 KB 以内，自动寻找最佳质量，支持 JPG 与 WebP。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片压缩到指定大小</div>
+  <div class="panel">
+    <h2>📉 图片压缩到指定大小</h2>
+    <p class="desc">把图片压缩到指定 KB 以内，自动寻找最佳质量，支持 JPG 与 WebP。</p>
+    <div class="dropzone" id="drop">
+      <div style="font-size:34px;margin-bottom:8px">📁</div>
+      <div>点击选择图片，或拖到这里</div>
+      <div style="font-size:12px;margin-top:6px;color:var(--muted)">图片只在本地处理，不会上传</div>
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div class="row" style="margin-top:18px">
+      <div><label style="margin-top:0">目标大小（KB）</label><input type="number" id="target" value="200" min="10"></div>
+      <div><label style="margin-top:0">输出格式</label>
+        <select id="fmt"><option value="image/jpeg">JPG</option><option value="image/webp">WebP（更小）</option></select></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="go">压缩</button>
+      <button class="btn ghost" id="dl">下载结果</button>
+    </div>
+    <div id="res" style="margin-top:16px"></div>
+    <p class="hint">自动二分查找最合适的质量参数，尽量在目标体积内保留最高画质。要求上传小于 200KB 之类的场景很好用。</p>
+  </div>
+<section class="seo">
+<p class="lead">很多网站上传图片有体积限制，要求小于 500KB 甚至 200KB。这个工具把图片压到指定大小以内，做法是用二分法反复尝试不同的压缩质量，在满足体积要求的前提下保留最高画质。压一次不够就降分辨率再来一轮，直到达标。</p>
+<h2>适用场景</h2><ul><li>网站上传图片提示体积超限</li><li>邮件附件需要小于某个大小</li><li>报名系统、考试系统限制图片大小</li><li>压缩照片便于发给别人</li></ul>
+<h2>使用方法</h2><ol><li>上传图片</li><li>填写目标大小（KB）</li><li>选择 JPG 或 WebP</li><li>点「压缩」，达标后点「下载结果」</li></ol>
+<h2>常见问题</h2><details><summary>为什么压不到目标大小？</summary><p>图片内容太复杂时，压缩到极低质量也降不下来。工具会自动降低分辨率再试，但如果目标极端（比如把 4000 像素的照片压到 20KB），画质会明显损失。</p></details><details><summary>WebP 比 JPG 好吗？</summary><p>同样画质下 WebP 体积通常小 25%-35%。但部分老旧系统不支持 WebP，需要兼容性优先时选 JPG。</p></details><details><summary>压缩后画质会变差吗？</summary><p>会有损失，这是有损压缩的必然代价。工具尽量在目标体积内选最高质量，肉眼看通常不明显。</p></details><details><summary>能批量压缩吗？</summary><p>当前一次一张。批量需求可以用图片格式转换工具逐张处理。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="image-compress.html">图片压缩</a><a href="imgconvert.html">图片格式转换</a><a href="imginfo.html">图片信息查看</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+
+function initDrop(cb){
+  var input=document.getElementById('file'),drop=document.getElementById('drop');
+  drop.onclick=function(){input.click()};
+  input.onchange=function(){if(this.files[0])cb(this.files[0])};
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('over')});
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('over')});
+  });
+  drop.addEventListener('drop',function(ev){
+    var f=ev.dataTransfer.files[0];
+    if(f)cb(f);
+  });
+}
+function loadImage(f,next){
+  var img=new Image(),url=URL.createObjectURL(f);
+  img.onload=function(){next(img,url,f)};
+  img.onerror=function(){alert('图片加载失败，请换一张');URL.revokeObjectURL(url)};
+  img.src=url;
+}
+function fmtSize(n){
+  if(n<1024)return n+' B';
+  if(n<1048576)return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+
+var cur=null,outUrl=null,outName='compressed.jpg';
+initDrop(function(f){
+  loadImage(f,function(img){
+    cur=img;outName=f.name.replace(/\.[^.]+$/,'')+'_compressed';
+    document.getElementById('go').click();
+  });
+});
+function toBlob(cv,type,q){
+  return new Promise(function(res){cv.toBlob(function(b){res(b)},type,q)});
+}
+async function compress(){
+  if(!cur){alert('请先选择图片');return}
+  var targetKB=Math.max(10,parseInt(document.getElementById('target').value,10)||200);
+  var type=document.getElementById('fmt').value;
+  var ext=type==='image/webp'?'webp':'jpg';
+  var res=document.getElementById('res');
+  res.innerHTML='<div style="color:var(--muted)">正在压缩…</div>';
+  var cv=document.createElement('canvas');
+  var maxSide=Math.max(cur.naturalWidth,cur.naturalHeight);
+  var scale=1;
+  var best=null;
+  for(var attempt=0;attempt<4;attempt++){
+    cv.width=Math.max(1,Math.round(cur.naturalWidth*scale));
+    cv.height=Math.max(1,Math.round(cur.naturalHeight*scale));
+    var ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,cv.width,cv.height);
+    if(type==='image/jpeg'){ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height)}
+    ctx.drawImage(cur,0,0,cv.width,cv.height);
+    var lo=0.1,hi=0.95,bestBlob=null;
+    for(var i=0;i<7;i++){
+      var mid=(lo+hi)/2;
+      var b=await toBlob(cv,type,mid);
+      if(b.size/1024<=targetKB){bestBlob=b;lo=mid}else{hi=mid}
+    }
+    if(!bestBlob){bestBlob=await toBlob(cv,type,0.1)}
+    best={blob:bestBlob,w:cv.width,h:cv.height,q:lo};
+    if(bestBlob.size/1024<=targetKB)break;
+    scale*=0.85;
+  }
+  if(outUrl)URL.revokeObjectURL(outUrl);
+  outUrl=URL.createObjectURL(best.blob);
+  outName=outName.split('_c')[0]+'_compressed.'+ext;
+  var ratio=Math.round(best.blob.size/ (arguments[0]||1));
+  res.innerHTML='<img src="'+outUrl+'" style="max-width:100%;max-height:320px;border-radius:8px;border:1px solid var(--line)">'
+   +'<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:12px">'
+   +'<tr><td style="padding:6px 0;color:var(--muted)">输出尺寸</td><td>'+best.w+' × '+best.h+'</td></tr>'
+   +'<tr><td style="padding:6px 0;color:var(--muted)">输出体积</td><td style="font-weight:700;color:var(--brand)">'+fmtSize(best.blob.size)+(best.blob.size/1024>targetKB?'（未能压到目标内）':'')+'</td></tr>'
+   +'<tr><td style="padding:6px 0;color:var(--muted)">质量参数</td><td>'+best.q.toFixed(2)+'</td></tr>'
+   +'</table>';
+}
+document.getElementById('go').onclick=compress;
+document.getElementById('dl').onclick=function(){
+  if(!outUrl){alert('请先压缩');return}
+  var a=document.createElement('a');
+  a.href=outUrl;a.download=outName;a.click();
+};
+
+</script></body></html>

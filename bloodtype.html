@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>血型遗传 - 万能工具箱</title>
+<meta name="description" content="根据父母 ABO 血型推算子女可能血型与概率分布。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 血型遗传规律</div>
+  <div class="panel">
+    <h2>🧬 血型遗传规律</h2>
+    <p class="desc">根据父母 ABO 血型推算子女可能血型与概率分布。</p>
+    <div class="row">
+      <div><label style="margin-top:0">父亲血型</label>
+        <select id="fa"><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+      <div><label style="margin-top:0">母亲血型</label>
+        <select id="mo"><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="go">计算</button>
+    </div>
+    <label>子女可能的血型</label>
+    <div class="result" id="out" style="font-size:20px;font-weight:700">等待计算</div>
+    <label>概率分布</label>
+    <div class="result" id="prob">—</div>
+    <p class="hint">基于 ABO 血型遗传规律。Rh 阴性（熊猫血）另有独立遗传方式，不在本工具范围内。</p>
+  </div>
+<section class="seo">
+<p class="lead">血型遗传工具按 ABO 血型系统的遗传规律，算出父母的组合会生出哪些血型的孩子、各自概率多少。每个人从父母各继承一个等位基因，A 和 B 是显性、O 是隐性，组合出来的结果有规律可循。好奇自己孩子的血型、或者想验证亲子关系是否可能，都可以算一下。</p>
+<h2>适用场景</h2><ul><li>备孕或孕期好奇宝宝可能是什么血型</li><li>生物学课程讲遗传规律时的演示</li><li>对血型有疑问时快速核对可能性</li><li>了解自己和伴侣的血型组合特点</li></ul>
+<h2>使用方法</h2><ol><li>选择父亲和母亲的血型</li><li>点「计算」</li><li>查看可能血型和概率条形图</li><li>注意这只是概率，实际以验血结果为准</li></ol>
+<h2>常见问题</h2><details><summary>血型能确定亲子关系吗？</summary><p>不能。血型只能排除某些可能性（比如 O 型和 O 型生不出 AB 型孩子），不能证明亲子关系。确定亲子关系需要 DNA 检测。</p></details><details><summary>为什么 A 型和 B 型能生出 O 型？</summary><p>因为 A 型可能是 AA 或 AO，B 型可能是 BB 或 BO。如果双方都带 O 基因（AO × BO），孩子有四分之一概率是 OO，即 O 型。</p></details><details><summary>Rh 阴性怎么算？</summary><p>Rh 是另一套血型系统，由 RHD 基因决定，遗传规律与 ABO 独立。本工具只算 ABO。</p></details><details><summary>概率是精确值吗？</summary><p>基于等位基因随机组合的理论概率。前提是不知道父母具体基因型，实际个体可能是 AA 或 AO，结果会不同。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="kinship.html">亲戚称谓</a><a href="zodiac.html">生肖星座查询</a><a href="tax.html">个税计算器</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+function alleles(t){
+  if(t==='A')return ['A','O'];
+  if(t==='B')return ['B','O'];
+  if(t==='AB')return ['A','B'];
+  return ['O','O'];
+}
+function compute(){
+  var fa=document.getElementById('fa').value,mo=document.getElementById('mo').value;
+  var A=alleles(fa),B=alleles(mo);
+  var cnt={};
+  A.forEach(function(a){B.forEach(function(b){
+    var k=[a,b].sort().join('');
+    cnt[k]=(cnt[k]||0)+1;
+  })});
+  var map={'AA':'A','AO':'A','OA':'A','BB':'B','BO':'B','OB':'B','AB':'AB','BA':'AB','OO':'O'};
+  var type={},total=0;
+  Object.keys(cnt).forEach(function(k){
+    var t=map[k];type[t]=(type[t]||0)+cnt[k];total+=cnt[k];
+  });
+  var order=['A','B','AB','O'].filter(function(t){return type[t]});
+  document.getElementById('out').textContent=order.join(' / ')+' 型';
+  document.getElementById('prob').innerHTML=order.map(function(t){
+    var p=Math.round(type[t]/total*100);
+    return '<div style="display:flex;align-items:center;gap:10px;margin:6px 0"><span style="width:44px;font-weight:600">'+t+' 型</span><div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="width:'+p+'%;height:100%;background:var(--brand)"></div></div><span style="width:44px;text-align:right;font-size:13px;color:var(--muted)">'+p+'%</span></div>';
+  }).join('');
+}
+document.getElementById('go').onclick=compute;
+document.getElementById('fa').onchange=compute;
+document.getElementById('mo').onchange=compute;
+compute();
+
+</script></body></html>

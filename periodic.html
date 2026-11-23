@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>元素周期表 - 万能工具箱</title>
+<meta name="description" content="118 种化学元素完整数据，按分类筛选、按名称符号原子序数搜索。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 元素周期表</div>
+  <div class="panel">
+    <h2>⚗️ 元素周期表</h2>
+    <p class="desc">118 种化学元素完整数据，按分类筛选、按名称符号原子序数搜索。</p>
+    <label>搜索（元素名、符号或原子序数）</label>
+    <input type="text" id="q" placeholder="例如 氧、O、8、铁">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px" id="cats"></div>
+    <div class="result" id="out" style="padding:0;background:#fff;overflow:auto;max-height:540px"></div>
+    <p class="hint">共 118 种元素，点击卡片查看详细信息。</p>
+  </div>
+<section class="seo">
+<p class="lead">元素周期表收录全部 118 种化学元素的符号、中文名、原子序数和相对原子质量，按碱金属、过渡金属、稀有气体等分类整理。学生背元素、工程师查原子量、看科普文章遇到陌生元素想了解它的位置，都可以直接搜。</p>
+<h2>适用场景</h2><ul><li>化学作业查元素符号和原子量</li><li>看科普文章时确认某个元素属于哪一类</li><li>教学演示元素分类规律</li><li>写材料相关文档需要准确的元素信息</li></ul>
+<h2>使用方法</h2><ol><li>在搜索框输入元素名、符号或原子序数</li><li>或点分类标签筛选</li><li>点击元素卡片查看详细信息</li></ol>
+<h2>常见问题</h2><details><summary>原子量为什么有小数？</summary><p>因为元素在自然界中存在多种同位素，相对原子质量是各同位素按丰度加权的平均值。</p></details><details><summary>104 号以后的元素名字怎么读？</summary><p>这些是人工合成的超重元素，中文名多为生僻字或新造字，很多输入法打不出来，日常交流一般直接说符号或原子序数。</p></details><details><summary>放射性元素有标注吗？</summary><p>技术上是，但本表未单独标注。锝（43）、钷（61）以及 84 号以后的所有元素都没有稳定同位素。</p></details><details><summary>数据来源可靠吗？</summary><p>原子量采用 IUPAC 公布的常规原子量，部分放射性元素用最稳定同位素的质量数。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="unitconvert.html">单位转换</a><a href="base-convert.html">进制转换</a><a href="fraction.html">分数计算器</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+var ELEMS=[
+['H','氢',1,1.008,6],
+['He','氦',2,4.003,8],
+['Li','锂',3,6.94,1],
+['Be','铍',4,9.012,2],
+['B','硼',5,10.81,5],
+['C','碳',6,12.011,6],
+['N','氮',7,14.007,6],
+['O','氧',8,15.999,6],
+['F','氟',9,18.998,7],
+['Ne','氖',10,20.18,8],
+['Na','钠',11,22.99,1],
+['Mg','镁',12,24.305,2],
+['Al','铝',13,26.982,4],
+['Si','硅',14,28.085,5],
+['P','磷',15,30.974,6],
+['S','硫',16,32.06,6],
+['Cl','氯',17,35.45,7],
+['Ar','氩',18,39.948,8],
+['K','钾',19,39.098,1],
+['Ca','钙',20,40.078,2],
+['Sc','钪',21,44.956,3],
+['Ti','钛',22,47.867,3],
+['V','钒',23,50.942,3],
+['Cr','铬',24,51.996,3],
+['Mn','锰',25,54.938,3],
+['Fe','铁',26,55.845,3],
+['Co','钴',27,58.933,3],
+['Ni','镍',28,58.693,3],
+['Cu','铜',29,63.546,3],
+['Zn','锌',30,65.38,3],
+['Ga','镓',31,69.723,4],
+['Ge','锗',32,72.63,5],
+['As','砷',33,74.922,5],
+['Se','硒',34,78.971,6],
+['Br','溴',35,79.904,7],
+['Kr','氪',36,83.798,8],
+['Rb','铷',37,85.468,1],
+['Sr','锶',38,87.62,2],
+['Y','钇',39,88.906,3],
+['Zr','锆',40,91.224,3],
+['Nb','铌',41,92.906,3],
+['Mo','钼',42,95.95,3],
+['Tc','锝',43,98,3],
+['Ru','钌',44,101.07,3],
+['Rh','铑',45,102.91,3],
+['Pd','钯',46,106.42,3],
+['Ag','银',47,107.87,3],
+['Cd','镉',48,112.41,3],
+['In','铟',49,114.82,4],
+['Sn','锡',50,118.71,4],
+['Sb','锑',51,121.76,5],
+['Te','碲',52,127.6,5],
+['I','碘',53,126.9,7],
+['Xe','氙',54,131.29,8],
+['Cs','铯',55,132.91,1],
+['Ba','钡',56,137.33,2],
+['La','镧',57,138.91,9],
+['Ce','铈',58,140.12,9],
+['Pr','镨',59,140.91,9],
+['Nd','钕',60,144.24,9],
+['Pm','钷',61,145,9],
+['Sm','钐',62,150.36,9],
+['Eu','铕',63,151.96,9],
+['Gd','钆',64,157.25,9],
+['Tb','铽',65,158.93,9],
+['Dy','镝',66,162.5,9],
+['Ho','钬',67,164.93,9],
+['Er','铒',68,167.26,9],
+['Tm','铥',69,168.93,9],
+['Yb','镱',70,173.05,9],
+['Lu','镥',71,174.97,9],
+['Hf','铪',72,178.49,3],
+['Ta','钽',73,180.95,3],
+['W','钨',74,183.84,3],
+['Re','铼',75,186.21,3],
+['Os','锇',76,190.23,3],
+['Ir','铱',77,192.22,3],
+['Pt','铂',78,195.08,3],
+['Au','金',79,196.97,3],
+['Hg','汞',80,200.59,3],
+['Tl','铊',81,204.38,4],
+['Pb','铅',82,207.2,4],
+['Bi','铋',83,208.98,4],
+['Po','钋',84,209,4],
+['At','砹',85,210,7],
+['Rn','氡',86,222,8],
+['Fr','钫',87,223,1],
+['Ra','镭',88,226,2],
+['Ac','锕',89,227,10],
+['Th','钍',90,232.04,10],
+['Pa','镤',91,231.04,10],
+['U','铀',92,238.03,10],
+['Np','镎',93,237,10],
+['Pu','钚',94,244,10],
+['Am','镅',95,243,10],
+['Cm','锔',96,247,10],
+['Bk','锫',97,247,10],
+['Cf','锎',98,251,10],
+['Es','锿',99,252,10],
+['Fm','镄',100,257,10],
+['Md','钔',101,258,10],
+['No','锘',102,259,10],
+['Lr','铹',103,266,10],
+['Rf','钅卢',104,267,3],
+['Db','钅杜',105,268,3],
+['Sg','钅喜',106,269,3],
+['Bh','钅波',107,270,3],
+['Hs','钅黑',108,269,3],
+['Mt','钅麦',109,278,3],
+['Ds','钅达',110,281,3],
+['Rg','钅仑',111,282,3],
+['Cn','鎶',112,285,3],
+['Nh','鉨',113,286,4],
+['Fl','鈇',114,289,4],
+['Mc','镆',115,290,4],
+['Lv','鉝',116,293,4],
+['Ts','鿬',117,294,7],
+['Og','鿫',118,294,8]
+];
+var CATS=['','碱金属','碱土金属','过渡金属','后过渡金属','类金属','非金属','卤素','稀有气体','镧系','锕系'];
+var curCat='全部';
+function card(e){
+  var sym=e[0],name=e[1],z=e[2],mass=e[3],cat=e[4];
+  return '<div class="ecard" data-z="'+z+'" style="border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center;cursor:pointer;background:#fff;transition:.12s">'
+    +'<div style="font-size:11px;color:var(--muted)">'+z+'</div>'
+    +'<div style="font-size:20px;font-weight:700;line-height:1.2;color:var(--brand)">'+sym+'</div>'
+    +'<div style="font-size:13px">'+name+'</div>'
+    +'<div style="font-size:11px;color:var(--muted)">'+mass+'</div></div>';
+}
+function render(){
+  var q=document.getElementById('q').value.trim().toLowerCase();
+  var list=ELEMS.filter(function(e){
+    if(curCat!=='全部'&&CATS[e[4]]!==curCat)return false;
+    if(!q)return true;
+    return e[0].toLowerCase()===q||e[1].indexOf(q)>=0||String(e[2])===q||e[1].toLowerCase().indexOf(q)>=0;
+  });
+  var out=document.getElementById('out');
+  if(!list.length){out.innerHTML='<p style="padding:18px;color:var(--muted)">没有匹配的元素</p>';return}
+  var h='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;padding:14px">';
+  list.forEach(function(e){h+=card(e)});
+  h+='</div>';
+  out.innerHTML=h;
+  out.querySelectorAll('.ecard').forEach(function(el){
+    el.onclick=function(){detail(+el.dataset.z)};
+    el.onmouseover=function(){el.style.borderColor='var(--brand)';el.style.transform='translateY(-2px)'};
+    el.onmouseout=function(){el.style.borderColor='var(--line)';el.style.transform=''};
+  });
+}
+function detail(z){
+  var e=ELEMS.filter(function(x){return x[2]===z})[0];
+  if(!e)return;
+  alert('元素：'+e[1]+'（'+e[0]+'）\n原子序数：'+e[2]+'\n相对原子质量：'+e[3]+'\n分类：'+CATS[e[4]]);
+}
+function buildCats(){
+  var h='';
+  ['全部'].concat(CATS.slice(1)).forEach(function(c){
+    h+='<span class="cbtn" data-c="'+c+'" style="padding:6px 12px;border:1px solid var(--line);border-radius:14px;font-size:13px;cursor:pointer;'+(c===curCat?'background:var(--brand);color:#fff;border-color:var(--brand)':'')+'">'+c+'</span>';
+  });
+  var box=document.getElementById('cats');
+  box.innerHTML=h;
+  box.querySelectorAll('.cbtn').forEach(function(el){
+    el.onclick=function(){curCat=el.dataset.c;buildCats();render()};
+  });
+}
+document.getElementById('q').addEventListener('input',render);
+buildCats();
+render();
+
+</script></body></html>

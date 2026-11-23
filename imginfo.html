@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片信息查看 - 万能工具箱</title>
+<meta name="description" content="查看图片真实格式、尺寸、体积、宽高比与平均色，识别改扩展名的假图。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片信息查看</div>
+  <div class="panel">
+    <h2>🔎 图片信息查看</h2>
+    <p class="desc">查看图片真实格式、尺寸、体积、宽高比与平均色，识别改扩展名的假图。</p>
+    <div class="dropzone" id="drop">
+      <div style="font-size:34px;margin-bottom:8px">📁</div>
+      <div>点击选择图片，或拖到这里</div>
+      <div style="font-size:12px;margin-top:6px;color:var(--muted)">图片只在本地处理，不会上传</div>
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div id="info" style="margin-top:16px"></div>
+    <p class="hint">读取图片的真实格式、尺寸、体积、宽高比和平均色。判断「改名成 jpg 的 png」特别有用。</p>
+  </div>
+<section class="seo">
+<p class="lead">图片信息查看工具读出图片的真实参数：是不是真如扩展名所说那样、像素尺寸多少、体积多大、宽高比是否适合某个平台、平均色调偏暖还是偏冷。最实用的一点是能识破改了扩展名的图——把 PNG 改名成 .jpg 骗过上传校验的做法，这里一传就露馅。</p>
+<h2>适用场景</h2><ul><li>上传图片前确认尺寸是否符合平台要求</li><li>检查图片是否被改过扩展名</li><li>确认图片体积是否超限</li><li>设计时快速取图片的平均色调</li></ul>
+<h2>使用方法</h2><ol><li>上传或拖入图片</li><li>工具自动读取出全部信息</li><li>如有格式与扩展名不符会红字提示</li></ol>
+<h2>常见问题</h2><details><summary>为什么说真实格式不一样？</summary><p>图片格式由文件头字节决定，改扩展名不会改变实际编码。工具读的是浏览器解码后的类型，不是扩展名。</p></details><details><summary>能看到 EXIF 拍摄参数吗？</summary><p>不能。浏览器出于隐私考虑，部分情况下会剥离 EXIF 信息，纯前端也拿不到完整的 EXIF 元数据。</p></details><details><summary>宽高比为什么是简化后的？</summary><p>工具用最大公约数化简，比如 1920×1080 会显示 16:9，方便判断是否符合某个平台的标准比例。</p></details><details><summary>平均色有什么用？</summary><p>设计参考、给图片配背景色、判断整体色调冷暖，或者提取作为占位背景色。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="imgconvert.html">图片格式转换</a><a href="imagepalette.html">图片取色</a><a href="magicbytes.html">文件类型识别</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+
+function initDrop(cb){
+  var input=document.getElementById('file'),drop=document.getElementById('drop');
+  drop.onclick=function(){input.click()};
+  input.onchange=function(){if(this.files[0])cb(this.files[0])};
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('over')});
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('over')});
+  });
+  drop.addEventListener('drop',function(ev){
+    var f=ev.dataTransfer.files[0];
+    if(f)cb(f);
+  });
+}
+function loadImage(f,next){
+  var img=new Image(),url=URL.createObjectURL(f);
+  img.onload=function(){next(img,url,f)};
+  img.onerror=function(){alert('图片加载失败，请换一张');URL.revokeObjectURL(url)};
+  img.src=url;
+}
+function fmtSize(n){
+  if(n<1024)return n+' B';
+  if(n<1048576)return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+
+initDrop(function(f){
+  var info=document.getElementById('info');
+  info.innerHTML='<div style="color:var(--muted)">读取中…</div>';
+  loadImage(f,function(img){
+    var c=document.createElement('canvas');
+    var s=Math.min(1,120/Math.max(img.naturalWidth,img.naturalHeight));
+    c.width=Math.max(1,Math.round(img.naturalWidth*s));
+    c.height=Math.max(1,Math.round(img.naturalHeight*s));
+    var ctx=c.getContext('2d');
+    ctx.drawImage(img,0,0,c.width,c.height);
+    var avg='—';
+    try{
+      var d=ctx.getImageData(0,0,c.width,c.height).data;
+      var r=0,g=0,b=0,n=0;
+      for(var i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++}
+      r=Math.round(r/n);g=Math.round(g/n);b=Math.round(b/n);
+      avg='rgb('+r+','+g+','+b+')';
+    }catch(e){}
+    var w=img.naturalWidth,h=img.naturalHeight;
+    var g2=(function(a,b){while(b){var t=b;b=a%b;a=t}return a})(w,h);
+    var realType=f.type||'未知';
+    var ext=(f.name.split('.').pop()||'').toLowerCase();
+    var mismatch='';
+    if(ext&&realType&&realType.indexOf(ext.replace('jpg','jpeg'))<0&&!((ext==='jpg'||ext==='jpeg')&&realType==='image/jpeg')){
+      var map={png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',webp:'image/webp',gif:'image/gif',bmp:'image/bmp',svg:'image/svg+xml'};
+      if(map[ext]&&realType!==map[ext])mismatch='<div style="margin-top:10px;padding:10px 12px;background:#fff4f1;border-radius:6px;color:var(--brand);font-size:13px">⚠ 扩展名是 .'+ext+'，但真实格式是 '+realType+'</div>';
+    }
+    var rows=[
+      ['文件名',f.name],
+      ['真实格式',realType],
+      ['文件体积',fmtSize(f.size)],
+      ['尺寸',w+' × '+h+' 像素'],
+      ['宽高比',(w/g2)+':'+(h/g2)],
+      ['总像素',(w*h/1000000).toFixed(2)+' 百万像素'],
+      ['修改时间',f.lastModified?new Date(f.lastModified).toLocaleString('zh-CN'):'未知'],
+      ['平均色','<span style="display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;border:1px solid var(--line);background:'+avg+'"></span> '+avg]
+    ];
+    var h3='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px"><img src="'+img.src+'" style="max-width:240px;max-height:200px;border-radius:8px;border:1px solid var(--line)"><table style="flex:1;min-width:260px;border-collapse:collapse;font-size:14px">';
+    rows.forEach(function(r){
+      h3+='<tr><td style="padding:7px 10px 7px 0;color:var(--muted);white-space:nowrap;vertical-align:top">'+r[0]+'</td><td style="padding:7px 0;border-bottom:1px solid #f5f5f5;word-break:break-all">'+r[1]+'</td></tr>';
+    });
+    h3+='</table></div>'+mismatch;
+    info.innerHTML=h3;
+  });
+});
+
+</script></body></html>

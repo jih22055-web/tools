@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>万能工具箱 - 免费在线工具集合</title>
 <meta name="description" content="免费在线实用工具集合：图片压缩、二维码生成、Base64编码、时间戳转换、密码生成、字数统计等，无需注册，打开即用。">
-<link rel="stylesheet" href="style.css?v=20261123e">
+<link rel="stylesheet" href="style.css?v=20261123f">
 </head>
 <body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
@@ -27,7 +27,7 @@
 
   <section class="seo" id="about">
     <h2>关于万能工具箱</h2>
-    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、查询计算、网络工具等 49 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
+    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、查询计算、网络工具等 84 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
     <h2>为什么选择我们</h2>
     <ul>
       <li><strong>完全免费</strong>：所有工具永久免费使用，不设会员、不看广告也能用</li>
@@ -98,6 +98,41 @@ const TOOLS = [
   {name:'生肖星座查询',desc:'查生肖、天干地支与星座，附对照表',icon:'🐉',color:'#8c5a2e',file:'zodiac.html',tag:'生肖 星座 属相 查询',cat:'查询计算'},
   {name:'单位转换',desc:'长度、重量、温度等八大类单位实时换算',icon:'📐',color:'#2e7a7a',file:'unitconvert.html',tag:'单位 换算 长度 重量 温度',cat:'查询计算'},
   {name:'纸张尺寸查询',desc:'A/B/C 系列与开本尺寸速查，含英寸换算',icon:'📄',color:'#5a6a2e',file:'papersize.html',tag:'纸张 a4 尺寸 开本 打印',cat:'查询计算'},
+  {name:'SQL 格式化',desc:'一键美化 SQL，关键字大写、按子句换行缩进',icon:'🗃️',color:'#4a5a7a',file:'sqlformat.html',tag:'sql 格式化 美化 mysql 语句',cat:'开发工具'},
+  {name:'XML 格式化',desc:'XML 美化缩进与压缩，自动校验标签闭合',icon:'📄',color:'#5a6a4a',file:'xmlformat.html',tag:'xml 格式化 美化 压缩',cat:'开发工具'},
+  {name:'YAML 转换',desc:'YAML 与 JSON 双向转换，配置文件互转',icon:'🧾',color:'#8c6a2e',file:'yamlformat.html',tag:'yaml json 转换 配置 k8s docker',cat:'开发工具'},
+  {name:'CSS 美化压缩',desc:'CSS 一键美化缩进或压缩，显示压缩率',icon:'🎨',color:'#2e6a7a',file:'cssformat.html',tag:'css 美化 压缩 格式化',cat:'开发工具'},
+  {name:'HTML 美化压缩',desc:'HTML 美化缩进或压缩，保护 script 内容',icon:'📐',color:'#6a4a7a',file:'htmlformat.html',tag:'html 美化 压缩 格式化',cat:'开发工具'},
+  {name:'Cron 表达式解析',desc:'解析定时表达式，算出接下来 8 次执行时间',icon:'⏰',color:'#8c5a2e',file:'cron.html',tag:'cron crontab 定时 表达式',cat:'开发工具'},
+  {name:'UA 解析',desc:'识别 User-Agent 的浏览器、内核、系统与设备',icon:'🔍',color:'#2e5a8c',file:'useragent.html',tag:'ua useragent 浏览器 识别',cat:'开发工具'},
+  {name:'curl 转代码',desc:'curl 命令转 fetch、axios、Python、Go 代码',icon:'💻',color:'#3a4a8c',file:'curl2code.html',tag:'curl 转换 fetch axios python go',cat:'开发工具'},
+  {name:'随机字符串生成',desc:'批量生成随机字符串，用加密级随机数',icon:'🎲',color:'#5a3a8c',file:'randomstring.html',tag:'随机 字符串 密钥 token 生成',cat:'开发工具'},
+  {name:'Htpasswd 生成',desc:'生成 Apache htpasswd 密码行，支持 SHA-1',icon:'🔑',color:'#6a3a5a',file:'htpasswd.html',tag:'htpasswd apache 密码 认证',cat:'开发工具'},
+  {name:'ASCII 码表',desc:'ASCII 0-127 完整对照表，可搜索可复制',icon:'🔣',color:'#4a6a3a',file:'asciitable.html',tag:'ascii 码表 字符 编码',cat:'开发工具'},
+  {name:'URL 参数解析',desc:'拆解 URL 查询参数，可编辑后重新生成链接',icon:'🔗',color:'#2e7a6a',file:'queryparams.html',tag:'url 参数 解析 query string',cat:'开发工具'},
+  {name:'Hex 转字符串',desc:'十六进制与文本互转，按 UTF-8 解码不乱码',icon:'🔢',color:'#5a6a2e',file:'hex.html',tag:'hex 十六进制 转换 字符串',cat:'文本处理'},
+  {name:'文字加密解密',desc:'凯撒、ROT13、Atbash、维吉尼亚密码加解密',icon:'🔒',color:'#6a3a3a',file:'textcrypt.html',tag:'凯撒 rot13 atbash 维吉尼亚 密码',cat:'文本处理'},
+  {name:'在线提词器',desc:'全屏大字滚动提词，可调速度与字号',icon:'📺',color:'#2e4a7a',file:'teleprompter.html',tag:'提词器 台词 滚动 口播',cat:'文本处理'},
+  {name:'键盘符号速查',desc:'数学、箭头、货币、序号等特殊符号，点击复制',icon:'⌨️',color:'#4a4a6a',file:'keysymbols.html',tag:'特殊符号 键盘 箭头 货币 序号',cat:'文本处理'},
+  {name:'文本批量加行号',desc:'给每行批量加序号，可设起始、步长与补零',icon:'🔢',color:'#7a4a2e',file:'linenumber.html',tag:'行号 序号 编号 批量',cat:'文本处理'},
+  {name:'亲戚称谓计算器',desc:'点选关系链，算出该怎么称呼对方',icon:'👪',color:'#8c3a5a',file:'kinship.html',tag:'亲戚 称谓 称呼 家族 辈分',cat:'查询计算'},
+  {name:'衣服鞋码对照',desc:'男女装、裤子、鞋码、童装尺码对照',icon:'👕',color:'#2e7a5a',file:'sizechart.html',tag:'尺码 鞋码 衣服 对照 尺寸',cat:'查询计算'},
+  {name:'血型遗传规律',desc:'根据父母血型推算子女可能血型与概率',icon:'🧬',color:'#6a2e5a',file:'bloodtype.html',tag:'血型 遗传 abo 父母 子女',cat:'查询计算'},
+  {name:'分数计算器',desc:'分数加减乘除，自动约分转带分数',icon:'➗',color:'#4a5a6a',file:'fraction.html',tag:'分数 计算 约分 通分',cat:'查询计算'},
+  {name:'元素周期表',desc:'118 种元素完整数据，按分类筛选搜索',icon:'⚗️',color:'#2e6a4a',file:'periodic.html',tag:'元素 周期表 化学 原子量',cat:'查询计算'},
+  {name:'中国历史朝代表',desc:'历代朝代顺序、起止年份、都城与人物',icon:'📜',color:'#7a5a2e',file:'dynasty.html',tag:'朝代 历史 年表 中国',cat:'查询计算'},
+  {name:'罗马数字转换',desc:'阿拉伯数字与罗马数字互转，校验标准写法',icon:'🏛️',color:'#5a4a6a',file:'roman.html',tag:'罗马数字 转换 mmxxvi',cat:'查询计算'},
+  {name:'九宫格切图',desc:'图片切成九宫格或任意行列，批量下载',icon:'🖼️',color:'#3a5a8c',file:'ninegrid.html',tag:'九宫格 切图 分割 朋友圈',cat:'图片工具'},
+  {name:'图片信息查看',desc:'读真实格式、尺寸、体积，识破改扩展名',icon:'🔎',color:'#4a6a5a',file:'imginfo.html',tag:'图片 信息 尺寸 格式 查看',cat:'图片工具'},
+  {name:'图片压缩到指定大小',desc:'压到指定 KB 以内，自动寻找最佳质量',icon:'📉',color:'#8c4a2e',file:'imgtarget.html',tag:'图片 压缩 指定大小 kb',cat:'图片工具'},
+  {name:'图片圆角处理',desc:'圆角矩形、圆形、椭圆裁剪，输出透明 PNG',icon:'⭕',color:'#2e7a7a',file:'imground.html',tag:'图片 圆角 圆形 头像 裁剪',cat:'图片工具'},
+  {name:'图片取色',desc:'提取图片主色调，点击任意位置取精确颜色',icon:'🌈',color:'#7a2e6a',file:'imagepalette.html',tag:'图片 取色 主色 配色 hex',cat:'图片工具'},
+  {name:'今天吃什么',desc:'选择困难救星，按类型随机推荐一餐',icon:'🍜',color:'#8c5a2e',file:'eattoday.html',tag:'今天吃什么 随机 外卖 推荐',cat:'生活工具'},
+  {name:'手持弹幕',desc:'手机变滚动大字牌，接机应援生日祝福',icon:'📢',color:'#6a2e3a',file:'danmaku.html',tag:'弹幕 手持 灯牌 应援 接机',cat:'生活工具'},
+  {name:'在线节拍器',desc:'40-240 BPM 节拍器，可手动打拍测速',icon:'🎵',color:'#2e5a6a',file:'metronome.html',tag:'节拍器 bpm 打拍 练琴',cat:'生活工具'},
+  {name:'地图坐标转换',desc:'WGS84、GCJ-02、BD-09 互转，解决点位偏移',icon:'🗺️',color:'#3a6a4a',file:'coordconvert.html',tag:'坐标 转换 gps 火星 百度 高德',cat:'生活工具'},
+  {name:'密码强度检测',desc:'评估密码强度与破解时间，指出具体弱点',icon:'🔐',color:'#6a3a4a',file:'passwordstrength.html',tag:'密码 强度 检测 安全',cat:'生活工具'},
+  {name:'二维码识别',desc:'上传图片识别二维码内容，本地解析不上传',icon:'📷',color:'#2e6a8c',file:'qrcan.html',tag:'二维码 识别 扫描 解码',cat:'编码解码'},
 ];
 
 const CATS = ['全部', ...new Set(TOOLS.map(t=>t.cat))];

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片取色 - 万能工具箱</title>
+<meta name="description" content="上传图片自动提取主色调，点击图片任意位置取精确颜色值。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片取色与主色提取</div>
+  <div class="panel">
+    <h2>🎨 图片取色与主色提取</h2>
+    <p class="desc">上传图片自动提取主色调，点击图片任意位置取精确颜色值。</p>
+    <div class="dropzone" id="drop">
+      <div style="font-size:34px;margin-bottom:8px">📁</div>
+      <div>点击选择图片，或拖到这里</div>
+      <div style="font-size:12px;margin-top:6px;color:var(--muted)">图片只在本地处理，不会上传</div>
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div id="pv" style="margin-top:16px"></div>
+    <label>主色提取结果（点击色块复制 HEX）</label>
+    <div id="palette" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px"></div>
+    <p class="hint">上传图片自动提取主色调，也能点击图片任意位置取精确颜色。设计师配色、给图片挑背景色很好用。</p>
+  </div>
+<section class="seo">
+<p class="lead">图片取色工具做两件事：自动提取一张图的主色调，以及点击图片任意位置取那一个像素的精确颜色。做设计时想沿用参考图的配色、给照片挑一个协调的背景色、从截图里取出品牌色，比用取色软件再截图快得多。</p>
+<h2>适用场景</h2><ul><li>从参考图提取配色方案</li><li>取品牌 Logo 的准确色值</li><li>给图片挑协调的背景色</li><li>前端开发时取设计稿颜色</li></ul>
+<h2>使用方法</h2><ol><li>上传图片</li><li>自动显示提取的主色块，点击复制 HEX</li><li>也可点击图片任意位置取该点颜色</li></ol>
+<h2>常见问题</h2><details><summary>提取的主色准确吗？</summary><p>用的是颜色分桶统计，取占比最高的若干种颜色。对照片效果好，对渐变图会偏向中间调。</p></details><details><summary>为什么取到的颜色和看到的不一样？</summary><p>图片经过浏览器缩放后，点击位置对应的原图像素可能有偏差。需要精确值建议用图片原尺寸操作。</p></details><details><summary>HEX 和 RGB 怎么互换？</summary><p>可以用颜色转换工具互转，本工具复制的是 HEX 值。</p></details><details><summary>能导出配色方案吗？</summary><p>当前点色块复制单个色值。需要整套配色可以逐个复制，或用颜色转换工具整理。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="color.html">颜色转换</a><a href="imginfo.html">图片信息查看</a><a href="imground.html">图片圆角</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+
+function initDrop(cb){
+  var input=document.getElementById('file'),drop=document.getElementById('drop');
+  drop.onclick=function(){input.click()};
+  input.onchange=function(){if(this.files[0])cb(this.files[0])};
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('over')});
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('over')});
+  });
+  drop.addEventListener('drop',function(ev){
+    var f=ev.dataTransfer.files[0];
+    if(f)cb(f);
+  });
+}
+function loadImage(f,next){
+  var img=new Image(),url=URL.createObjectURL(f);
+  img.onload=function(){next(img,url,f)};
+  img.onerror=function(){alert('图片加载失败，请换一张');URL.revokeObjectURL(url)};
+  img.src=url;
+}
+function fmtSize(n){
+  if(n<1024)return n+' B';
+  if(n<1048576)return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+
+var cur=null,cv=null;
+initDrop(function(f){
+  loadImage(f,function(img){
+    cur=img;
+    var w=img.naturalWidth,h=img.naturalHeight;
+    var max=900,s=Math.min(1,max/Math.max(w,h));
+    cv=document.createElement('canvas');
+    cv.width=Math.round(w*s);cv.height=Math.round(h*s);
+    var ctx=cv.getContext('2d');
+    ctx.drawImage(img,0,0,cv.width,cv.height);
+    document.getElementById('pv').innerHTML='';
+    cv.style.cssText='max-width:100%;border:1px solid var(--line);border-radius:8px;cursor:crosshair;display:block';
+    document.getElementById('pv').appendChild(cv);
+    cv.onclick=function(ev){
+      var rect=cv.getBoundingClientRect();
+      var x=Math.round((ev.clientX-rect.left)*(cv.width/rect.width));
+      var y=Math.round((ev.clientY-rect.top)*(cv.height/rect.height));
+      try{
+        var d=cv.getContext('2d').getImageData(x,y,1,1).data;
+        var hex=rgb2hex(d[0],d[1],d[2]);
+        navigator.clipboard.writeText(hex);
+        var t=document.createElement('div');
+        t.style.cssText='position:fixed;left:'+ev.clientX+'px;top:'+(ev.clientY-34)+'px;background:#000;color:#fff;padding:4px 10px;border-radius:4px;font-size:13px;z-index:9999';
+        t.textContent=hex+' 已复制';
+        document.body.appendChild(t);
+        setTimeout(function(){t.remove()},1000);
+      }catch(e){}
+    };
+    palette();
+  });
+});
+function rgb2hex(r,g,b){
+  return '#'+[r,g,b].map(function(v){return v.toString(16).padStart(2,'0')}).join('').toUpperCase();
+}
+function palette(){
+  if(!cv)return;
+  var d;
+  try{d=cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data}catch(e){
+    document.getElementById('palette').innerHTML='<span style="color:var(--muted)">无法读取像素</span>';return;
+  }
+  var bins={};
+  for(var i=0;i<d.length;i+=16){
+    var r=d[i],g=d[i+1],b=d[i+2],a=d[i+3];
+    if(a<128)continue;
+    if(r>245&&g>245&&b>245)continue;
+    if(r<10&&g<10&&b<10)continue;
+    var key=((r>>4)<<8)|((g>>4)<<4)|(b>>4);
+    if(!bins[key])bins[key]={n:0,r:0,g:0,b:0};
+    bins[key].n++;bins[key].r+=r;bins[key].g+=g;bins[key].b+=b;
+  }
+  var arr=Object.keys(bins).map(function(k){
+    var v=bins[k];
+    return {n:v.n,r:Math.round(v.r/v.n),g:Math.round(v.g/v.n),b:Math.round(v.b/v.n)};
+  }).sort(function(x,y){return y.n-x.n}).slice(0,12);
+  var box=document.getElementById('palette');
+  if(!arr.length){box.innerHTML='<span style="color:var(--muted)">图片是纯色或全透明</span>';return}
+  box.innerHTML=arr.map(function(c){
+    var hex=rgb2hex(c.r,c.g,c.b);
+    return '<div class="swatch" data-h="'+hex+'" style="cursor:pointer;text-align:center"><div style="width:76px;height:56px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:'+hex+'"></div><div style="font-size:11px;margin-top:5px;color:var(--muted);font-family:ui-monospace,monospace">'+hex+'</div></div>';
+  }).join('');
+  box.querySelectorAll('.swatch').forEach(function(el){
+    el.onclick=function(){
+      navigator.clipboard.writeText(el.dataset.h);
+      var t=el.querySelector('div:last-child');
+      var old=t.textContent;t.textContent='已复制';t.style.color='var(--brand)';
+      setTimeout(function(){t.textContent=old;t.style.color=''},900);
+    };
+  });
+}
+
+</script></body></html>

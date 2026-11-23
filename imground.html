@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片圆角 - 万能工具箱</title>
+<meta name="description" content="给图片加圆角、圆形或椭圆裁剪，输出透明 PNG，可作头像与卡片素材。">
+<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片圆角处理</div>
+  <div class="panel">
+    <h2>⭕ 图片圆角处理</h2>
+    <p class="desc">给图片加圆角、圆形或椭圆裁剪，输出透明 PNG，可作头像与卡片素材。</p>
+    <div class="dropzone" id="drop">
+      <div style="font-size:34px;margin-bottom:8px">📁</div>
+      <div>点击选择图片，或拖到这里</div>
+      <div style="font-size:12px;margin-top:6px;color:var(--muted)">图片只在本地处理，不会上传</div>
+      <input type="file" id="file" accept="image/*" style="display:none">
+    </div>
+    <div class="row" style="margin-top:18px">
+      <div><label style="margin-top:0">圆角半径（像素）</label><input type="number" id="r" value="40" min="0" max="2000"></div>
+      <div><label style="margin-top:0">形状</label>
+        <select id="shape"><option value="rect">圆角矩形</option><option value="circle">圆形</option><option value="ellipse">椭圆</option></select></div>
+      <div><label style="margin-top:0">背景</label>
+        <select id="bg"><option value="transparent">透明</option><option value="#ffffff">白色</option><option value="#000000">黑色</option></select></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="go">生成</button>
+      <button class="btn ghost" id="dl">下载 PNG</button>
+    </div>
+    <div id="pv" style="margin-top:16px"></div>
+    <p class="hint">输出 PNG 保留透明圆角，可直接用作头像、卡片配图、UI 素材。</p>
+  </div>
+<section class="seo">
+<p class="lead">图片圆角工具把方正的图片处理成圆角矩形、圆形或椭圆，边缘透明。做头像要圆形、做卡片配图要圆角、做 UI 素材需要统一圆角半径，用设计软件太重，这里传图调个数值就能导出。输出是 PNG，透明边缘可以直接叠在任意背景上。</p>
+<h2>适用场景</h2><ul><li>把照片裁成圆形做头像</li><li>给卡片配图加统一圆角</li><li>制作圆形图标素材</li><li>把方图处理成椭圆用于封面</li></ul>
+<h2>使用方法</h2><ol><li>上传图片</li><li>设置圆角半径，或选择圆形/椭圆</li><li>选择背景色（透明/白/黑）</li><li>点「生成」看预览，满意后下载 PNG</li></ol>
+<h2>常见问题</h2><details><summary>圆形裁剪会变形吗？</summary><p>不会拉伸图片，而是按短边做圆，圆心居中，超出圆的部分被裁掉。所以非正方形的图会损失两侧或上下的内容。</p></details><details><summary>圆角半径最大能设多少？</summary><p>输入框允许到 2000，实际会被限制在短边的一半，超过就变成完全圆形。</p></details><details><summary>为什么输出的文件比原图大？</summary><p>PNG 是无损压缩，而且带 alpha 通道，体积通常比 JPG 大。要小体积建议导出后再用压缩工具处理。</p></details><details><summary>背景选透明后能直接发微信吗？</summary><p>微信会把透明区域显示成白色或黑色（视版本），需要特定背景请直接选白或黑输出。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="ninegrid.html">九宫格切图</a><a href="watermark.html">图片加水印</a><a href="imagepalette.html">图片取色</a><a href="index.html">全部工具</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+
+<script>
+
+
+function initDrop(cb){
+  var input=document.getElementById('file'),drop=document.getElementById('drop');
+  drop.onclick=function(){input.click()};
+  input.onchange=function(){if(this.files[0])cb(this.files[0])};
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('over')});
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('over')});
+  });
+  drop.addEventListener('drop',function(ev){
+    var f=ev.dataTransfer.files[0];
+    if(f)cb(f);
+  });
+}
+function loadImage(f,next){
+  var img=new Image(),url=URL.createObjectURL(f);
+  img.onload=function(){next(img,url,f)};
+  img.onerror=function(){alert('图片加载失败，请换一张');URL.revokeObjectURL(url)};
+  img.src=url;
+}
+function fmtSize(n){
+  if(n<1024)return n+' B';
+  if(n<1048576)return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+
+var cur=null;
+initDrop(function(f){
+  loadImage(f,function(img){cur=img;document.getElementById('go').click()});
+});
+function roundRect(ctx,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(r,0);
+  ctx.lineTo(w-r,0);ctx.quadraticCurveTo(w,0,w,r);
+  ctx.lineTo(w,h-r);ctx.quadraticCurveTo(w,h,w-r,h);
+  ctx.lineTo(r,h);ctx.quadraticCurveTo(0,h,0,h-r);
+  ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);
+  ctx.closePath();
+}
+function draw(){
+  if(!cur){alert('请先选择图片');return}
+  var w=cur.naturalWidth,h=cur.naturalHeight;
+  var r=Math.min(2000,Math.max(0,parseInt(document.getElementById('r').value,10)||0));
+  var shape=document.getElementById('shape').value;
+  var bg=document.getElementById('bg').value;
+  var cv=document.createElement('canvas');
+  cv.width=w;cv.height=h;
+  var ctx=cv.getContext('2d');
+  if(bg!=='transparent'){ctx.fillStyle=bg;ctx.fillRect(0,0,w,h)}
+  ctx.save();
+  if(shape==='circle'){
+    var s=Math.min(w,h);
+    ctx.beginPath();
+    ctx.arc(w/2,h/2,s/2,0,Math.PI*2);
+    ctx.closePath();
+  }else if(shape==='ellipse'){
+    ctx.beginPath();
+    ctx.ellipse(w/2,h/2,w/2,h/2,0,0,Math.PI*2);
+    ctx.closePath();
+  }else{
+    roundRect(ctx,w,h,r);
+  }
+  ctx.clip();
+  ctx.drawImage(cur,0,0,w,h);
+  ctx.restore();
+  var url=cv.toDataURL('image/png');
+  window._outUrl=url;
+  document.getElementById('pv').innerHTML='<div style="font-size:13px;color:var(--muted);margin-bottom:8px">预览（'+w+'×'+h+'）</div><img src="'+url+'" style="max-width:100%;max-height:360px;border:1px solid var(--line);border-radius:6px;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0/16px 16px">';
+}
+document.getElementById('go').onclick=draw;
+document.getElementById('shape').onchange=draw;
+document.getElementById('bg').onchange=draw;
+document.getElementById('r').oninput=function(){if(cur)draw()};
+document.getElementById('dl').onclick=function(){
+  if(!window._outUrl){alert('请先生成');return}
+  var a=document.createElement('a');
+  a.href=window._outUrl;a.download='rounded.png';a.click();
+};
+
+</script></body></html>
