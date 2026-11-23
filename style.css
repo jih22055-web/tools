@@ -23,24 +23,11 @@ header{
   width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
   background:var(--brand);font-size:16px;color:#fff;
 }
-.nav-links{display:flex;gap:4px;color:var(--text);font-size:14px;align-items:center;flex-wrap:wrap}
-.nav-links>a,.nav-links>.drop>a{
-  display:inline-block;padding:8px 10px;border-radius:6px;white-space:nowrap;
+.nav-links{display:flex;gap:4px;color:var(--text);font-size:14px;align-items:center}
+.nav-links>a{
+  display:inline-block;padding:8px 12px;border-radius:6px;white-space:nowrap;
 }
-.nav-links>a:hover,.nav-links>.drop:hover>a{color:var(--brand);background:#fff4f1}
-.nav-links .drop>a.active{color:var(--brand);font-weight:700}
-.nav-links .drop{position:relative}
-.nav-links .drop>a::after{content:' ▾';font-size:10px;color:var(--muted)}
-.nav-links .drop .menu{
-  display:none;position:absolute;top:100%;left:0;min-width:150px;background:#fff;
-  border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.1);
-  padding:6px;z-index:60;
-}
-.nav-links .drop:hover .menu{display:block}
-.nav-links .drop .menu a{
-  display:block;padding:8px 12px;border-radius:5px;font-size:13px;color:var(--text);white-space:nowrap;
-}
-.nav-links .drop .menu a:hover{background:#fff4f1;color:var(--brand)}
+.nav-links>a:hover{color:var(--brand);background:#fff4f1}
 
 /* hero */
 .hero{padding:56px 0 34px;text-align:center}
