@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>时间戳转换 - 万能工具箱</title>
+<meta name="description" content="Unix 时间戳与日期时间相互转换，支持秒/毫秒，显示当前时间戳。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 时间戳转换</div>
+  <div class="panel">
+    <h2>🕐 时间戳转换</h2>
+    <p class="desc">Unix 时间戳与日期时间双向转换，自动识别秒/毫秒。</p>
+    <div class="stat-grid" style="margin-top:0">
+      <div class="stat"><div class="num" id="nowSec" style="font-size:20px">-</div><div class="lbl">当前时间戳（秒）</div></div>
+      <div class="stat"><div class="num" id="nowMs" style="font-size:20px">-</div><div class="lbl">当前时间戳（毫秒）</div></div>
+    </div>
+    <label>时间戳 → 日期</label>
+    <div class="row"><input type="text" id="tsInput" placeholder="如 1700000000"><button class="btn" id="tsToDate" style="flex:0 0 auto">转换</button></div>
+    <div class="result" id="dateOut">—</div>
+    <label>日期 → 时间戳</label>
+    <div class="row"><input type="datetime-local" id="dateInput"><button class="btn" id="dateToTs" style="flex:0 0 auto">转换</button></div>
+    <div class="result" id="tsOut">—</div>
+  </div>
+  <div class="adslot">广告位</div>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function tick(){
+  const s=Math.floor(Date.now()/1000);
+  document.getElementById('nowSec').textContent=s;
+  document.getElementById('nowMs').textContent=Date.now();
+}
+tick();setInterval(tick,1000);
+function pad(n){return String(n).padStart(2,'0')}
+function fmt(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())}
+document.getElementById('tsToDate').onclick=()=>{
+  let v=document.getElementById('tsInput').value.trim();if(!v)return;
+  v=Number(v);if(isNaN(v))return document.getElementById('dateOut').textContent='❌ 请输入有效数字';
+  if(v<1e11)v*=1000;
+  const d=new Date(v);
+  document.getElementById('dateOut').textContent=isNaN(d.getTime())?'❌ 无效时间戳':fmt(d)+' (本地时间)';
+};
+document.getElementById('dateToTs').onclick=()=>{
+  const v=document.getElementById('dateInput').value;if(!v)return;
+  const t=new Date(v).getTime();
+  document.getElementById('tsOut').textContent='秒: '+Math.floor(t/1000)+'\n毫秒: '+t;
+};
+</script></body></html>

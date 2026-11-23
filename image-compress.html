@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片压缩 - 万能工具箱</title>
+<meta name="description" content="在线压缩图片，减小体积，本地处理不上传，支持 JPG/PNG/WEBP。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 图片压缩</div>
+  <div class="panel">
+    <h2>🖼️ 图片压缩</h2>
+    <p class="desc">在浏览器本地压缩图片，图片不会上传到服务器。调整质量即可实时预览压缩效果。</p>
+    <label>压缩质量：<span id="qval">70</span>%</label>
+    <input type="range" id="quality" min="10" max="100" value="70" style="width:100%;padding:0;accent-color:var(--brand)">
+    <label style="margin-top:20px">选择图片</label>
+    <div class="drop" id="drop">点击选择图片，或把图片拖到这里<br><small>支持 JPG / PNG / WEBP</small></div>
+    <input type="file" id="file" accept="image/*" hidden>
+    <div class="preview" id="preview" style="display:none">
+      <img id="imgOut">
+      <div class="stat-grid">
+        <div class="stat"><div class="num" id="origSize">-</div><div class="lbl">原大小 KB</div></div>
+        <div class="stat"><div class="num" id="newSize">-</div><div class="lbl">压缩后 KB</div></div>
+        <div class="stat"><div class="num" id="saved">-</div><div class="lbl">节省</div></div>
+      </div>
+      <div class="actions"><button class="btn full" id="download">⬇️ 下载压缩后的图片</button></div>
+    </div>
+  </div>
+  <div class="adslot">广告位</div>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+const drop=document.getElementById('drop'),file=document.getElementById('file'),quality=document.getElementById('quality');
+const qval=document.getElementById('qval'),preview=document.getElementById('preview'),imgOut=document.getElementById('imgOut');
+let curFile=null,resultBlob=null;
+drop.onclick=()=>file.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])load(e.dataTransfer.files[0])};
+file.onchange=e=>{if(e.target.files[0])load(e.target.files[0])};
+function load(f){if(!f.type.startsWith('image/'))return alert('请选择图片文件');curFile=f;compress()}
+function compress(){
+  if(!curFile)return;
+  const q=+quality.value/100;qval.textContent=quality.value;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');canvas.width=img.width;canvas.height=img.height;
+      const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,img.width,img.height);
+      ctx.drawImage(img,0,0);
+      const type=curFile.type==='image/png'?'image/png':'image/jpeg';
+      canvas.toBlob(blob=>{
+        resultBlob=blob;imgOut.src=URL.createObjectURL(blob);preview.style.display='block';
+        document.getElementById('origSize').textContent=(curFile.size/1024).toFixed(1);
+        document.getElementById('newSize').textContent=(blob.size/1024).toFixed(1);
+        document.getElementById('saved').textContent=Math.max(0,(1-blob.size/curFile.size)*100).toFixed(0)+'%';
+      },type,q);
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(curFile);
+}
+quality.oninput=compress;
+document.getElementById('download').onclick=()=>{
+  if(!resultBlob)return;
+  const a=document.createElement('a');a.href=URL.createObjectURL(resultBlob);
+  a.download='compressed.'+(curFile.type==='image/png'?'png':'jpg');a.click();
+};
+</script></body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>万能工具箱 - 免费在线工具集合</title>
+<meta name="description" content="免费在线实用工具集合：图片压缩、二维码生成、Base64编码、时间戳转换、密码生成、字数统计等，无需注册，打开即用。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a>
+    <nav class="nav-links">
+      <a href="#tools">全部工具</a>
+      <a href="#about">关于</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>你需要的工具，<span class="g">都在这里</span></h1>
+    <p>免费、快速、无需注册。打开网页就能用。</p>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" id="search" placeholder="搜索工具，如：压缩、二维码、时间戳…">
+    </div>
+  </section>
+
+  <div class="adslot">广告位（流量起来后接入 Google AdSense 变现）</div>
+
+  <h2 class="section-title" id="tools"><span class="dot"></span> 全部工具 <span id="count" style="color:var(--muted);font-size:14px;font-weight:400"></span></h2>
+  <div class="grid" id="grid"></div>
+
+  <section id="about" style="padding-bottom:60px;color:var(--muted);font-size:14px">
+    <h2 class="section-title"><span class="dot"></span> 关于本站</h2>
+    <p>万能工具箱提供完全免费的在线工具，所有计算都在你的浏览器本地完成，不上传任何数据，安全隐私有保障。</p>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div>
+</footer>
+
+<script>
+const TOOLS = [
+  {name:'图片压缩',desc:'在线压缩图片，减小文件体积，支持 JPG/PNG/WEBP',icon:'🖼️',color:'#3a5a8c',file:'image-compress.html',tag:'图片 压缩 jpg png webp'},
+  {name:'二维码生成器',desc:'输入文字或链接，一键生成可下载的二维码',icon:'🔳',color:'#4a4a6a',file:'qrcode.html',tag:'二维码 qrcode 扫码'},
+  {name:'Base64 编码解码',desc:'文本与 Base64 相互转换，支持中文',icon:'🔤',color:'#2f6b5a',file:'base64.html',tag:'base64 编码 解码'},
+  {name:'时间戳转换',desc:'时间戳与日期时间互转，支持毫秒/秒',icon:'🕐',color:'#7a5a2e',file:'timestamp.html',tag:'时间戳 日期 时间'},
+  {name:'密码生成器',desc:'生成高强度随机密码，自定义长度与字符',icon:'🔐',color:'#6a3a5a',file:'password.html',tag:'密码 随机 强密码'},
+  {name:'字数统计',desc:'统计字符数、字数、行数、段落数、词频',icon:'📝',color:'#3a6a7a',file:'wordcount.html',tag:'字数 统计 字符 行数'},
+  {name:'URL 编码解码',desc:'网址与参数编码解码，处理特殊字符',icon:'🔗',color:'#5a4a8c',file:'urlencode.html',tag:'url 编码 解码 网址'},
+  {name:'JSON 格式化',desc:'美化压缩校验 JSON，语法高亮',icon:'📦',color:'#7a5a2e',file:'jsonformat.html',tag:'json 格式化 美化 校验'},
+  {name:'文字大小写转换',desc:'大小写、驼峰、下划线等格式互转',icon:'Aa',color:'#4a6a3a',file:'caseconvert.html',tag:'大小写 驼峰 下划线'},
+  {name:'文本去重',desc:'去除重复行，保留顺序，支持区分大小写',icon:'📋',color:'#6a3a3a',file:'dedupe.html',tag:'去重 重复行 文本'},
+];
+
+const grid = document.getElementById('grid');
+const count = document.getElementById('count');
+const search = document.getElementById('search');
+
+function render(list){
+  grid.innerHTML = list.map(t=>`
+    <a class="tool" href="${t.file}">
+      <span class="arrow">↗</span>
+      <div class="ic" style="background:${t.color}33;color:${t.color}">${t.icon}</div>
+      <h3>${t.name}</h3>
+      <p>${t.desc}</p>
+    </a>`).join('');
+  count.textContent = `(${list.length})`;
+}
+render(TOOLS);
+search.addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  render(TOOLS.filter(t=>(t.name+t.desc+t.tag).toLowerCase().includes(q)));
+});
+</script>
+</body>
+</html>

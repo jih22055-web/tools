@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文字大小写转换 - 万能工具箱</title>
+<meta name="description" content="英文大小写、驼峰、下划线、连字符、蛇形等命名格式相互转换。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 文字大小写转换</div>
+  <div class="panel">
+    <h2>Aa 文字大小写转换</h2>
+    <p class="desc">在多种命名格式间一键转换，程序员和文案必备。</p>
+    <label>输入文本</label>
+    <textarea id="input" placeholder="例如：hello world" style="min-height:120px"></textarea>
+    <div class="actions" id="btns"></div>
+    <label>输出</label>
+    <div class="result" id="output">结果将显示在这里…</div>
+  </div>
+  <div class="adslot">广告位</div>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function words(s){return s.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/[_-]/g,' ').trim().split(/\s+/).filter(Boolean)}
+const ops={
+  '全大写':s=>s.toUpperCase(),
+  '全小写':s=>s.toLowerCase(),
+  '首字母大写':s=>s.replace(/\b\w/g,c=>c.toUpperCase()),
+  '驼峰 camelCase':s=>{const w=words(s);return w[0].toLowerCase()+w.slice(1).map(x=>x.charAt(0).toUpperCase()+x.slice(1).toLowerCase()).join('')},
+  '帕斯卡 PascalCase':s=>words(s).map(x=>x.charAt(0).toUpperCase()+x.slice(1).toLowerCase()).join(''),
+  '下划线 snake_case':s=>words(s).map(x=>x.toLowerCase()).join('_'),
+  '连字符 kebab-case':s=>words(s).map(x=>x.toLowerCase()).join('-'),
+  '常量 CONSTANT':s=>words(s).map(x=>x.toUpperCase()).join('_'),
+};
+const btns=document.getElementById('btns');
+Object.keys(ops).forEach(k=>{const b=document.createElement('button');b.className='btn ghost';b.textContent=k;b.onclick=()=>{const v=document.getElementById('input').value;document.getElementById('output').textContent=v?ops[k](v):'结果将显示在这里…'};btns.appendChild(b)});
+</script></body></html>
