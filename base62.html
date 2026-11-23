@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Base62 编码 - 万能工具箱</title>
+<meta name="description" content="Base62 编码与解码，把数字转成更短的字母数字字符串，常用于短链接和 ID。">
+
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">首页</a><div class="drop"><a href="#" class="active">编码解码</a><div class="menu"><a href="base64.html">Base64 编码解码</a><a href="urlencode.html">URL 编码解码</a><a href="unicode.html">Unicode 编码</a><a href="base62.html">Base62 编码</a><a href="md5.html">MD5 加密</a><a href="base-convert.html">任意进制转换</a></div></div><div class="drop"><a href="#" class="">开发工具</a><div class="menu"><a href="jsonformat.html">JSON 格式化</a><a href="jwt.html">JWT 解码器</a><a href="regex.html">正则表达式测试</a><a href="uuid.html">UUID 生成器</a><a href="httpstatus.html">HTTP 状态码</a><a href="html-markdown.html">HTML 转 Markdown</a></div></div><div class="drop"><a href="#" class="">文本处理</a><div class="menu"><a href="wordcount.html">字数统计</a><a href="caseconvert.html">文字大小写转换</a><a href="dedupe.html">文本去重</a><a href="diff.html">文本对比</a><a href="markdown.html">Markdown 预览</a></div></div><div class="drop"><a href="#" class="">表格转换</a><div class="menu"><a href="csv-markdown.html">CSV 转 Markdown</a><a href="json-markdown.html">JSON 转 Markdown</a></div></div><div class="drop"><a href="#" class="">图片工具</a><div class="menu"><a href="image-compress.html">图片压缩</a><a href="qrcode.html">二维码生成器</a><a href="color.html">颜色转换</a><a href="watermark.html">图片加水印</a></div></div><div class="drop"><a href="#" class="">网络工具</a><div class="menu"><a href="iplocation.html">IP 归属地查询</a><a href="netmask.html">子网掩码计算</a><a href="temp-mail.html">临时邮箱</a></div></div><div class="drop"><a href="#" class="">生活工具</a><div class="menu"><a href="timestamp.html">时间戳转换</a><a href="password.html">密码生成器</a><a href="random.html">随机抽取</a></div></div></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / Base62 编码</div>
+  <div class="panel">
+    <h2>🔢 Base62 编码</h2>
+    <p class="desc">Base62 编码与解码，把数字转成更短的字母数字字符串，常用于短链接和 ID。</p>
+    <label>输入内容</label>
+    <textarea id="in" placeholder="输入数字（编码）或 Base62 字符串（解码）…"></textarea>
+    <div class="actions">
+      <button class="btn" id="enc">编码 → Base62</button>
+      <button class="btn ghost" id="dec">解码 ← Base62</button>
+    </div>
+    <label>结果</label>
+    <div class="result" id="out">结果将在这里显示</div>
+  </div>
+<section class="seo">
+<p class="lead">Base62 使用 0-9、a-z、A-Z 共 62 个字符表示数据，比十进制更紧凑。它常用于短链接、数据库主键压缩、分布式 ID 生成等场景。</p>
+<h2>适用场景</h2><ul>
+<li>生成短链接的短码</li>
+<li>把自增数字 ID 压缩成更短的字符串</li>
+<li>在 URL 中传递紧凑的标识符</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>输入一个数字，点「编码」得到 Base62 字符串</li>
+<li>粘贴 Base62 字符串，点「解码」还原数字</li>
+<li>可批量处理，每行一个</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>Base62 和 Base64 有什么区别？</summary><p>Base62 只包含字母和数字，不含 + / = 等特殊符号，更适合放在 URL 里；Base64 包含 64 个字符，编码效率略高。</p></details>
+<details><summary>支持超大数字吗？</summary><p>JavaScript 的安全整数上限是 2^53-1。更大的数字可能精度丢失，本工具按字符串模拟大数运算，可处理较长的数字。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="base64.html">Base64 编码</a><a href="md5.html">MD5 加密</a><a href="jsonformat.html">JSON 格式化</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+const CS='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function bigDiv(s,b){let q='',r=0;for(const c of s){const n=r*10+(c.charCodeAt(0)-48);const d=Math.floor(n/b);r=n%b;if(q||d)q+=d}return[q||'0',r]}
+function enc(n){n=String(n).replace(/\D/g,'');if(!n)return'';let s='';while(n!=='0'){const [q,r]=bigDiv(n,62);s=CS[r]+s;n=q}return s}
+function dec(s){let n='0';for(const c of s){const i=CS.indexOf(c);if(i<0)continue;let carry=i;let out='';for(let k=n.length-1;k>=0;k--){const v=(n.charCodeAt(k)-48)*62+carry;out=String(v%10)+out;carry=Math.floor(v/10)}while(carry)out=String(carry%10)+out,carry=Math.floor(carry/10);n=out}return n.replace(/^0+(?=\d)/,'')||'0'}
+document.getElementById('enc').onclick=()=>{document.getElementById('out').textContent=document.getElementById('in').value.split(/\s+/).filter(Boolean).map(enc).join('\n')};
+document.getElementById('dec').onclick=()=>{document.getElementById('out').textContent=document.getElementById('in').value.split(/\s+/).filter(Boolean).map(dec).join('\n')};
+</script></body></html>

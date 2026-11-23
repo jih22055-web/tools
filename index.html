@@ -8,15 +8,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a>
-    <nav class="nav-links">
-      <a href="#tools">全部工具</a>
-      <a href="#about">关于</a>
-    </nav>
-  </div>
-</header>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">首页</a><div class="drop"><a href="#" class="">编码解码</a><div class="menu"><a href="base64.html">Base64 编码解码</a><a href="urlencode.html">URL 编码解码</a><a href="unicode.html">Unicode 编码</a><a href="base62.html">Base62 编码</a><a href="md5.html">MD5 加密</a><a href="base-convert.html">任意进制转换</a></div></div><div class="drop"><a href="#" class="">开发工具</a><div class="menu"><a href="jsonformat.html">JSON 格式化</a><a href="jwt.html">JWT 解码器</a><a href="regex.html">正则表达式测试</a><a href="uuid.html">UUID 生成器</a><a href="httpstatus.html">HTTP 状态码</a><a href="html-markdown.html">HTML 转 Markdown</a></div></div><div class="drop"><a href="#" class="">文本处理</a><div class="menu"><a href="wordcount.html">字数统计</a><a href="caseconvert.html">文字大小写转换</a><a href="dedupe.html">文本去重</a><a href="diff.html">文本对比</a><a href="markdown.html">Markdown 预览</a></div></div><div class="drop"><a href="#" class="">表格转换</a><div class="menu"><a href="csv-markdown.html">CSV 转 Markdown</a><a href="json-markdown.html">JSON 转 Markdown</a></div></div><div class="drop"><a href="#" class="">图片工具</a><div class="menu"><a href="image-compress.html">图片压缩</a><a href="qrcode.html">二维码生成器</a><a href="color.html">颜色转换</a><a href="watermark.html">图片加水印</a></div></div><div class="drop"><a href="#" class="">网络工具</a><div class="menu"><a href="iplocation.html">IP 归属地查询</a><a href="netmask.html">子网掩码计算</a><a href="temp-mail.html">临时邮箱</a></div></div><div class="drop"><a href="#" class="">生活工具</a><div class="menu"><a href="timestamp.html">时间戳转换</a><a href="password.html">密码生成器</a><a href="random.html">随机抽取</a></div></div></nav></div></header>
 
 <div class="wrap">
   <section class="hero">
@@ -25,16 +17,17 @@
     <div class="searchbox">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input type="text" id="search" placeholder="搜索工具，如：压缩、二维码、时间戳…">
+      <button class="searchbtn" id="searchBtn">搜索一下</button>
     </div>
   </section>
 
-
   <h2 class="section-title" id="tools"><span class="dot"></span> 全部工具 <span id="count" style="color:var(--muted);font-size:14px;font-weight:400"></span></h2>
+  <div class="catbar" id="catbar"></div>
   <div class="grid" id="grid"></div>
 
   <section class="seo" id="about">
     <h2>关于万能工具箱</h2>
-    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码转换、开发调试等 21 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
+    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、网络工具等 29 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
     <h2>为什么选择我们</h2>
     <ul>
       <li><strong>完全免费</strong>：所有工具永久免费使用，不设会员、不看广告也能用</li>
@@ -56,48 +49,61 @@
 
 <script>
 const TOOLS = [
-  {name:'图片压缩',desc:'在线压缩图片，减小文件体积，支持 JPG/PNG/WEBP',icon:'🖼️',color:'#3a5a8c',file:'image-compress.html',tag:'图片 压缩 jpg png webp'},
-  {name:'二维码生成器',desc:'输入文字或链接，一键生成可下载的二维码',icon:'🔳',color:'#4a4a6a',file:'qrcode.html',tag:'二维码 qrcode 扫码'},
-  {name:'Base64 编码解码',desc:'文本与 Base64 相互转换，支持中文',icon:'🔤',color:'#2f6b5a',file:'base64.html',tag:'base64 编码 解码'},
-  {name:'时间戳转换',desc:'时间戳与日期时间互转，支持毫秒/秒',icon:'🕐',color:'#7a5a2e',file:'timestamp.html',tag:'时间戳 日期 时间'},
-  {name:'密码生成器',desc:'生成高强度随机密码，自定义长度与字符',icon:'🔐',color:'#6a3a5a',file:'password.html',tag:'密码 随机 强密码'},
-  {name:'字数统计',desc:'统计字符数、字数、行数、段落数、词频',icon:'📝',color:'#3a6a7a',file:'wordcount.html',tag:'字数 统计 字符 行数'},
-  {name:'URL 编码解码',desc:'网址与参数编码解码，处理特殊字符',icon:'🔗',color:'#5a4a8c',file:'urlencode.html',tag:'url 编码 解码 网址'},
-  {name:'JSON 格式化',desc:'美化压缩校验 JSON，语法高亮',icon:'📦',color:'#7a5a2e',file:'jsonformat.html',tag:'json 格式化 美化 校验'},
-  {name:'文字大小写转换',desc:'大小写、驼峰、下划线等格式互转',icon:'Aa',color:'#4a6a3a',file:'caseconvert.html',tag:'大小写 驼峰 下划线'},
-  {name:'文本去重',desc:'去除重复行，保留顺序，支持区分大小写',icon:'📋',color:'#6a3a3a',file:'dedupe.html',tag:'去重 重复行 文本'},
-  {name:'JWT 解码器',desc:'解析 Token 的 Header 与 Payload，查看过期时间',icon:'🔑',color:'#8c6a2e',file:'jwt.html',tag:'jwt token 解码 解析'},
-  {name:'正则表达式测试',desc:'实时测试正则，高亮匹配结果与分组',icon:'🔍',color:'#2e5a8c',file:'regex.html',tag:'正则 regex 测试 匹配'},
-  {name:'UUID 生成器',desc:'批量生成 UUID/GUID，可设数量与格式',icon:'🆔',color:'#5a2e8c',file:'uuid.html',tag:'uuid guid 唯一id 生成'},
-  {name:'颜色转换',desc:'HEX、RGB、HSL 互转，带取色器与预览',icon:'🎨',color:'#8c2e5a',file:'color.html',tag:'颜色 hex rgb hsl 转换'},
-  {name:'图片加水印',desc:'给图片添加文字水印，可调透明度位置',icon:'💧',color:'#2e7a7a',file:'watermark.html',tag:'水印 图片 版权'},
-  {name:'文本对比',desc:'逐行对比两段文本，高亮新增与删除',icon:'📑',color:'#7a3a2e',file:'diff.html',tag:'对比 diff 差异 文本'},
-  {name:'HTTP 状态码',desc:'1xx 到 5xx 状态码速查，含含义与排查',icon:'🌐',color:'#2e8c6a',file:'httpstatus.html',tag:'http 状态码 404 500'},
-  {name:'Markdown 预览',desc:'边写边预览 Markdown 渲染效果',icon:'📝',color:'#6a5a2e',file:'markdown.html',tag:'markdown md 预览 编辑器'},
-  {name:'进制转换',desc:'二/八/十/十六进制互相转换',icon:'🔢',color:'#3a4a8c',file:'base-convert.html',tag:'进制 二进制 十六进制 转换'},
-  {name:'随机抽取',desc:'从名单随机抽奖、点名、分组',icon:'🎲',color:'#8c3a6a',file:'random.html',tag:'随机 抽奖 点名 抽签'},
-  {name:'临时邮箱',desc:'免费一次性邮箱，实时收验证码，防垃圾邮件',icon:'📮',color:'#2e6a8c',file:'temp-mail.html',tag:'临时邮箱 一次性邮箱 验证码 收信'},
+  {name:'图片压缩',desc:'在线压缩图片，减小文件体积，支持 JPG/PNG/WEBP',icon:'🖼️',color:'#3a5a8c',file:'image-compress.html',tag:'图片 压缩 jpg png webp',cat:'图片工具'},
+  {name:'二维码生成器',desc:'输入文字或链接，一键生成可下载的二维码',icon:'🔳',color:'#4a4a6a',file:'qrcode.html',tag:'二维码 qrcode 扫码',cat:'图片工具'},
+  {name:'颜色转换',desc:'HEX、RGB、HSL 互转，带取色器与预览',icon:'🎨',color:'#8c2e5a',file:'color.html',tag:'颜色 hex rgb hsl 转换',cat:'图片工具'},
+  {name:'图片加水印',desc:'给图片添加文字水印，可调透明度位置',icon:'💧',color:'#2e7a7a',file:'watermark.html',tag:'水印 图片 版权',cat:'图片工具'},
+  {name:'Base64 编码解码',desc:'文本与 Base64 相互转换，支持中文',icon:'🔤',color:'#2f6b5a',file:'base64.html',tag:'base64 编码 解码',cat:'编码解码'},
+  {name:'URL 编码解码',desc:'网址与参数编码解码，处理特殊字符',icon:'🔗',color:'#5a4a8c',file:'urlencode.html',tag:'url 编码 解码 网址',cat:'编码解码'},
+  {name:'Unicode 编码',desc:'中文与 Unicode 编码互转，支持 HTML 实体',icon:'㊰',color:'#4a4a8c',file:'unicode.html',tag:'unicode 编码 中文 转义',cat:'编码解码'},
+  {name:'Base62 编码',desc:'数字与 Base62 互转，生成短码短链接',icon:'🔢',color:'#5a4a6a',file:'base62.html',tag:'base62 短链 短码 编码',cat:'编码解码'},
+  {name:'MD5 加密',desc:'MD5 加密，支持 32 位与 16 位输出',icon:'🔒',color:'#6a3a5a',file:'md5.html',tag:'md5 加密 哈希 摘要',cat:'编码解码'},
+  {name:'进制转换',desc:'二/八/十/十六进制互相转换',icon:'🔢',color:'#3a4a8c',file:'base-convert.html',tag:'进制 二进制 十六进制 转换',cat:'编码解码'},
+  {name:'JSON 格式化',desc:'美化压缩校验 JSON，语法高亮',icon:'📦',color:'#7a5a2e',file:'jsonformat.html',tag:'json 格式化 美化 校验',cat:'开发工具'},
+  {name:'JWT 解码器',desc:'解析 Token 的 Header 与 Payload，查看过期时间',icon:'🔑',color:'#8c6a2e',file:'jwt.html',tag:'jwt token 解码 解析',cat:'开发工具'},
+  {name:'正则表达式测试',desc:'实时测试正则，高亮匹配结果与分组',icon:'🔍',color:'#2e5a8c',file:'regex.html',tag:'正则 regex 测试 匹配',cat:'开发工具'},
+  {name:'UUID 生成器',desc:'批量生成 UUID/GUID，可设数量与格式',icon:'🆔',color:'#5a2e8c',file:'uuid.html',tag:'uuid guid 唯一id 生成',cat:'开发工具'},
+  {name:'HTTP 状态码',desc:'1xx 到 5xx 状态码速查，含含义与排查',icon:'🌐',color:'#2e8c6a',file:'httpstatus.html',tag:'http 状态码 404 500',cat:'开发工具'},
+  {name:'HTML 转 Markdown',desc:'HTML 代码一键转 Markdown 文本',icon:'🔄',color:'#8c3a3a',file:'html-markdown.html',tag:'html markdown 转换',cat:'开发工具'},
+  {name:'CSV 转 Markdown',desc:'CSV 数据转换成 Markdown 表格',icon:'📊',color:'#2e7a5a',file:'csv-markdown.html',tag:'csv markdown 表格 转换',cat:'表格转换'},
+  {name:'JSON 转 Markdown',desc:'JSON 数据转 Markdown 表格或列表',icon:'📋',color:'#5a6a2e',file:'json-markdown.html',tag:'json markdown 表格 转换',cat:'表格转换'},
+  {name:'字数统计',desc:'统计字符数、字数、行数、段落数、词频',icon:'📝',color:'#3a6a7a',file:'wordcount.html',tag:'字数 统计 字符 行数',cat:'文本处理'},
+  {name:'文字大小写转换',desc:'大小写、驼峰、下划线等格式互转',icon:'Aa',color:'#4a6a3a',file:'caseconvert.html',tag:'大小写 驼峰 下划线',cat:'文本处理'},
+  {name:'文本去重',desc:'去除重复行，保留顺序，支持区分大小写',icon:'📋',color:'#6a3a3a',file:'dedupe.html',tag:'去重 重复行 文本',cat:'文本处理'},
+  {name:'文本对比',desc:'逐行对比两段文本，高亮新增与删除',icon:'📑',color:'#7a3a2e',file:'diff.html',tag:'对比 diff 差异 文本',cat:'文本处理'},
+  {name:'Markdown 预览',desc:'边写边预览 Markdown 渲染效果',icon:'📝',color:'#6a5a2e',file:'markdown.html',tag:'markdown md 预览 编辑器',cat:'文本处理'},
+  {name:'IP 归属地查询',desc:'查 IP 地址的国家、地区、城市与运营商',icon:'🌍',color:'#2e6a8c',file:'iplocation.html',tag:'ip 归属地 定位 运营商',cat:'网络工具'},
+  {name:'子网掩码计算',desc:'计算网络地址、广播地址与可用主机范围',icon:'🧮',color:'#3a5a6a',file:'netmask.html',tag:'子网掩码 cidr ip 计算',cat:'网络工具'},
+  {name:'临时邮箱',desc:'免费一次性邮箱，实时收验证码，防垃圾邮件',icon:'📮',color:'#2e6a8c',file:'temp-mail.html',tag:'临时邮箱 一次性邮箱 验证码 收信',cat:'网络工具'},
+  {name:'时间戳转换',desc:'时间戳与日期时间互转，支持毫秒/秒',icon:'🕐',color:'#7a5a2e',file:'timestamp.html',tag:'时间戳 日期 时间',cat:'生活工具'},
+  {name:'密码生成器',desc:'生成高强度随机密码，自定义长度与字符',icon:'🔐',color:'#6a3a5a',file:'password.html',tag:'密码 随机 强密码',cat:'生活工具'},
+  {name:'随机抽取',desc:'从名单随机抽奖、点名、分组',icon:'🎲',color:'#8c3a6a',file:'random.html',tag:'随机 抽奖 点名 抽签',cat:'生活工具'},
 ];
 
+const CATS = ['全部', ...new Set(TOOLS.map(t=>t.cat))];
 const grid = document.getElementById('grid');
 const count = document.getElementById('count');
 const search = document.getElementById('search');
-
-function render(list){
-  grid.innerHTML = list.map(t=>`
-    <a class="tool" href="${t.file}">
-      <span class="arrow">↗</span>
-      <div class="ic" style="background:${t.color}33;color:${t.color}">${t.icon}</div>
-      <h3>${t.name}</h3>
-      <p>${t.desc}</p>
-    </a>`).join('');
-  count.textContent = `(${list.length})`;
+let curCat = '全部';
+function renderCatbar(){
+  const bar = document.getElementById('catbar');
+  bar.innerHTML = CATS.map(c=>'<a href="#" data-cat="'+c+'" class="'+(c===curCat?'active':'')+'">'+c+'</a>').join('');
+  bar.onclick = e=>{
+    const a = e.target.closest('a[data-cat]'); if(!a) return;
+    e.preventDefault(); curCat = a.dataset.cat; renderCatbar(); doSearch();
+  };
 }
-render(TOOLS);
-search.addEventListener('input',e=>{
-  const q=e.target.value.trim().toLowerCase();
-  render(TOOLS.filter(t=>(t.name+t.desc+t.tag).toLowerCase().includes(q)));
-});
+function doSearch(){
+  const q = search.value.trim().toLowerCase();
+  const list = TOOLS.filter(t=>(curCat==='全部'||t.cat===curCat) && (!q||(t.name+t.desc+t.tag).toLowerCase().includes(q)));
+  grid.innerHTML = list.map(t=>'<a class="tool" href="'+t.file+'"><span class="arrow">↗</span><div class="ic" style="background:'+t.color+'22;color:'+t.color+'">'+t.icon+'</div><h3>'+t.name+'</h3><p>'+t.desc+'</p></a>').join('');
+  count.textContent = '('+list.length+')';
+}
+renderCatbar();
+doSearch();
+search.addEventListener('input',doSearch);
+document.getElementById('searchBtn').addEventListener('click',doSearch);
+search.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 </script>
 </body>
 </html>

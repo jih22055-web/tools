@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSV 转 Markdown - 万能工具箱</title>
+<meta name="description" content="把 CSV 数据转换成 Markdown 表格，支持多种分隔符，可直接复制粘贴。">
+
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">首页</a><div class="drop"><a href="#" class="">编码解码</a><div class="menu"><a href="base64.html">Base64 编码解码</a><a href="urlencode.html">URL 编码解码</a><a href="unicode.html">Unicode 编码</a><a href="base62.html">Base62 编码</a><a href="md5.html">MD5 加密</a><a href="base-convert.html">任意进制转换</a></div></div><div class="drop"><a href="#" class="">开发工具</a><div class="menu"><a href="jsonformat.html">JSON 格式化</a><a href="jwt.html">JWT 解码器</a><a href="regex.html">正则表达式测试</a><a href="uuid.html">UUID 生成器</a><a href="httpstatus.html">HTTP 状态码</a><a href="html-markdown.html">HTML 转 Markdown</a></div></div><div class="drop"><a href="#" class="">文本处理</a><div class="menu"><a href="wordcount.html">字数统计</a><a href="caseconvert.html">文字大小写转换</a><a href="dedupe.html">文本去重</a><a href="diff.html">文本对比</a><a href="markdown.html">Markdown 预览</a></div></div><div class="drop"><a href="#" class="active">表格转换</a><div class="menu"><a href="csv-markdown.html">CSV 转 Markdown</a><a href="json-markdown.html">JSON 转 Markdown</a></div></div><div class="drop"><a href="#" class="">图片工具</a><div class="menu"><a href="image-compress.html">图片压缩</a><a href="qrcode.html">二维码生成器</a><a href="color.html">颜色转换</a><a href="watermark.html">图片加水印</a></div></div><div class="drop"><a href="#" class="">网络工具</a><div class="menu"><a href="iplocation.html">IP 归属地查询</a><a href="netmask.html">子网掩码计算</a><a href="temp-mail.html">临时邮箱</a></div></div><div class="drop"><a href="#" class="">生活工具</a><div class="menu"><a href="timestamp.html">时间戳转换</a><a href="password.html">密码生成器</a><a href="random.html">随机抽取</a></div></div></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / CSV 转 Markdown</div>
+  <div class="panel">
+    <h2>📊 CSV 转 Markdown</h2>
+    <p class="desc">把 CSV 数据转换成 Markdown 表格，支持多种分隔符，可直接复制粘贴。</p>
+    <label>CSV 内容</label>
+    <textarea id="in" placeholder="name,age,city
+Tom,25,Beijing
+Jerry,30,Shanghai" style="min-height:200px"></textarea>
+    <div class="row" style="margin-top:12px">
+      <div><label style="margin-top:0">分隔符</label><select id="sep"><option value=",">逗号 ,</option><option value="\t">制表符 Tab</option><option value=";">分号 ;</option><option value="|">竖线 |</option></select></div>
+      <div><label style="margin-top:0">首行作为表头</label><select id="head"><option value="1">是</option><option value="0">否</option></select></div>
+      <button class="btn" id="go" style="flex:0 0 auto">转换</button>
+    </div>
+    <label>Markdown 表格</label>
+    <div class="result" id="out">结果将在这里显示</div>
+  </div>
+<section class="seo">
+<p class="lead">CSV 是常见的数据交换格式，Markdown 表格适合写在文档和 README 中。本工具把 CSV 快速转换成 Markdown 表格，支持自定义分隔符和是否包含表头。</p>
+<h2>适用场景</h2><ul>
+<li>把 Excel 导出的数据贴到 Markdown 文档</li>
+<li>生成 GitHub README 中的表格</li>
+<li>整理爬虫或数据库导出的数据</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>粘贴 CSV 内容到输入框</li>
+<li>选择分隔符和是否首行为表头</li>
+<li>点击「转换」得到 Markdown 表格</li>
+</ol>
+<h2>常见问题</h2>
+<details><summary>字段里有逗号怎么办？</summary><p>标准 CSV 用双引号包裹含逗号的字段，如 "北京,中国"。本工具支持这种引号包裹的写法。</p></details>
+<details><summary>转换后表格对不齐？</summary><p>Markdown 表格不要求列宽对齐，渲染引擎会自动处理。复制后直接粘贴到支持 Markdown 的编辑器即可。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="base64.html">Base64 编码</a><a href="md5.html">MD5 加密</a><a href="jsonformat.html">JSON 格式化</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+function parseCSV(s,sep){
+ const rows=[];let row=[],cur='',q=false;
+ for(let i=0;i<s.length;i++){
+  const c=s[i];
+  if(q){if(c==='"'){if(s[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
+  else if(c==='"')q=true;
+  else if(c===sep){row.push(cur);cur=''}
+  else if(c==='\n'){row.push(cur.replace(/\r$/,''));rows.push(row);row=[];cur=''}
+  else cur+=c;
+ }
+ if(cur||row.length){row.push(cur);rows.push(row)}
+ return rows.filter(r=>r.some(x=>x!==''));
+}
+document.getElementById('go').onclick=()=>{
+ const sep=document.getElementById('sep').value;
+ const withHead=document.getElementById('head').value==='1';
+ const rows=parseCSV(document.getElementById('in').value,sep==='\\t'?'\t':sep);
+ if(!rows.length){document.getElementById('out').textContent='请先输入 CSV 内容';return}
+ const esc=s=>String(s).replace(/\|/g,'\\|').replace(/\n/g,'<br>');
+ const max=Math.max(...rows.map(r=>r.length));
+ const norm=rows.map(r=>{const a=r.slice();while(a.length<max)a.push('');return a});
+ let md='';
+ if(withHead&&norm.length){md+='| '+norm[0].map(esc).join(' | ')+' |\n'+'| '+norm[0].map(()=>'---').join(' | ')+' |\n';norm.shift()}
+ md+=norm.map(r=>'| '+r.map(esc).join(' | ')+' |').join('\n');
+ document.getElementById('out').textContent=md;
+};
+</script></body></html>
