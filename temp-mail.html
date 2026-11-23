@@ -121,7 +121,7 @@ async function newAddress(custom){
   try{
     if(!custom)sid='';
     const extra=custom?{email_user:'tool'+Math.random().toString(36).slice(2,8)}:{};
-    const d=await api('get_email_address',extra);
+    const d=await api(custom?'set_email_user':'get_email_address',extra);
     if(d.alias_error){setStatus('该用户名被占用，请重试');return}
     if(d.sid_token){sid=d.sid_token;localStorage.setItem('toolnest_gm_sid',sid)}
     $('addr').value=d.email_addr||'';
