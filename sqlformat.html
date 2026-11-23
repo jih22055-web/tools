@@ -79,12 +79,13 @@ function fmtSQL(src){
   // 字段列表按逗号拆行
   var res=[];
   out.forEach(function(l){
-    if(/^  (SELECT|SET|VALUES|INSERT INTO)\b/i.test(l)&&l.indexOf(', ')>=0){
+    var mm=l.match(/^(\s*)(SELECT|SET|VALUES|INSERT INTO)\b/i);
+    if(mm&&l.indexOf(', ')>=0){
       var parts=l.split(', ');
-      res.push(parts[0]);
-      parts.slice(1).forEach(function(x,j){res.push('  '+x+(j===parts.length-2?'':','))});
-      // 重写逗号
-      for(var i=1;i<res.length;i++){if(!/,$/.test(res[i])&&i<res.length-1&&res[i].indexOf('FROM')<0&&res[i].indexOf('WHERE')<0)res[i]+=','}
+      res.push(parts[0]+',');
+      parts.slice(1).forEach(function(x,j){
+        res.push(mm[1]+'  '+x+(j<parts.length-2?',':''));
+      });
     } else res.push(l);
   });
   return restoreSQL(res.join('\n'),p.s);
