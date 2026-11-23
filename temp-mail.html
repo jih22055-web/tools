@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>临时邮箱生成器 - 免费一次性邮箱，实时收信 - 万能工具箱</title>
+<meta name="description" content="免费临时邮箱，一键生成一次性邮箱地址，实时收取验证码和邮件，无需注册。适合注册试用、防垃圾邮件、保护真实邮箱隐私。">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 临时邮箱</div>
+  <div class="panel">
+    <h2>📮 临时邮箱生成器</h2>
+    <p class="desc">一键生成一次性邮箱地址，实时收信。无需注册，打开即用。</p>
+
+    <div style="background:rgba(255,92,92,.08);border:1px solid rgba(255,92,92,.3);border-radius:10px;padding:14px 16px;font-size:13px;color:#ffb3b3;line-height:1.8">
+      ⚠️ <b>注意</b>：这是公开的一次性邮箱，任何人都可能看到收件内容。<b>请勿用于接收密码、身份证、银行卡等敏感信息</b>。邮件通常保留约 1 小时，请及时查看。
+    </div>
+
+    <label>你的临时邮箱地址</label>
+    <div class="row">
+      <input type="text" id="addr" readonly placeholder="正在生成…" style="font-size:17px;font-weight:700;letter-spacing:.3px">
+      <button class="btn" id="copy" style="flex:0 0 auto">📋 复制</button>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" id="newAddr">🔄 换一个地址</button>
+      <button class="btn ghost" id="refresh">📥 刷新收件箱</button>
+      <span id="status" style="color:var(--muted);font-size:13px;align-self:center"></span>
+    </div>
+
+    <div class="row" style="margin-top:26px;justify-content:space-between">
+      <h3 style="font-size:17px;font-weight:700">收件箱 <span id="mailCount" style="color:var(--muted);font-size:13px;font-weight:400"></span></h3>
+      <span style="font-size:12px;color:var(--muted)">每 15 秒自动刷新</span>
+    </div>
+    <div class="result" id="mailList" style="max-height:520px;overflow:auto;white-space:normal">正在连接邮箱服务器…</div>
+    <div id="mailBody" style="display:none;margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <b id="bodySubject" style="font-size:15px"></b>
+        <button class="btn ghost" id="closeBody" style="padding:6px 12px">关闭</button>
+      </div>
+      <div id="bodyMeta" style="color:var(--muted);font-size:12px;margin-bottom:12px"></div>
+      <div id="bodyText" style="white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.8"></div>
+    </div>
+  </div>
+  <div class="adslot">广告位</div>
+<section class="seo">
+<p class="lead">临时邮箱（也叫一次性邮箱、 disposable email）是一个用完即弃的邮箱地址，用来接收验证码、注册试用、下载资料，避免自己的常用邮箱被垃圾邮件淹没。本页面生成的临时邮箱完全免费、无需注册，打开就能收信。</p>
+<h2>什么时候需要临时邮箱</h2><ul>
+<li>注册不熟悉的网站或 App，避免真实邮箱被出售、被营销邮件轰炸</li>
+<li>下载资料、领取优惠券时必须留邮箱，但又不想暴露常用地址</li>
+<li>测试网站注册流程、邮件通知功能，需要一个能收信的测试地址</li>
+<li>一次性活动报名、论坛发帖，防止后续被垃圾信息骚扰</li>
+</ul>
+<h2>使用方法</h2><ol>
+<li>打开页面后会自动生成一个临时邮箱地址，点「复制」即可使用</li>
+<li>在需要邮箱的地方粘贴这个地址，等待对方发信</li>
+<li>收件箱每 15 秒自动刷新，也可手动点「刷新收件箱」</li>
+<li>点击邮件查看正文；点「换一个地址」可随时更换新邮箱</li>
+</ol>
+<h2>重要提醒</h2>
+<p>临时邮箱是<b>公开</b>的，其他人也可能看到收到的邮件，且服务商会在一段时间后自动删除邮件。因此<b>绝对不要</b>用它接收银行验证码、支付信息、身份证号、账号密码或任何敏感内容。涉及重要账号请务必使用自己的真实邮箱。</p>
+<h2>常见问题</h2>
+<details><summary>这个邮箱要钱吗？需要注册吗？</summary><p>完全免费，也不需要注册。打开页面就会自动生成一个邮箱地址，直接可用。</p></details>
+<details><summary>邮件会保存多久？</summary><p>临时邮箱服务商通常会在约 1 小时后清理邮件，具体时间以服务商策略为准。收到验证码请及时查看，不要指望长期保存。</p></details>
+<details><summary>收不到邮件怎么办？</summary><p>先点「刷新收件箱」手动检查；如果长时间没收到，可以点「换一个地址」生成新邮箱，再重新发送一次。部分网站会屏蔽临时邮箱域名，这种情况只能改用真实邮箱。</p></details>
+<details><summary>能发邮件吗？</summary><p>本工具只提供收信功能，不支持发信。它主要用于接收验证码和注册确认邮件。</p></details>
+<h2>你可能还需要</h2><div class="related"><a href="index.html">全部工具</a><a href="password.html">密码生成器</a><a href="uuid.html">UUID 生成</a><a href="random.html">随机抽取</a></div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+const API='https://api.guerrillamail.com/ajax.php';
+const $=id=>document.getElementById(id);
+let sid=localStorage.getItem('toolnest_gm_sid')||'';
+let timer=null;
+let openedId=null;
+
+async function api(f,extra){
+  const p=new URLSearchParams();p.set('f',f);
+  if(sid)p.set('sid_token',sid);
+  if(extra)for(const k in extra)p.set(k,extra[k]);
+  const r=await fetch(API+'?'+p.toString(),{cache:'no-store'});
+  if(!r.ok)throw new Error('请求失败 '+r.status);
+  return r.json();
+}
+function setStatus(t){$('status').textContent=t}
+function decodeHtml(s){
+  const d=document.createElement('textarea');d.innerHTML=s;return d.value;
+}
+function plain(html){
+  let s=String(html||'');
+  s=s.replace(/<br\s*\/?>/gi,'\n').replace(/<pre[^>]*>/gi,'').replace(/<\/pre>/gi,'').replace(/<\/p>/gi,'\n\n');
+  s=s.replace(/<[^>]+>/g,'');
+  return decodeHtml(s).replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+}
+function renderList(list){
+  $('mailCount').textContent=list.length?'('+list.length+' 封)':'';
+  if(!list.length){$('mailList').innerHTML='<span style="color:var(--muted)">收件箱是空的，去需要邮箱的网站注册试试吧。</span>';return}
+  $('mailList').innerHTML=list.map(m=>`
+    <div class="mailrow" data-id="${m.mail_id}" style="padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+        <b style="font-size:14px;color:${m.mail_read?'var(--muted)':'var(--text)'}">${escapeHtml(m.mail_subject||'(无主题)')}</b>
+        <span style="color:var(--muted);font-size:12px;white-space:nowrap">${escapeHtml(m.mail_date||'')}</span>
+      </div>
+      <div style="color:var(--muted);font-size:12px;margin-top:4px">来自：${escapeHtml(m.mail_from||'')}</div>
+      <div style="color:var(--muted);font-size:13px;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(plain(m.mail_excerpt||''))}</div>
+    </div>`).join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+async function loadMail(silent){
+  try{
+    const d=await api('get_email_list',{offset:0});
+    if(d.sid_token){sid=d.sid_token;localStorage.setItem('toolnest_gm_sid',sid)}
+    renderList(d.list||[]);
+    if(!silent)setStatus('已更新 · '+new Date().toLocaleTimeString('zh-CN',{hour12:false}));
+  }catch(e){
+    if(!silent)setStatus('刷新失败：'+e.message);
+    else $('mailList').innerHTML='<span style="color:var(--danger)">连接失败，请点「刷新收件箱」重试。</span>';
+  }
+}
+async function newAddress(custom){
+  setStatus('正在生成…');
+  try{
+    if(!custom)sid='';
+    const extra=custom?{email_user:'tool'+Math.random().toString(36).slice(2,8)}:{};
+    const d=await api('get_email_address',extra);
+    if(d.alias_error){setStatus('该用户名被占用，请重试');return}
+    if(d.sid_token){sid=d.sid_token;localStorage.setItem('toolnest_gm_sid',sid)}
+    $('addr').value=d.email_addr||'';
+    $('mailBody').style.display='none';openedId=null;
+    setStatus(custom?'地址已更换':'就绪');
+    await loadMail(true);
+  }catch(e){setStatus('生成失败：'+e.message)}
+}
+async function openMail(id){
+  setStatus('正在读取邮件…');
+  try{
+    const d=await api('fetch_email',{email_id:id});
+    openedId=id;
+    $('bodySubject').textContent=d.mail_subject||'(无主题)';
+    $('bodyMeta').textContent='来自：'+(d.mail_from||'')+' · '+(d.mail_date||'');
+    $('bodyText').textContent=plain(d.mail_body);
+    $('mailBody').style.display='block';
+    $('mailBody').scrollIntoView({behavior:'smooth',block:'nearest'});
+    setStatus('');
+    loadMail(true);
+  }catch(e){setStatus('读取失败：'+e.message)}
+}
+function copyAddr(){
+  const v=$('addr').value;if(!v)return;
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(v).then(()=>setStatus('已复制')).catch(()=>fallbackCopy(v));
+  }else fallbackCopy(v);
+}
+function fallbackCopy(v){
+  const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');setStatus('已复制')}catch(e){setStatus('复制失败，请手动选中')}
+  document.body.removeChild(t);
+}
+$('copy').onclick=copyAddr;
+$('newAddr').onclick=()=>newAddress(true);
+$('refresh').onclick=()=>loadMail(false);
+$('closeBody').onclick=()=>{$('mailBody').style.display='none';openedId=null};
+$('mailList').onclick=e=>{const row=e.target.closest('.mailrow');if(row)openMail(row.dataset.id)};
+function startPoll(){if(timer)clearInterval(timer);timer=setInterval(()=>{if(!document.hidden)loadMail(true)},15000)}
+(async function init(){
+  if(sid){
+    try{
+      const d=await api('get_email_address');
+      if(d.email_addr){if(d.sid_token)sid=d.sid_token;$('addr').value=d.email_addr;setStatus('已恢复上次的邮箱');await loadMail(true);startPoll();return}
+    }catch(e){}
+  }
+  await newAddress(false);startPoll();
+})();
+</script></body></html>
