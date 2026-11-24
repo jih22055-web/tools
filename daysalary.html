@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>单双休薪资转换 - 月薪换算日薪时薪计算器</title>
+<meta name="description" content="单双休薪资换算器：按双休 21.75 天、单休 26 天、大小周 24 天等不同计薪方式，换算日薪和时薪，对比同样月薪下的真实时薪差异。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/daysalary.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "单双休薪资转换", "url": "https://toolpocket.cn/daysalary.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "description": "单双休薪资换算器：按双休 21.75 天、单休 26 天、大小周 24 天等不同计薪方式，换算日薪和时薪，对比同样月薪下的真实时薪差异。", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "21.75 天是怎么来的？", "acceptedAnswer": {"@type": "Answer", "text": "国家规定：月计薪天数 =（365 天 − 104 天休息日）÷ 12 个月 = 21.75 天。注意法定节假日是要计薪的，所以只扣了双休日。"}}, {"@type": "Question", "name": "单休为什么日薪更低？", "acceptedAnswer": {"@type": "Answer", "text": "因为月薪固定，出勤天数从 21.75 涨到 26，同样一笔钱摊到更多天数上，每天的单价就变低了。"}}, {"@type": "Question", "name": "月薪里包含加班费吗？", "acceptedAnswer": {"@type": "Answer", "text": "要看合同。很多单休岗位的月薪里已经打包了周六的加班费，这种情况下法定加班费基数会按最低工资或基本工资算，实际权益需要单独核算。"}}, {"@type": "Question", "name": "时薪按 8 小时算对吗？", "acceptedAnswer": {"@type": "Answer", "text": "这里按标准工时 8 小时算。实际单休岗位常常每天工作 9–10 小时，真实时薪比这里显示的更低。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="单双休薪资转换 - 月薪换算日薪时薪计算器">
+<meta property="og:description" content="单双休薪资换算器：按双休 21.75 天、单休 26 天、大小周 24 天等不同计薪方式，换算日薪和时薪，对比同样月薪下的真实时薪差异。">
+<meta property="og:url" content="https://toolpocket.cn/daysalary.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 单双休薪资转换</div>
+  <div class="panel">
+    <h1>💴 单双休薪资转换</h1>
+    <p class="desc">月薪换算日薪、时薪，支持双休 21.75 天、单休 26 天、大小周等，一眼看清单休真实时薪。</p>
+<style>
+.big{font-size:52px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cwrap{text-align:center;padding:10px 0 6px}
+.ring{--p:0;width:250px;height:250px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#eef0f2 0)}
+.ring-in{width:206px;height:206px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.ring-in .t{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.ring-in .p{font-size:13px;color:var(--muted);margin-top:4px}
+.chip{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;margin:0 6px 8px 0;background:#fff}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2)}
+.tbl tr:last-child td{border-bottom:none}
+.flexrow{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.flexrow>div{flex:1;min-width:130px}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;background:#fff1ee;color:var(--brand);font-weight:600}
+.ok{color:#1a8f5a}.warn{color:#c98200}.bad{color:#d43b26}
+@media(max-width:600px){.big{font-size:38px}.ring{width:210px;height:210px}.ring-in{width:172px;height:172px}.ring-in .t{font-size:34px}}
+</style>
+<div class="flexrow">
+  <div><label>月薪（元）</label><input type="number" id="sal" value="8000" min="0"></div>
+  <div style="flex:0 0 170px"><label>计薪方式</label><select id="mode">
+    <option value="21.75">双休（21.75 天）</option>
+    <option value="26">单休（26 天）</option>
+    <option value="24">大小周（24 天）</option>
+    <option value="30">无休（30 天）</option>
+    <option value="custom">自定义</option>
+  </select></div>
+  <div style="flex:0 0 120px"><label>计薪天数</label><input type="number" id="days" value="21.75" step="0.25" min="1" max="31"></div>
+</div>
+<div class="actions"><button class="btn" id="go">换算</button></div>
+<div id="out"></div>
+<label>同样月薪，不同计薪天数下的日薪对比</label>
+<table class="tbl"><thead><tr><th>计薪方式</th><th>月计薪天数</th><th>日薪</th><th>时薪（8 小时）</th></tr></thead><tbody id="tb"></tbody></table>
+<p class="hint">国家规定的月计薪天数是 21.75（(365−104)÷12，已扣除双休日但含法定节假日）。单休、大小周是企业的实际出勤约定，不改变法定口径，但会直接影响你的日薪和加班费基数。</p>
+
+  </div>
+  <section class="seo">
+    <p class="lead">两个岗位都写「月薪 8000」，一个是双休，一个是单休，实际到手的工作时长差出一个月。按国家规定的月计薪天数 21.75 天算，双休的日薪是 368 元；按单休 26 天算，同样的月薪日薪只有 308 元，时薪差 7.5 元。这个工具把不同计薪方式下的日薪、时薪并排列出来，换工作谈薪时能直接算清单休的真实代价——单休不是多上四天班，是把每天的单位时间价值压低了。</p>
+    <h2>适用场景</h2><ul><li>对比两个 offer 的真实时薪</li><li>判断单休岗位该要多少月薪才抵得上双休</li><li>算加班费的日薪基数</li><li>和 HR 谈薪资时算清楚账</li></ul>
+    <h2>使用方法</h2><ol><li>填月薪</li><li>选计薪方式：双休 21.75、单休 26、大小周 24、无休 30</li><li>点「换算」或直接改数字，结果实时更新</li><li>下方表格是对比，红色高亮那一行是你当前选的</li></ol>
+    <h2>常见问题</h2><details><summary>21.75 天是怎么来的？</summary><p>国家规定：月计薪天数 =（365 天 − 104 天休息日）÷ 12 个月 = 21.75 天。注意法定节假日是要计薪的，所以只扣了双休日。</p></details><details><summary>单休为什么日薪更低？</summary><p>因为月薪固定，出勤天数从 21.75 涨到 26，同样一笔钱摊到更多天数上，每天的单价就变低了。</p></details><details><summary>月薪里包含加班费吗？</summary><p>要看合同。很多单休岗位的月薪里已经打包了周六的加班费，这种情况下法定加班费基数会按最低工资或基本工资算，实际权益需要单独核算。</p></details><details><summary>时薪按 8 小时算对吗？</summary><p>这里按标准工时 8 小时算。实际单休岗位常常每天工作 9–10 小时，真实时薪比这里显示的更低。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="datecalc.html">日期计算器</a><a href="tax.html">个税计算器</a><a href="loan.html">贷款计算器</a><a href="retirement.html">退休年龄计算器</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+
+function $(i){return document.getElementById(i)}
+function money(n){
+  if(!isFinite(n))return '—';
+  return n.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+var ROWS=[
+ ['双休',21.75],['标准工时',21.75],['大小周',24],['单休',26],['无休',30]
+];
+function calc(){
+  var sal=+$('sal').value||0;
+  var d=+$('days').value||21.75;
+  if(sal<=0){$('out').innerHTML='<div class="result bad">先填月薪</div>';return}
+  var day=sal/d,hr=day/8;
+  var md=sal/21.75,mdDay=md;
+  $('out').innerHTML='<div class="stat-grid">'+
+    '<div class="stat"><div class="num">'+money(day)+'</div><div class="lbl">日薪（元）</div></div>'+
+    '<div class="stat"><div class="num">'+money(hr)+'</div><div class="lbl">时薪（元）</div></div>'+
+    '<div class="stat"><div class="num">'+money(sal*12)+'</div><div class="lbl">年收入（元）</div></div>'+
+    '<div class="stat"><div class="num">'+money(sal/Math.max(1,d)*8*21.75)+'</div><div class="lbl">折算双休日薪（元）</div></div>'+
+    '</div><div class="result" style="margin-top:14px">按每月 <b>'+d+'</b> 个计薪日算，月薪 '+money(sal)+' 元对应日薪 <b>'+money(day)+'</b> 元、时薪 <b>'+money(hr)+'</b> 元。'+
+    (d>21.75?'<br>注意：计薪天数高于 21.75 意味着休息日被算进了工作日，同样的月薪摊到每天更少，加班费基数也会被压低。':'')+
+    (d<21.75?'<br>计薪天数低于 21.75，通常是按实际出勤天数折算，月薪会随出勤波动。':'')+'</div>';
+  $('tb').innerHTML=ROWS.map(function(r){
+    var dy=sal/r[1];
+    var hit=Math.abs(r[1]-d)<0.001;
+    return '<tr'+(hit?' style="background:#fff8f6;font-weight:700"':'')+'><td>'+r[0]+(hit?'（当前）':'')+'</td><td class="mono">'+r[1]+'</td><td class="mono">'+money(dy)+'</td><td class="mono">'+money(dy/8)+'</td></tr>';
+  }).join('');
+}
+$('mode').onchange=function(){
+  var v=$('mode').value;
+  if(v==='custom'){$('days').focus();return}
+  $('days').value=v;calc();
+};
+$('days').onchange=function(){$('mode').value='custom';calc()};
+$('go').onclick=calc;
+calc();
+
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>

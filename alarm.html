@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>在线闹钟 - 网页版定时闹钟 到点响铃</title>
+<meta name="description" content="在线闹钟：设置多个闹钟，支持按星期重复、自定义标签，到点响铃并弹窗提醒。无需安装 App，浏览器里就能用。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/alarm.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "在线闹钟", "url": "https://toolpocket.cn/alarm.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "description": "在线闹钟：设置多个闹钟，支持按星期重复、自定义标签，到点响铃并弹窗提醒。无需安装 App，浏览器里就能用。", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "关掉网页还会响吗？", "acceptedAnswer": {"@type": "Answer", "text": "不会。网页闹钟靠页面里的定时器，标签页关掉就失效。浏览器休眠或内存回收时也可能暂停。"}}, {"@type": "Question", "name": "能响多久？", "acceptedAnswer": {"@type": "Answer", "text": "响铃持续到你点停止为止，期间每 6 秒重复一次提示音。"}}, {"@type": "Question", "name": "为什么勾了星期还是没响？", "acceptedAnswer": {"@type": "Answer", "text": "检查三项：闹钟开关是不是「已开启」、页面有没有被关掉、电脑有没有休眠。"}}, {"@type": "Question", "name": "支持多少个闹钟？", "acceptedAnswer": {"@type": "Answer", "text": "不限数量，全部存在浏览器本地，刷新后还在。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="在线闹钟 - 网页版定时闹钟 到点响铃">
+<meta property="og:description" content="在线闹钟：设置多个闹钟，支持按星期重复、自定义标签，到点响铃并弹窗提醒。无需安装 App，浏览器里就能用。">
+<meta property="og:url" content="https://toolpocket.cn/alarm.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 在线闹钟</div>
+  <div class="panel">
+    <h1>⏰ 在线闹钟</h1>
+    <p class="desc">设多个闹钟，可按星期重复、加标签，到点响铃弹窗。页面开着才有效。</p>
+<style>
+.big{font-size:52px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cwrap{text-align:center;padding:10px 0 6px}
+.ring{--p:0;width:250px;height:250px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#eef0f2 0)}
+.ring-in{width:206px;height:206px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.ring-in .t{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.ring-in .p{font-size:13px;color:var(--muted);margin-top:4px}
+.chip{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;margin:0 6px 8px 0;background:#fff}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2)}
+.tbl tr:last-child td{border-bottom:none}
+.flexrow{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.flexrow>div{flex:1;min-width:130px}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;background:#fff1ee;color:var(--brand);font-weight:600}
+.ok{color:#1a8f5a}.warn{color:#c98200}.bad{color:#d43b26}
+@media(max-width:600px){.big{font-size:38px}.ring{width:210px;height:210px}.ring-in{width:172px;height:172px}.ring-in .t{font-size:34px}}
+</style>
+<div class="flexrow">
+  <div style="flex:0 0 150px"><label>响铃时间</label><input type="time" id="at" value="07:00"></div>
+  <div><label>标签（可选）</label><input type="text" id="aLabel" placeholder="起床 / 吃药 / 开会"></div>
+  <div style="flex:0 0 auto"><button class="btn" id="add">添加闹钟</button></div>
+</div>
+<label>重复（一个都不选 = 只响一次）</label>
+<div id="days"></div>
+<div id="list" style="margin-top:20px"></div>
+<p class="hint">⚠️ 网页闹钟必须保持这个页面开着（标签页在后台也行，但浏览器休眠后可能暂停）。关掉页面就不会响，重要的事请用手机自带闹钟。</p>
+
+  </div>
+  <section class="seo">
+    <p class="lead">在线闹钟解决的是「临时需要一个闹钟」的场景：电脑前做事，不想专门给手机设一个；或者手机静音了，希望屏幕上弹出来。设定时间、可选重复星期、到点响铃并全屏弹窗，点了才停。注意网页闹钟受浏览器限制，页面关掉就不会响，重要事项仍建议用手机自带闹钟。</p>
+    <h2>适用场景</h2><ul><li>电脑前午睡 20 分钟，怕睡过头</li><li>定时吃药、喝水、起身活动</li><li>煮东西、烤面包时按时间回来关火</li><li>会议、网课开始前设个提前 5 分钟的提醒</li></ul>
+    <h2>使用方法</h2><ol><li>选择时间，需要的话填个标签</li><li>要每天或每周固定响，就勾上对应星期</li><li>点「添加闹钟」</li><li>到点会响铃并弹出提示，点按钮停止</li></ol>
+    <h2>常见问题</h2><details><summary>关掉网页还会响吗？</summary><p>不会。网页闹钟靠页面里的定时器，标签页关掉就失效。浏览器休眠或内存回收时也可能暂停。</p></details><details><summary>能响多久？</summary><p>响铃持续到你点停止为止，期间每 6 秒重复一次提示音。</p></details><details><summary>为什么勾了星期还是没响？</summary><p>检查三项：闹钟开关是不是「已开启」、页面有没有被关掉、电脑有没有休眠。</p></details><details><summary>支持多少个闹钟？</summary><p>不限数量，全部存在浏览器本地，刷新后还在。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="pomodoro.html">番茄钟</a><a href="sitremind.html">久坐提醒</a><a href="countdown-timer.html">在线倒计时器</a><a href="stopwatch.html">秒表计时</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+
+function $(i){return document.getElementById(i)}
+
+var AC=null;
+function beep(times,vol){
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended')AC.resume();
+    times=times||3;vol=vol||0.18;
+    for(var i=0;i<times;i++){
+      var t=AC.currentTime+i*0.45;
+      var o=AC.createOscillator(),g=AC.createGain();
+      o.type='sine';o.frequency.value=880;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.02);
+      g.gain.setValueAtTime(vol,t+0.22);g.gain.linearRampToValueAtTime(0,t+0.34);
+      o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+0.36);
+    }
+  }catch(e){}
+}
+
+var KEY='tp_alarm_v1',DAYS=['一','二','三','四','五','六','日'],picked={};
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
+function save(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+function pad(n){return String(n).padStart(2,'0')}
+function renderDays(){
+  $('days').innerHTML=DAYS.map(function(d,i){
+    return '<span class="chip'+(picked[i]?' on':'')+'" data-d="'+i+'">周'+d+'</span>';
+  }).join('');
+  Array.prototype.forEach.call($('days').children,function(c){
+    c.onclick=function(){var i=+c.dataset.d;picked[i]=!picked[i];renderDays()};
+  });
+}
+function render(){
+  var a=load();
+  if(!a.length){$('list').innerHTML='<p class="hint">还没有闹钟。选个时间点「添加闹钟」。</p>';return}
+  a.sort(function(x,y){return x.time<y.time?-1:1});
+  $('list').innerHTML=a.map(function(it,ix){
+    var rep=it.days.length?it.days.map(function(d){return '周'+DAYS[d]}).join(' '):'仅一次';
+    return '<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px;'+(it.on?'':'opacity:.5')+'">'+
+      '<div class="mono" style="font-size:26px;font-weight:800;min-width:92px">'+it.time+'</div>'+
+      '<div style="flex:1"><div style="font-size:14px">'+ (it.label||'闹钟') +'</div><div class="hint" style="margin:2px 0 0">'+rep+'</div></div>'+
+      '<button class="chip'+(it.on?' on':'')+'" data-t="'+ix+'">'+(it.on?'已开启':'已关闭')+'</button>'+
+      '<button class="chip" data-x="'+ix+'">删除</button></div>';
+  }).join('');
+  Array.prototype.forEach.call($('list').querySelectorAll('[data-t]'),function(b){
+    b.onclick=function(){var a=load();a[+b.dataset.t].on=!a[+b.dataset.t].on;save(a);render()};
+  });
+  Array.prototype.forEach.call($('list').querySelectorAll('[data-x]'),function(b){
+    b.onclick=function(){var a=load();a.splice(+b.dataset.x,1);save(a);render()};
+  });
+}
+function fire(it){
+  beep(8,0.22);
+  var m=document.createElement('div');
+  m.style.cssText='position:fixed;inset:0;background:rgba(20,22,26,.72);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  m.innerHTML='<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:360px;width:100%">'+
+    '<div style="font-size:44px">⏰</div><div style="font-size:24px;font-weight:800;margin:10px 0 4px">'+it.time+'</div>'+
+    '<div style="color:#6b7280;font-size:14px">'+(it.label||'闹钟响了')+'</div>'+
+    '<button class="btn" style="margin-top:20px;width:100%" id="stopAlarm">我知道了，停止响铃</button></div>';
+  document.body.appendChild(m);
+  m.querySelector('#stopAlarm').onclick=function(){m.remove();beep(1,0.1)};
+  var iv=setInterval(function(){beep(3,0.2)},6000);
+  m.querySelector('#stopAlarm').addEventListener('click',function(){clearInterval(iv)});
+}
+var lastKey='';
+setInterval(function(){
+  var d=new Date(),key=pad(d.getHours())+':'+pad(d.getMinutes())+'_'+d.getDate()+'_'+d.getMonth();
+  if(key===lastKey)return;
+  var a=load(),hit=false;
+  a.forEach(function(it){
+    if(!it.on)return;
+    if(it.time!==pad(d.getHours())+':'+pad(d.getMinutes()))return;
+    if(it.days.length){
+      var wd=(d.getDay()+6)%7;
+      if(it.days.indexOf(wd)<0)return;
+    }
+    if(it.last===key)return;
+    it.last=key;hit=true;fire(it);
+  });
+  if(hit)save(a);
+  lastKey=key;
+},1000);
+$('add').onclick=function(){
+  var t=$('at').value;
+  if(!/^\d{2}:\d{2}$/.test(t)){alert('请选择时间');return}
+  var a=load(),ds=[];
+  Object.keys(picked).forEach(function(k){if(picked[k])ds.push(+k)});
+  a.push({time:t,label:$('aLabel').value.trim(),days:ds,on:true});
+  save(a);picked={};$('aLabel').value='';renderDays();render();
+};
+renderDays();render();
+
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>

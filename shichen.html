@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>十二时辰转换 - 现代时间与时辰对照查询</title>
+<meta name="description" content="十二时辰转换器：输入任意时间立刻查出对应的子丑寅卯时辰、生肖、别称与时段，附完整十二时辰对照表与八刻换算。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/shichen.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "十二时辰转换", "url": "https://toolpocket.cn/shichen.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "description": "十二时辰转换器：输入任意时间立刻查出对应的子丑寅卯时辰、生肖、别称与时段，附完整十二时辰对照表与八刻换算。", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "一个时辰是多少分钟？", "acceptedAnswer": {"@type": "Answer", "text": "120 分钟，即 2 小时。一个时辰分八刻，每刻 15 分钟。"}}, {"@type": "Question", "name": "「午时三刻」是现在几点？", "acceptedAnswer": {"@type": "Answer", "text": "午时是 11:00–12:59，三刻是第 4 个刻（从初刻算第 3 个），约 11:45。"}}, {"@type": "Question", "name": "子时到底算今天还是明天？", "acceptedAnswer": {"@type": "Answer", "text": "23:00–23:59 属于当天的子时末段，00:00 后进入次日的子时前段。传统命理中子时分为「早子时」和「晚子时」。"}}, {"@type": "Question", "name": "时辰和生肖什么关系？", "acceptedAnswer": {"@type": "Answer", "text": "地支与生肖一一对应：子鼠、丑牛、寅虎、卯兔、辰龙、巳蛇、午马、未羊、申猴、酉鸡、戌狗、亥猪。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="十二时辰转换 - 现代时间与时辰对照查询">
+<meta property="og:description" content="十二时辰转换器：输入任意时间立刻查出对应的子丑寅卯时辰、生肖、别称与时段，附完整十二时辰对照表与八刻换算。">
+<meta property="og:url" content="https://toolpocket.cn/shichen.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 十二时辰转换</div>
+  <div class="panel">
+    <h1>🕰️ 十二时辰转换</h1>
+    <p class="desc">输入时间查对应时辰、生肖、别称与第几刻，附完整对照表。</p>
+<style>
+.big{font-size:52px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cwrap{text-align:center;padding:10px 0 6px}
+.ring{--p:0;width:250px;height:250px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#eef0f2 0)}
+.ring-in{width:206px;height:206px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.ring-in .t{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.ring-in .p{font-size:13px;color:var(--muted);margin-top:4px}
+.chip{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;margin:0 6px 8px 0;background:#fff}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2)}
+.tbl tr:last-child td{border-bottom:none}
+.flexrow{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.flexrow>div{flex:1;min-width:130px}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;background:#fff1ee;color:var(--brand);font-weight:600}
+.ok{color:#1a8f5a}.warn{color:#c98200}.bad{color:#d43b26}
+@media(max-width:600px){.big{font-size:38px}.ring{width:210px;height:210px}.ring-in{width:172px;height:172px}.ring-in .t{font-size:34px}}
+</style>
+<div class="cwrap" style="padding:4px 0 10px">
+  <div style="font-size:13px;color:var(--muted);margin-bottom:6px">现在的时辰</div>
+  <div style="font-size:46px;font-weight:800;color:var(--brand)" id="now">—</div>
+  <div style="font-size:14px;color:var(--muted);margin-top:6px" id="nowsub">—</div>
+</div>
+<div class="flexrow" style="margin-top:6px">
+  <div><label>输入时间（24 小时制）</label><input type="time" id="tm" value="12:00"></div>
+  <div style="flex:0 0 auto"><button class="btn" id="go">查时辰</button></div>
+</div>
+<div class="result" id="out">—</div>
+<table class="tbl"><thead><tr><th>时辰</th><th>时段</th><th>生肖</th><th>别称</th></tr></thead><tbody id="tb"></tbody></table>
+<p class="hint">一个时辰 = 2 小时 = 8 刻（每刻 15 分钟）。子时跨两天，23:00 到次日 00:59。</p>
+
+  </div>
+  <section class="seo">
+    <p class="lead">十二时辰是古代中国的一天分法，每个时辰两小时，用地支命名，同时配了生肖和别称。这个页面做两件事：一是把你现在的时间、或任意输入的时间换算成时辰，精确到「第几刻」；二是给一张完整对照表，包括时段、生肖和子夜、鸡鸣这类古称。看古文、写剧本、算八字、给孩子讲传统文化都用得上。</p>
+    <h2>适用场景</h2><ul><li>读古文时对照「午时三刻」这类表述</li><li>看传统题材影视、小说时换算时间</li><li>给孩子讲十二时辰和十二生肖的对应关系</li><li>写小说、剧本需要准确的古代时间说法</li></ul>
+    <h2>使用方法</h2><ol><li>页面顶部自动显示当前时辰，不用操作</li><li>要看其他时间，在输入框选时间点「查时辰」</li><li>下方表格是完整对照表，可直接查</li><li>注意子时跨天：23:00 已进入子时，属于次日</li></ol>
+    <h2>常见问题</h2><details><summary>一个时辰是多少分钟？</summary><p>120 分钟，即 2 小时。一个时辰分八刻，每刻 15 分钟。</p></details><details><summary>「午时三刻」是现在几点？</summary><p>午时是 11:00–12:59，三刻是第 4 个刻（从初刻算第 3 个），约 11:45。</p></details><details><summary>子时到底算今天还是明天？</summary><p>23:00–23:59 属于当天的子时末段，00:00 后进入次日的子时前段。传统命理中子时分为「早子时」和「晚子时」。</p></details><details><summary>时辰和生肖什么关系？</summary><p>地支与生肖一一对应：子鼠、丑牛、寅虎、卯兔、辰龙、巳蛇、午马、未羊、申猴、酉鸡、戌狗、亥猪。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="beijingtime.html">北京标准时间</a><a href="hourformat.html">12/24 小时制转换</a><a href="zodiac.html">生肖星座查询</a><a href="timestamp.html">时间戳转换</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+
+function $(i){return document.getElementById(i)}
+var S=[
+ ['子','23:00–00:59','鼠','子夜'],
+ ['丑','01:00–02:59','牛','鸡鸣'],
+ ['寅','03:00–04:59','虎','平旦'],
+ ['卯','05:00–06:59','兔','日出'],
+ ['辰','07:00–08:59','龙','食时'],
+ ['巳','09:00–10:59','蛇','隅中'],
+ ['午','11:00–12:59','马','日中'],
+ ['未','13:00–14:59','羊','日昳'],
+ ['申','15:00–16:59','猴','晡时'],
+ ['酉','17:00–18:59','鸡','日入'],
+ ['戌','19:00–20:59','狗','黄昏'],
+ ['亥','21:00–22:59','猪','人定']
+];
+var BR=['初','一','二','三','四','五','六','七'];  // 时辰内八刻
+function idx(h){return Math.floor(((h+1)%24)/2)}
+function detail(h,m){
+  var i=idx(h),s=S[i];
+  var quarter=Math.min(7,Math.floor(((h%2===1?60:0)+m)/15));
+  return {i:i,name:s[0],range:s[1],zodiac:s[2],alias:s[3],quarter:BR[quarter]};
+}
+function show(txt){
+  $('out').textContent=txt;
+}
+function query(){
+  var v=$('tm').value;
+  if(!/^\d{1,2}:\d{2}$/.test(v)){show('请填写时间，格式如 14:30');return}
+  var p=v.split(':'),h=+p[0],m=+p[1];
+  var d=detail(h,m);
+  var hour12=(h%12||12)+':'+String(m).padStart(2,'0');
+  show(v+' → '+d.name+'时（'+d.range+'），属'+d.zodiac+'，别称「'+d.alias+'」\n'+
+       '这个时辰的第 '+d.quarter+' 刻 · 12 小时制写法 '+hour12+' '+(h>=12?'PM':'AM'));
+}
+function renderNow(){
+  var n=new Date(),d=detail(n.getHours(),n.getMinutes());
+  $('now').textContent=d.name+'时';
+  $('nowsub').textContent=d.range+' · 属'+d.zodiac+' · '+d.alias+' · 第'+d.quarter+'刻';
+}
+$('tb').innerHTML=S.map(function(s){
+  return '<tr><td style="font-weight:700;font-size:16px">'+s[0]+'</td><td class="mono">'+s[1]+'</td><td>'+s[2]+'</td><td style="color:var(--muted)">'+s[3]+'</td></tr>';
+}).join('');
+$('go').onclick=query;
+$('tm').addEventListener('keydown',function(e){if(e.key==='Enter')query()});
+renderNow();query();setInterval(renderNow,20000);
+
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
