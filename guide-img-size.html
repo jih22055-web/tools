@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片怎么压到指定大小（1MB / 2MB 以内）</title>
+<meta name="description" content="报名系统要求图片小于 1MB、护照照片要 500KB 以内——讲清压缩原理，以及为什么反复压会糊、怎么一次压到目标大小。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/guide-img-size.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"图片怎么压到指定大小","description":"报名系统要求图片小于 1MB、护照照片要 500KB 以内——讲清压缩原理，以及为什么反复压会糊、怎么一次压到目标大小。","url":"https://toolpocket.cn/guide-img-size.html","inLanguage":"zh-CN","datePublished":"2026-11-24","dateModified":"2026-11-24","author":{"@type":"Organization","name":"万能工具箱"},"publisher":{"@type":"Organization","name":"万能工具箱"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"工具箱","item":"https://toolpocket.cn/"},{"@type":"ListItem","position":2,"name":"使用教程","item":"https://toolpocket.cn/guide.html"},{"@type":"ListItem","position":3,"name":"图片压到指定大小"}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="图片怎么压到指定大小（1MB / 2MB 以内）">
+<meta property="og:description" content="报名系统要求图片小于 1MB、护照照片要 500KB 以内——讲清压缩原理，以及为什么反复压会糊、怎么一次压到目标大小。">
+<meta property="og:url" content="https://toolpocket.cn/guide-img-size.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item active" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / <a href="guide.html">使用教程</a> / 图片压到指定大小</div>
+  <div class="article">
+    <h1>图片怎么压到指定大小</h1>
+    <div class="meta">2026-11-24 · 约 1000 字</div>
+    <p>「请上传小于 1MB 的证件照」「图片不能超过 2M」——这种硬性限制几乎每个报名系统都有。多数人的做法是：用压缩工具压一次，看还是大了，再压一次，还是大，再压……最后图糊得看不清，系统倒是过了。</p>
+    <p>问题在于反复压缩。搞清原理，一次就能压到位。</p>
+
+    <h2>JPEG 压缩在做什么</h2>
+    <p>JPEG 是有损压缩，它把画面切成 8×8 的小块，对人眼不敏感的高频信息（细节、细微色差）做粗量化，只保留主要结构。压缩质量越低，丢掉的高频信息越多，表现就是：</p>
+    <ul>
+      <li>文字边缘出现「蚊子噪点」一样的杂色</li>
+      <li>大面积渐变（天空、背景布）出现方块</li>
+      <li>细密的纹理（头发、织物）糊成一片</li>
+    </ul>
+    <p><b>关键点：每次压缩都是一次重新编码，损失会叠加。</b>一张图压三次质量 80，效果远差于一次压到等效大小。所以正确做法不是「多次轻压」，而是「一次压到目标」。</p>
+
+    <h2>压缩的三个旋钮</h2>
+    <p>能减小文件体积的手段只有三种，效果从大到小：</p>
+    <ol>
+      <li><b>缩小尺寸</b>：最有效。4000×3000 缩到 1920×1440，像素少 70%，文件立刻小一大截，而屏幕上看起来几乎没区别</li>
+      <li><b>降低质量</b>：次有效。90 → 75 大约能减 40%，再往下就明显了</li>
+      <li><b>换格式</b>：PNG 照片转 JPG 常常能小 5–10 倍（PNG 是无损格式，存照片非常浪费）</li>
+    </ol>
+    <p>多数人只动第二个旋钮，效果有限还伤画质。真正该先动的是第一个。</p>
+
+    <h2>怎么一次压到指定大小</h2>
+    <p>用<a href="imgtarget.html">图片压缩到指定大小</a>，逻辑是自动的：</p>
+    <ol>
+      <li>上传图片，填目标大小，比如 800KB（留一点余量，别填正好 1024KB）</li>
+      <li>工具会先试一个质量档，算出来多大，大了就降、小了就升，反复逼近目标</li>
+      <li>导出前对比预览，确认文字和细节还能看清</li>
+    </ol>
+    <p>如果压到质量 60 还是超标，说明这张图尺寸太大，得先缩尺寸——工具里可以直接设最长边。</p>
+
+    <h2>不同用途的参考参数</h2>
+    <ul>
+      <li><b>证件照上传</b>：尺寸按系统要求（常见 295×413 或 358×441），质量 85，一般 100–200KB</li>
+      <li><b>网页配图</b>：最长边 1200–1600 像素，质量 80，200–400KB，兼顾加载速度和清晰度</li>
+      <li><b>微信分享</b>：最长边 1080 像素足够，质量 75</li>
+      <li><b>打印用</b>：别压。按 300dpi 算实际尺寸，宁可文件大</li>
+    </ul>
+
+    <h2>两个容易忽略的点</h2>
+    <p><b>PNG 截图不要直接压质量。</b>PNG 是无损格式，没有「质量」这个参数，压它只能减少颜色数或转成 JPG。截图里有文字的，转 JPG 会出现彩色毛边，反而不如保持 PNG 只缩尺寸。</p>
+    <p><b>手机相册里的「优化存储」不是压缩。</b>它只是把原图传到云端、本地留个缩略图，你导出的还是原图。</p>
+
+    <div class="tip"><p>一句话总结：先缩尺寸，再降质量，最后考虑换格式；一次压到目标，别反复压。</p></div>
+    <div style="margin-top:34px;padding-top:22px;border-top:1px solid var(--line)">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">这篇文章用到的工具</div>
+      <div class="related"><a href="imgtarget.html">图片压缩到指定大小</a><a href="image-compress.html">图片压缩</a><a href="imgconvert.html">图片格式转换</a><a href="guide-heic-to-jpg.html">HEIC 转 JPG</a></div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:24px 0 10px"><a href="guide.html" style="color:var(--muted);font-size:14px">← 返回教程列表</a></div>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
