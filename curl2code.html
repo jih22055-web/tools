@@ -5,6 +5,19 @@
 <link rel="stylesheet" href="style.css?v=20261124a">
 <link rel="canonical" href="https://toolpocket.cn/curl2code.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"curl 转代码","url":"https://toolpocket.cn/curl2code.html","description":"把 curl 命令一键转成 fetch、axios、Python requests、Go、PHP 代码。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"支持哪些 curl 参数？","acceptedAnswer":{"@type":"Answer","text":"-X 方法、-H 请求头、-d/--data/--data-raw/--data-binary 请求体、-u 基础认证、-b  Cookie、-A UA、-e Referer。其他参数会被忽略。"}},{"@type":"Question","name":"multipart 表单（-F）支持吗？","acceptedAnswer":{"@type":"Answer","text":"暂不支持。带文件的 -F 上传建议手写，或者用 Postman 生成代码。"}},{"@type":"Question","name":"生成的 Python 代码里 json= 和 data= 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"请求体是合法 JSON 时用 json=payload（requests 会自动设置 Content-Type 并序列化），否则用 data= 原样发送。"}},{"@type":"Question","name":"Windows 下的 curl 命令带 ^ 转义怎么办？","acceptedAnswer":{"@type":"Answer","text":"先去掉 ^ 符号，或者从浏览器的 Copy as cURL (bash) 复制，那种格式能直接用。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="curl 转代码 - 万能工具箱">
+<meta property="og:description" content="把 curl 命令一键转成 fetch、axios、Python requests、Go、PHP 代码。">
+<meta property="og:url" content="https://toolpocket.cn/curl2code.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
 </head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">

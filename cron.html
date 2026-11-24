@@ -5,6 +5,19 @@
 <link rel="stylesheet" href="style.css?v=20261124a">
 <link rel="canonical" href="https://toolpocket.cn/cron.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Cron 表达式解析","url":"https://toolpocket.cn/cron.html","description":"在线解析 Crontab 表达式，说明每个字段含义并算出接下来 8 次执行时间。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"支持 6 段式（带秒）吗？","acceptedAnswer":{"@type":"Answer","text":"只支持标准 5 段式：分 时 日 月 周。Quartz 的 6 段式带秒格式需要另找工具。"}},{"@type":"Question","name":"星期几从 0 开始还是 1？","acceptedAnswer":{"@type":"Answer","text":"0 和 7 都表示周日，1-6 表示周一到周六。和标准 crontab 一致。"}},{"@type":"Question","name":"日和星期同时指定时怎么算？","acceptedAnswer":{"@type":"Answer","text":"标准 cron 里这两个字段是「或」的关系，本工具计算时要求两者都满足（更严格）。如果两个字段都不是 *，建议只用其中一个。"}},{"@type":"Question","name":"算出来的时间和服务器上不一致？","acceptedAnswer":{"@type":"Answer","text":"本工具按你本地时区计算。服务器通常跑 UTC，如果表达式里有小时数，记得把时差算进去。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="Cron 表达式解析 - 万能工具箱">
+<meta property="og:description" content="在线解析 Crontab 表达式，说明每个字段含义并算出接下来 8 次执行时间。">
+<meta property="og:url" content="https://toolpocket.cn/cron.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
 </head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">
