@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>倒数日计算器 - 纪念日/节日倒计时在线查询</title>
+<meta name="description" content="在线倒数日计算器：添加纪念日、生日、考试日期，自动算出还有多少天或已经过了多少天，内置常见节日倒计时，打开即用不上传。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/countdown.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"倒数日计算器","url":"https://toolpocket.cn/countdown.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","description":"在线倒数日计算器：添加纪念日、生日、考试日期，自动算出还有多少天或已经过了多少天，内置常见节日倒计时，打开即用不上传。","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"数据会上传到服务器吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部存在浏览器的 localStorage 里，断网也能用，换电脑或清缓存后会消失。"}},{"@type":"Question","name":"为什么节日日期是固定的？","acceptedAnswer":{"@type":"Answer","text":"内置的是公历固定节日。春节、中秋、端午是农历节日，每年日期不同，需要手动添加当年日期。"}},{"@type":"Question","name":"能加多少个事件？","acceptedAnswer":{"@type":"Answer","text":"没有上限，几十个也流畅，超出屏幕可以滚动查看。"}},{"@type":"Question","name":"为什么刚添加的日期排序不对？","acceptedAnswer":{"@type":"Answer","text":"列表按距离今天的天数从近到远排，过去的日期会排在最后并显示负数天数。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="倒数日计算器 - 万能工具箱">
+<meta property="og:description" content="在线倒数日计算器：添加纪念日、生日、考试日期，自动算出还有多少天或已经过了多少天，内置常见节日倒计时，打开即用不上传。">
+<meta property="og:url" content="https://toolpocket.cn/countdown.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 倒数日计算器</div>
+  <div class="panel">
+    <h1>📅 倒数日计算器</h1>
+    <p class="desc">添加一个日期，立刻看到还有多少天、或者已经过去了多少天。生日、纪念日、考试、放假都能用。</p>
+    <div class="row">
+      <div><label>事件名称</label><input type="text" id="nm" placeholder="例如：结婚纪念日、高考"></div>
+      <div><label>日期</label><input type="text" id="dt" placeholder="2027-06-07" autocomplete="off"></div>
+    </div>
+    <div class="actions"><button class="btn" id="add">添加倒数日</button><button class="btn ghost" id="clr">清空自建</button></div>
+    <p class="hint">日期格式：2027-06-07，也可写成 2027/6/7。过去的日子会显示「已经过去多少天」。</p>
+    <div id="list" style="margin-top:20px"></div>
+  </div>
+  <section class="seo">
+    <p class="lead">倒数日计算器把「还有多少天」这件事算清楚。加一个日期，页面会按天数排序，最近的排最前面；过去的日子显示已经过去多少天，用来算在一起多久、戒烟多久、某事多久没犯。数据只存在你自己的浏览器里，换设备不会同步。</p>
+    <h2>适用场景</h2><ul><li>算生日、结婚纪念日还有多少天</li><li>高考、考研、考试倒计时</li><li>算在一起多少天、坚持某事多少天</li><li>算年假、试用期、合同到期的剩余天数</li></ul>
+    <h2>使用方法</h2><ol><li>在事件名称里填个名字，比如「回家」</li><li>日期填 2027-06-07 这种格式</li><li>点「添加倒数日」</li><li>自建项目会自动保存，下次打开还在</li></ol>
+    <h2>常见问题</h2><details><summary>数据会上传到服务器吗？</summary><p>不会。全部存在浏览器的 localStorage 里，断网也能用，换电脑或清缓存后会消失。</p></details><details><summary>为什么节日日期是固定的？</summary><p>内置的是公历固定节日。春节、中秋、端午是农历节日，每年日期不同，需要手动添加当年日期。</p></details><details><summary>能加多少个事件？</summary><p>没有上限，几十个也流畅，超出屏幕可以滚动查看。</p></details><details><summary>为什么刚添加的日期排序不对？</summary><p>列表按距离今天的天数从近到远排，过去的日期会排在最后并显示负数天数。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="datecalc.html">日期计算器</a><a href="zodiac.html">生肖星座查询</a><a href="timer.html">多通道计时器</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var KEY='tp_cd_v1';
+var HOL=[['元旦',1,1],['情人节',2,14],['妇女节',3,8],['愚人节',4,1],['劳动节',5,1],['儿童节',6,1],['建党节',7,1],['建军节',8,1],['教师节',9,10],['国庆节',10,1],['万圣夜',10,31],['光棍节',11,11],['平安夜',12,24],['圣诞节',12,25]];
+function zero(d){var x=new Date(d);x.setHours(0,0,0,0);return x}
+function today(){return zero(new Date())}
+function diff(d){return Math.round((zero(d)-today())/86400000)}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
+function save(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+function parseDate(s){
+  s=(s||'').trim();var m=s.match(/^(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})/);
+  if(!m)return null;var d=new Date(+m[1],+m[2]-1,+m[3]);
+  if(d.getMonth()!==+m[2]-1||d.getDate()!==+m[3])return null;return d;
+}
+function fmt(n){
+  if(n>0)return '<span style="color:#ef5b41;font-weight:800;font-size:20px">'+n+'</span> <span style="font-size:13px;color:#8b8f99">天后</span>';
+  if(n===0)return '<span style="color:#18b566;font-weight:800;font-size:18px">就是今天</span>';
+  return '<span style="font-size:13px;color:#8b8f99">已经过去</span> <span style="color:#5a6070;font-weight:800;font-size:18px">'+(-n)+'</span> <span style="font-size:13px;color:#8b8f99">天</span>';
+}
+function row(name,d,custom,idx){
+  var n=diff(d),w=['日','一','二','三','四','五','六'][d.getDay()];
+  var ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return '<div style="display:flex;align-items:center;gap:14px;background:#fafbfc;border:1px solid #e8e9ed;border-radius:10px;padding:14px 18px;margin-bottom:10px">'
+    +'<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15px;margin-bottom:3px">'+name+'</div>'
+    +'<div style="font-size:12.5px;color:#8b8f99">'+ds+' 星期'+w+(custom?'':' · 节日')+'</div></div>'
+    +'<div style="text-align:right;white-space:nowrap">'+fmt(n)+'</div>'
+    +(custom?'<button data-i="'+idx+'" class="del" title="删除" style="border:none;background:none;color:#c2c5cc;cursor:pointer;font-size:18px;padding:0 2px">×</button>':'')
+    +'</div>';
+}
+function render(){
+  var list=[],y=new Date().getFullYear(),custom=load();
+  HOL.forEach(function(h){
+    var d=new Date(y,h[1]-1,h[2]);if(diff(d)<0)d=new Date(y+1,h[1]-1,h[2]);
+    list.push({name:h[0],d:d,c:false});
+  });
+  custom.forEach(function(c,i){var d=parseDate(c.dt);if(d)list.push({name:c.nm,d:d,c:true,i:i})});
+  list.sort(function(a,b){return diff(a.d)-diff(b.d)});
+  document.getElementById('list').innerHTML=list.map(function(x){return row(x.name,x.d,x.c,x.i)}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.del'),function(b){
+    b.onclick=function(){
+      var a=load();a.splice(+b.dataset.i,1);save(a);render();
+    };
+  });
+}
+document.getElementById('add').onclick=function(){
+  var nm=document.getElementById('nm').value.trim(),d=parseDate(document.getElementById('dt').value);
+  if(!nm){alert('先给这个日子起个名字');return}
+  if(!d){alert('日期格式不对，请填 2027-06-07 这样');return}
+  var a=load();a.push({nm:nm,dt:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')});
+  save(a);document.getElementById('nm').value='';document.getElementById('dt').value='';render();
+};
+document.getElementById('clr').onclick=function(){if(confirm('清空所有自建倒数日？')){save([]);render()}};
+document.getElementById('dt').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('add').click()});
+render();
+</script><script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
