@@ -5,6 +5,19 @@
 <link rel="stylesheet" href="style.css?v=20261124a">
 <link rel="canonical" href="https://toolpocket.cn/magicbytes.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"文件类型识别","url":"https://toolpocket.cn/magicbytes.html","description":"通过文件头字节识别真实文件格式，不管后缀被改成什么都能看出它到底是什么文件，附十六进制查看。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么能识别出真实类型？","acceptedAnswer":{"@type":"Answer","text":"不同格式的文件开头有固定特征字节，例如 PNG 一定以 89 50 4E 47 开头，PDF 一定以 25 50 44 46（即 %PDF）开头。改后缀不会改变这些字节。"}},{"@type":"Question","name":"文件会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。工具只读取文件开头的 512 字节，而且读取和处理全在你本地浏览器完成，文件内容不会离开你的电脑。"}},{"@type":"Question","name":"识别成「未知格式」怎么办？","acceptedAnswer":{"@type":"Answer","text":"说明该格式的特征不在收录表内，或者文件已损坏、被加密。可以看下方的十六进制值，去网上查对应格式的签名。"}},{"@type":"Question","name":"能识别加壳或加密的文件吗？","acceptedAnswer":{"@type":"Answer","text":"不能。加密后的文件头通常是随机数据，无法从字节特征判断原始类型。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="文件类型识别 - 万能工具箱">
+<meta property="og:description" content="通过文件头字节识别真实文件格式，不管后缀被改成什么都能看出它到底是什么文件，附十六进制查看。">
+<meta property="og:url" content="https://toolpocket.cn/magicbytes.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
 </head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">
