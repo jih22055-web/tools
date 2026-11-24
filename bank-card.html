@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>银行卡归属地查询 - 卡号识别发卡行与卡组织</title>
+<meta name="description" content="银行卡归属地查询：输入卡号自动识别发卡行、卡组织（银联/Visa/Mastercard 等）、卡号长度并做 Luhn 校验，纯本地计算不上传。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/bank-card.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "银行卡归属地", "url": "https://toolpocket.cn/bank-card.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "description": "银行卡归属地查询：输入卡号自动识别发卡行、卡组织（银联/Visa/Mastercard 等）、卡号长度并做 Luhn 校验，纯本地计算不上传。", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "卡号会被上传吗？", "acceptedAnswer": {"@type": "Answer", "text": "不会。全部在浏览器本地计算，页面不发起任何网络请求。"}}, {"@type": "Question", "name": "Luhn 校验通过就说明卡是真的吗？", "acceptedAnswer": {"@type": "Answer", "text": "不是。Luhn 只是数学规律校验，能筛掉输错一位的情况，但无法验证这张卡是否真实存在、是否有余额。"}}, {"@type": "Question", "name": "为什么我的卡查不到发卡行？", "acceptedAnswer": {"@type": "Answer", "text": "本页只内置了约 60 个常见 BIN。全国银行有几百家、BIN 有几十万条且每年新增，不可能全部内置。"}}, {"@type": "Question", "name": "能查到开户行支行吗？", "acceptedAnswer": {"@type": "Answer", "text": "不能。支行信息需要银行内部系统或银联接口才能查，公开渠道拿不到。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="银行卡归属地查询 - 卡号识别发卡行与卡组织">
+<meta property="og:description" content="银行卡归属地查询：输入卡号自动识别发卡行、卡组织（银联/Visa/Mastercard 等）、卡号长度并做 Luhn 校验，纯本地计算不上传。">
+<meta property="og:url" content="https://toolpocket.cn/bank-card.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 银行卡归属地</div>
+  <div class="panel">
+    <h1>💳 银行卡归属地</h1>
+    <p class="desc">输卡号识别发卡行、卡组织、位数，自动 Luhn 校验，全程本地不上传。</p>
+<style>
+.big{font-size:52px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cwrap{text-align:center;padding:10px 0 6px}
+.ring{--p:0;width:250px;height:250px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#eef0f2 0)}
+.ring-in{width:206px;height:206px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.ring-in .t{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.ring-in .p{font-size:13px;color:var(--muted);margin-top:4px}
+.chip{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;margin:0 6px 8px 0;background:#fff}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2)}
+.tbl tr:last-child td{border-bottom:none}
+.flexrow{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.flexrow>div{flex:1;min-width:130px}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;background:#fff1ee;color:var(--brand);font-weight:600}
+.ok{color:#1a8f5a}.warn{color:#c98200}.bad{color:#d43b26}
+@media(max-width:600px){.big{font-size:38px}.ring{width:210px;height:210px}.ring-in{width:172px;height:172px}.ring-in .t{font-size:34px}}
+</style>
+<label style="margin-top:0">银行卡号</label>
+<input type="text" id="num" placeholder="输入 15–19 位卡号，试试 6222021234567890128" autocomplete="off">
+<div class="actions"><button class="btn" id="go">识别</button><button class="btn ghost" id="demo">填入测试卡号</button></div>
+<div id="out"></div>
+<label>常见银行 BIN 号段（前 6 位）</label>
+<table class="tbl"><thead><tr><th>BIN</th><th>发卡行</th><th>BIN</th><th>发卡行</th></tr></thead><tbody id="tb"></tbody></table>
+<p class="hint">⚠️ 卡号只在你的浏览器里计算，不会上传。BIN 表来自常见号段整理，用于识别参考；准确归属、卡种、开户行以银行官方为准。涉及转账请务必核对银行 App 显示的收款人信息。</p>
+
+  </div>
+  <section class="seo">
+    <p class="lead">拿到一串卡号想知道是哪家银行的、是不是输错了，这个工具能帮上忙。前 6 位是 BIN（发卡行识别码），对应发卡银行；卡号长度和 Luhn 校验能判断有没有输错位。要说明的是：完整的 BIN 库有几十万条且不断新增，本页内置的是常见银行的主要 BIN，查不到只代表没收录，不代表卡号有问题。所有计算都在你的浏览器里完成，卡号不会离开这台设备。</p>
+    <h2>适用场景</h2><ul><li>转账前核对卡号有没有输错位</li><li>确认某张卡是哪家银行的</li><li>识别是银联卡还是 Visa/Mastercard</li><li>批量录入卡号时做格式校验</li></ul>
+    <h2>使用方法</h2><ol><li>直接粘贴卡号，会自动识别</li><li>看四张卡片：发卡行、卡组织、位数、Luhn 校验结果</li><li>Luhn 校验通过说明位数和结构正确</li><li>查不到发卡行不用慌，可能只是 BIN 没收录</li></ol>
+    <h2>常见问题</h2><details><summary>卡号会被上传吗？</summary><p>不会。全部在浏览器本地计算，页面不发起任何网络请求。</p></details><details><summary>Luhn 校验通过就说明卡是真的吗？</summary><p>不是。Luhn 只是数学规律校验，能筛掉输错一位的情况，但无法验证这张卡是否真实存在、是否有余额。</p></details><details><summary>为什么我的卡查不到发卡行？</summary><p>本页只内置了约 60 个常见 BIN。全国银行有几百家、BIN 有几十万条且每年新增，不可能全部内置。</p></details><details><summary>能查到开户行支行吗？</summary><p>不能。支行信息需要银行内部系统或银联接口才能查，公开渠道拿不到。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="phone-location.html">手机号归属地</a><a href="luhn.html">银行卡号校验</a><a href="plate.html">车牌号查询</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+
+function $(i){return document.getElementById(i)}
+var BIN={
+'622202':'中国工商银行','622200':'中国工商银行','622203':'中国工商银行','622208':'中国工商银行','621226':'中国工商银行','622210':'中国工商银行','621723':'中国工商银行',
+'622848':'中国农业银行','622845':'中国农业银行','622846':'中国农业银行','622849':'中国农业银行','621336':'中国农业银行','621671':'中国农业银行','622827':'中国农业银行',
+'621660':'中国银行','621661':'中国银行','621663':'中国银行','622760':'中国银行','621785':'中国银行','621788':'中国银行','621790':'中国银行',
+'621700':'中国建设银行','622700':'中国建设银行','621081':'中国建设银行','621466':'中国建设银行','621488':'中国建设银行','621499':'中国建设银行',
+'622260':'交通银行','622262':'交通银行','621002':'交通银行','621069':'交通银行','622258':'交通银行',
+'622580':'招商银行','622588':'招商银行','621483':'招商银行','621485':'招商银行','621286':'招商银行','622575':'招商银行',
+'621096':'中国邮政储蓄银行','621799':'中国邮政储蓄银行','622188':'中国邮政储蓄银行','621599':'中国邮政储蓄银行','622150':'中国邮政储蓄银行',
+'622690':'中信银行','622691':'中信银行','621771':'中信银行','621773':'中信银行',
+'622521':'浦发银行','622522':'浦发银行','621792':'浦发银行','621793':'浦发银行',
+'622622':'中国民生银行','622617':'中国民生银行','621691':'中国民生银行','622615':'中国民生银行',
+'622909':'兴业银行','621084':'兴业银行','621086':'兴业银行',
+'622660':'中国光大银行','622662':'中国光大银行','621489':'中国光大银行','621492':'中国光大银行',
+'622630':'华夏银行','622632':'华夏银行','621222':'华夏银行','621020':'华夏银行',
+'622568':'广发银行','622569':'广发银行','621462':'广发银行','622556':'广发银行',
+'622155':'平安银行','622156':'平安银行','621626':'平安银行','622535':'平安银行',
+'621468':'北京银行','622290':'北京银行',
+'622268':'上海银行','621417':'上海银行',
+'622315':'南京银行','621780':'南京银行'
+};
+var ORG=[
+ ['62','中国银联','银联标准卡（国内绝大多数借记卡）'],
+ ['4','Visa','国际卡组织，16 位为主'],
+ ['5','Mastercard','国际卡组织，51–55 开头'],
+ ['2','Mastercard','新版 2 系列（2221–2720）'],
+ ['3','American Express / JCB','34/37 美运，35 JCB'],
+ ['35','JCB','日本国际卡组织'],
+ ['6011','Discover','美国发现卡'],
+ ['62','银联','62 开头也可能是银联信用卡']
+];
+function luhn(s){
+  var sum=0,alt=false;
+  for(var i=s.length-1;i>=0;i--){
+    var n=+s[i];
+    if(alt){n*=2;if(n>9)n-=9}
+    sum+=n;alt=!alt;
+  }
+  return sum%10===0;
+}
+function org(s){
+  if(/^62/.test(s))return '中国银联';
+  if(/^4/.test(s))return 'Visa';
+  if(/^5[1-5]/.test(s))return 'Mastercard';
+  if(/^2(2[2-9]|[3-6]|7[01]|720)/.test(s))return 'Mastercard';
+  if(/^3[47]/.test(s))return 'American Express';
+  if(/^35/.test(s))return 'JCB';
+  if(/^6011|^65/.test(s))return 'Discover';
+  if(/^3(0[0-5]|[68])/.test(s))return 'Diners Club';
+  return '未识别';
+}
+function render(){
+  var s=$('num').value.replace(/\D/g,'');
+  if(!s){$('out').innerHTML='';return}
+  if(s.length<12){$('out').innerHTML='<div class="result">已输入 '+s.length+' 位，银行卡号通常 15–19 位</div>';return}
+  var bin=s.slice(0,6);
+  var bank=BIN[bin]||'';
+  var o=org(s);
+  var ok=luhn(s);
+  var parts=[];
+  for(var i=0;i<s.length;i+=4)parts.push(s.slice(i,i+4));
+  $('out').innerHTML='<div class="result">'+
+    '<div class="stat-grid" style="margin-top:0">'+
+    '<div class="stat"><div class="num" style="font-size:18px">'+(bank||'未收录')+'</div><div class="lbl">发卡行（BIN '+bin+'）</div></div>'+
+    '<div class="stat"><div class="num" style="font-size:18px">'+o+'</div><div class="lbl">卡组织</div></div>'+
+    '<div class="stat"><div class="num" style="font-size:18px">'+s.length+' 位</div><div class="lbl">卡号长度</div></div>'+
+    '<div class="stat"><div class="num '+(ok?'ok':'bad')+'" style="font-size:18px">'+(ok?'校验通过':'校验失败')+'</div><div class="lbl">Luhn 校验</div></div>'+
+    '</div>'+
+    '<div style="margin-top:14px;font-size:15px">格式化：<span class="mono">'+parts.join(' ')+'</span></div>'+
+    (bank?'':'<div style="margin-top:10px;font-size:13px;color:#c98200">这个 BIN 不在本页的常见号段表里。表里只有约 60 个常见 BIN，查不到不代表卡号有错，只是没收录。</div>')+
+    (ok?'':'<div style="margin-top:10px;font-size:13px;color:#d43b26">Luhn 校验不通过，说明卡号有位数输错或本身就是错号。这是纯数学校验，不会验证这张卡是否真实存在。</div>')+
+    '</div>';
+}
+$('go').onclick=render;
+$('demo').onclick=function(){$('num').value='6222021234567890128';render()};
+$('num').addEventListener('input',render);
+var keys=Object.keys(BIN),pairs=[];
+for(var i=0;i<keys.length;i+=2){
+  pairs.push('<tr><td class="mono">'+keys[i]+'</td><td>'+BIN[keys[i]]+'</td><td class="mono">'+(keys[i+1]||'')+'</td><td>'+(keys[i+1]?BIN[keys[i+1]]:'')+'</td></tr>');
+}
+$('tb').innerHTML=pairs.join('');
+render();
+
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>

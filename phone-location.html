@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>手机号归属地查询 - 号码校验与运营商识别</title>
+<meta name="description" content="手机号归属地查询：输入 11 位手机号，离线判断号段与运营商（移动/联通/电信/广电/虚拟运营商），校验号码格式，可选联网查询省市归属。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/phone-location.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "手机号归属地查询", "url": "https://toolpocket.cn/phone-location.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "description": "手机号归属地查询：输入 11 位手机号，离线判断号段与运营商（移动/联通/电信/广电/虚拟运营商），校验号码格式，可选联网查询省市归属。", "inLanguage": "zh-CN", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "归属地为什么不能离线算出来？", "acceptedAnswer": {"@type": "Answer", "text": "号段分配是运营商逐批报备的，同一运营商在不同城市有不同号段，不存在能推导出省份的数学规律。必须有完整的号段库才行，而那个库没有免费公开的完整版。"}}, {"@type": "Question", "name": "运营商判断准不准？", "acceptedAnswer": {"@type": "Answer", "text": "准。这是工信部公开的号段分配规则，前三位就能确定基础运营商，162/165/167/170/171 这几类是转售号段，信号仍走三大运营商网络。"}}, {"@type": "Question", "name": "170 开头是诈骗号吗？", "acceptedAnswer": {"@type": "Answer", "text": "不是。170/171 是虚拟运营商专用号段，早期被电销和诈骗大量使用，所以口碑差，但本身是合法号段。"}}, {"@type": "Question", "name": "号码会被记录或上传吗？", "acceptedAnswer": {"@type": "Answer", "text": "不会。离线部分完全在本机计算，不发任何请求。只有你主动点「联网查询归属地」时，才会把号码发给第三方接口。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="手机号归属地查询 - 号码校验与运营商识别">
+<meta property="og:description" content="手机号归属地查询：输入 11 位手机号，离线判断号段与运营商（移动/联通/电信/广电/虚拟运营商），校验号码格式，可选联网查询省市归属。">
+<meta property="og:url" content="https://toolpocket.cn/phone-location.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 手机号归属地查询</div>
+  <div class="panel">
+    <h1>📱 手机号归属地查询</h1>
+    <p class="desc">校验手机号、离线判运营商与号段，联网可查省市归属（查不到会直说）。</p>
+<style>
+.big{font-size:52px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cwrap{text-align:center;padding:10px 0 6px}
+.ring{--p:0;width:250px;height:250px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#eef0f2 0)}
+.ring-in{width:206px;height:206px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.ring-in .t{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.ring-in .p{font-size:13px;color:var(--muted);margin-top:4px}
+.chip{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;margin:0 6px 8px 0;background:#fff}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg2)}
+.tbl tr:last-child td{border-bottom:none}
+.flexrow{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.flexrow>div{flex:1;min-width:130px}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;background:#fff1ee;color:var(--brand);font-weight:600}
+.ok{color:#1a8f5a}.warn{color:#c98200}.bad{color:#d43b26}
+@media(max-width:600px){.big{font-size:38px}.ring{width:210px;height:210px}.ring-in{width:172px;height:172px}.ring-in .t{font-size:34px}}
+</style>
+<label style="margin-top:0">手机号码</label>
+<input type="text" id="num" value="13800138000" placeholder="输入 11 位手机号" maxlength="11" autocomplete="off">
+<div class="actions"><button class="btn" id="go">查询</button><button class="btn ghost" id="clr">清空</button></div>
+<div id="out"></div>
+<div id="online" style="margin-top:16px"></div>
+<label>号段与运营商对照（离线判断，准确）</label>
+<table class="tbl"><thead><tr><th>号段</th><th>运营商</th><th>说明</th></tr></thead><tbody id="tb"></tbody></table>
+<p class="hint">运营商判断是离线的、准确的（按工信部号段分配规则）。<b>归属地（省市）需要运营商的号段数据库</b>，纯前端拿不到完整数据，所以做了一个可选的联网查询：点按钮才请求，查不到就明确告诉你查不到，不编造结果。</p>
+
+  </div>
+  <section class="seo">
+    <p class="lead">手机号归属地查询有两个层次：一是号码本身的信息，包括格式对不对、属于哪个运营商、是不是虚拟运营商转售号段，这些可以直接从号段规则离线判断，准确且不用联网；二是省市归属，这个必须查运营商的号段数据库，纯前端页面没有完整数据。所以这个工具把两者分开：前半部分离线秒出、结果可靠；后半部分做成可选的联网查询，接口不可用时如实告知，并给出自己去运营商渠道核对的路径，绝不编一个省份糊弄你。</p>
+    <h2>适用场景</h2><ul><li>确认一个新号码是哪个运营商的</li><li>判断是不是虚拟运营商号段（推销电话常见）</li><li>核对录入的号码有没有输错位数</li><li>需要把号码打码展示时快速生成脱敏写法</li></ul>
+    <h2>使用方法</h2><ol><li>粘贴或输入 11 位手机号</li><li>满 11 位自动开始校验，也可以点「查询」</li><li>上半部分显示运营商、号段、脱敏写法</li><li>需要省市归属，点「联网查询归属地」</li></ol>
+    <h2>常见问题</h2><details><summary>归属地为什么不能离线算出来？</summary><p>号段分配是运营商逐批报备的，同一运营商在不同城市有不同号段，不存在能推导出省份的数学规律。必须有完整的号段库才行，而那个库没有免费公开的完整版。</p></details><details><summary>运营商判断准不准？</summary><p>准。这是工信部公开的号段分配规则，前三位就能确定基础运营商，162/165/167/170/171 这几类是转售号段，信号仍走三大运营商网络。</p></details><details><summary>170 开头是诈骗号吗？</summary><p>不是。170/171 是虚拟运营商专用号段，早期被电销和诈骗大量使用，所以口碑差，但本身是合法号段。</p></details><details><summary>号码会被记录或上传吗？</summary><p>不会。离线部分完全在本机计算，不发任何请求。只有你主动点「联网查询归属地」时，才会把号码发给第三方接口。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="bank-card.html">银行卡归属地</a><a href="plate.html">车牌号查询</a><a href="password.html">密码生成器</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+
+function $(i){return document.getElementById(i)}
+var OP={
+ '134':'中国移动','135':'中国移动','136':'中国移动','137':'中国移动','138':'中国移动','139':'中国移动',
+ '147':'中国移动','150':'中国移动','151':'中国移动','152':'中国移动','157':'中国移动','158':'中国移动',
+ '159':'中国移动','172':'中国移动','178':'中国移动','182':'中国移动','183':'中国移动','184':'中国移动',
+ '187':'中国移动','188':'中国移动','195':'中国移动','197':'中国移动','198':'中国移动',
+ '130':'中国联通','131':'中国联通','132':'中国联通','145':'中国联通','155':'中国联通','156':'中国联通',
+ '166':'中国联通','175':'中国联通','176':'中国联通','185':'中国联通','186':'中国联通','196':'中国联通',
+ '133':'中国电信','149':'中国电信','153':'中国电信','173':'中国电信','177':'中国电信','180':'中国电信',
+ '181':'中国电信','189':'中国电信','190':'中国电信','191':'中国电信','193':'中国电信','199':'中国电信',
+ '192':'中国广电'
+};
+var VIRT={'162':['中国电信','电信转售'],'165':['中国移动','移动转售'],'167':['中国联通','联通转售'],
+ '170':['中国移动','虚拟运营商专用号段'],'171':['中国联通','联通转售']};
+function check(s){
+  s=(s||'').replace(/\D/g,'');
+  if(!s)return {ok:false,msg:'请输入手机号'};
+  if(s.length!==11)return {ok:false,msg:'手机号应为 11 位，当前 '+s.length+' 位'};
+  if(s[0]!=='1')return {ok:false,msg:'手机号必须以 1 开头'};
+  if(('3456789'.indexOf(s[1]))<0)return {ok:false,msg:'第二位应为 3–9，'+s[1]+' 不是有效号段'};
+  var p3=s.slice(0,3);
+  var op=OP[p3],v=VIRT[p3];
+  if(!op&&!v)return {ok:false,msg:'号段 '+p3+' 不在工信部已分配列表中，可能是错号或新号段'};
+  return {ok:true,num:s,p3:p3,op:op||v[0],virt:v?v[1]:'',rest:s.slice(3,7),tail:s.slice(7)};
+}
+function render(){
+  var s=$('num').value,r=check(s);
+  if(!r.ok){$('out').innerHTML='<div class="result bad">'+r.msg+'</div>';$('online').innerHTML='';return null}
+  $('out').innerHTML='<div class="result"><div class="stat-grid" style="margin-top:0">'+
+    '<div class="stat"><div class="num" style="font-size:19px">'+r.op+'</div><div class="lbl">运营商</div></div>'+
+    '<div class="stat"><div class="num" style="font-size:19px">'+r.p3+'</div><div class="lbl">前三位号段</div></div>'+
+    '<div class="stat"><div class="num" style="font-size:19px">'+r.p3+' '+r.rest+'</div><div class="lbl">HLR 归属位置</div></div>'+
+    '<div class="stat"><div class="num" style="font-size:19px">中国</div><div class="lbl">国家/地区</div></div>'+
+    '</div><div style="margin-top:12px;font-size:14px">'+
+    (r.virt?'<span class="badge">'+r.virt+'</span> 这类号码由虚拟运营商放号，实际信号走 '+r.op+' 网络。<br>':'')+
+    '脱敏写法：<b class="mono">'+r.p3+'****'+r.tail+'</b>　·　号段归属地需要联网查询，见下面。</div></div>';
+  $('online').innerHTML='<div class="actions" style="margin-top:0"><button class="btn ghost" id="q">联网查询归属地（省市）</button></div>';
+  $('q').onclick=function(){queryOnline(r.num)};
+  return r;
+}
+function queryOnline(num){
+  $('online').innerHTML='<div class="result">正在查询 '+num+' 的归属地…</div>';
+  var urls=[
+    'https://api.vvhan.com/api/phone?tel='+num,
+    'https://api.uomg.com/api/phone?tel='+num
+  ];
+  var i=0;
+  function next(){
+    if(i>=urls.length){
+      $('online').innerHTML='<div class="result warn">所有归属地接口都不可用（可能被网络环境拦截、或接口已停止服务）。<br>'+
+      '归属地不是靠算法能推出来的，依赖运营商的号段库。你可以：<br>· 打开手机营业厅 App 查询<br>· 拨打运营商客服（10086 / 10010 / 10000）<br>'+
+      '· 在搜索引擎直接搜「'+num.slice(0,7)+' 归属地」</div>';
+      return;
+    }
+    var u=urls[i++];
+    var ctl=window.AbortController?new AbortController():null;
+    var to=setTimeout(function(){if(ctl)ctl.abort()},6000);
+    fetch(u,{signal:ctl?ctl.signal:undefined}).then(function(r){return r.json()}).then(function(d){
+      clearTimeout(to);
+      var prov=(d.data&&(d.data.prov||d.data.province))||d.prov||'';
+      var city=(d.data&&(d.data.city))||d.city||'';
+      var sp=(d.data&&(d.data.sp||d.data.operators))||d.sp||'';
+      if(!prov&&!city){throw new Error('empty')}
+      $('online').innerHTML='<div class="result ok"><b>归属地：'+(prov||'')+' '+(city||'')+'</b>'+
+        (sp?'　·　运营商：'+sp:'')+'<div class="hint" style="margin-top:6px">数据来自第三方公开接口，仅供参考，与运营商官方数据可能有个别差异。</div></div>';
+    }).catch(function(){clearTimeout(to);next()});
+  }
+  next();
+}
+$('go').onclick=render;
+$('clr').onclick=function(){$('num').value='';$('out').innerHTML='';$('online').innerHTML='';$('num').focus()};
+$('num').addEventListener('input',function(){
+  var v=$('num').value.replace(/\D/g,'');
+  if(v.length===11)render();
+  else if(!v){$('out').innerHTML='';$('online').innerHTML=''}
+});
+$('num').addEventListener('keydown',function(e){if(e.key==='Enter')render()});
+var rows=[
+ ['134–139 / 150–152 / 157–159 / 182–184 / 187–188','中国移动','最常见的一批移动号段'],
+ ['147 / 178 / 172 / 195 / 197 / 198','中国移动','物联、新号段'],
+ ['130–132 / 155–156 / 185–186 / 166 / 175–176 / 196','中国联通','联通主号段'],
+ ['133 / 153 / 180–181 / 189 / 199 / 173 / 177 / 190–191 / 193','中国电信','电信主号段'],
+ ['192','中国广电','广电 5G 号段'],
+ ['162 / 165 / 167 / 170 / 171','虚拟运营商','转售号段，信号走三大运营商']
+];
+$('tb').innerHTML=rows.map(function(r){return '<tr><td class="mono" style="font-size:13px">'+r[0]+'</td><td>'+r[1]+'</td><td style="color:var(--muted);font-size:13px">'+r[2]+'</td></tr>'}).join('');
+render();
+
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
