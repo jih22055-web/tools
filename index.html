@@ -173,12 +173,21 @@ const count = document.getElementById('count');
 const search = document.getElementById('search');
 let curCat = '全部';
 try{var qc=new URLSearchParams(location.search).get('cat');if(qc&&CATS.indexOf(qc)>-1)curCat=qc}catch(e){}
+function syncSb(){
+  var links=document.querySelectorAll('.sb-item');
+  Array.prototype.forEach.call(links,function(a){
+    var name=a.textContent.trim();
+    if(name===curCat||(curCat==='全部'&&name==='全部工具'))a.classList.add('active');
+    else a.classList.remove('active');
+  });
+}
 function renderCatbar(){
   const bar = document.getElementById('catbar');
   bar.innerHTML = CATS.map(c=>'<a href="#" data-cat="'+c+'" class="'+(c===curCat?'active':'')+'">'+c+'</a>').join('');
+  syncSb();
   bar.onclick = e=>{
     const a = e.target.closest('a[data-cat]'); if(!a) return;
-    e.preventDefault(); curCat = a.dataset.cat; renderCatbar(); doSearch();
+    e.preventDefault(); curCat = a.dataset.cat; renderCatbar(); doSearch(); syncSb();
   };
 }
 function doSearch(){
