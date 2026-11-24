@@ -2,12 +2,15 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>进制转换工具 - 万能工具箱</title>
 <meta name="description" content="十进制、二进制、八进制、十六进制互相转换，支持负数和大整数。程序员、计网学习必备。">
-<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<link rel="stylesheet" href="style.css?v=20261124a">
+<link rel="canonical" href="https://toolpocket.cn/base-convert.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"进制转换工具","url":"https://toolpocket.cn/base-convert.html","description":"十进制、二进制、八进制、十六进制互相转换，支持负数和大整数。程序员、计网学习必备。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"十六进制的 A-F 是什么意思？","acceptedAnswer":{"@type":"Answer","text":"十六进制有 16 个数字符号：0-9 之后用 A=10、B=11、C=12、D=13、E=14、F=15。所以 0xFF 就是十进制 255。"}},{"@type":"Question","name":"超过 2^53 的大整数准确吗？","acceptedAnswer":{"@type":"Answer","text":"JavaScript 的数字精度有限，超过 2^53 的大整数可能不准。本工具用原生 parseInt/toString，适合日常数值，超大整数需专门的大数库。"}},{"@type":"Question","name":"能转换小数吗？","acceptedAnswer":{"@type":"Answer","text":"本工具面向整数转换。小数在不同进制间的转换涉及精度问题，需要专门的算法。"}}]}]}</script>
+</head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">
   <div class="crumb"><a href="index.html">工具箱</a> / 进制转换工具</div>
   <div class="panel">
-    <h2>🔢 进制转换工具</h2>
+    <h1>🔢 进制转换工具</h1>
     <p class="desc">十进制、二进制、八进制、十六进制互相转换，支持负数和大整数。程序员、计网学习必备。</p>
     <label>输入数字</label>
     <input type="text" id="num" value="255">

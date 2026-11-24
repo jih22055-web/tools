@@ -2,12 +2,15 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>坐标转换 - 万能工具箱</title>
 <meta name="description" content="WGS84、GCJ-02、BD-09 三种坐标系互转，解决地图点位偏移问题。">
-<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<link rel="stylesheet" href="style.css?v=20261124a">
+<link rel="canonical" href="https://toolpocket.cn/coordconvert.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"坐标转换","url":"https://toolpocket.cn/coordconvert.html","description":"WGS84、GCJ-02、BD-09 三种坐标系互转，解决地图点位偏移问题。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么会偏移？","acceptedAnswer":{"@type":"Answer","text":"国家规定公开地图必须使用加密后的 GCJ-02 坐标，算法不公开。所以 WGS84 直接标注会在 GCJ-02 地图上偏移，通常几百米。"}},{"@type":"Question","name":"转换精度如何？","acceptedAnswer":{"@type":"Answer","text":"用的是业界通用的近似算法，误差通常在 1-2 米以内，日常使用足够。高精度测绘需求请用专业服务。"}},{"@type":"Question","name":"港澳台和境外怎么算？","acceptedAnswer":{"@type":"Answer","text":"境外坐标不做偏移，工具会自动判断范围，境外输入直接原样返回。"}},{"@type":"Question","name":"坐标顺序是纬度在前吗？","acceptedAnswer":{"@type":"Answer","text":"是的，本工具输入和输出都是「纬度, 经度」，和国内地图 API 的习惯一致。谷歌地图习惯是「纬度, 经度」但 URL 里常是「纬度,经度」。"}}]}]}</script>
+</head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">
   <div class="crumb"><a href="index.html">工具箱</a> / 地图坐标转换</div>
   <div class="panel">
-    <h2>🗺️ 地图坐标转换</h2>
+    <h1>🗺️ 地图坐标转换</h1>
     <p class="desc">WGS84、GCJ-02、BD-09 三种坐标系互转，解决地图点位偏移问题。</p>
     <label>输入坐标（纬度, 经度）</label>
     <input type="text" id="in" value="39.9042, 116.4074">
