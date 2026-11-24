@@ -2,12 +2,15 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>UA 解析 - 万能工具箱</title>
 <meta name="description" content="解析 User-Agent 字符串，识别浏览器、版本、内核、系统与设备类型。">
-<link rel="stylesheet" href="style.css?v=20261123f"></head><body>
+<link rel="stylesheet" href="style.css?v=20261124a">
+<link rel="canonical" href="https://toolpocket.cn/useragent.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"UA 解析","url":"https://toolpocket.cn/useragent.html","description":"解析 User-Agent 字符串，识别浏览器、版本、内核、系统与设备类型。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么 Chrome 的 UA 里也有 Safari 字样？","acceptedAnswer":{"@type":"Answer","text":"历史遗留。Chrome 基于 WebKit 开发，为了兼容网站的各种 UA 判断，保留了 Safari 和 AppleWebKit 标记。所以识别时要先判断 Chrome 再判断 Safari，顺序错了就会认错。"}},{"@type":"Question","name":"UA 能完全信任吗？","acceptedAnswer":{"@type":"Answer","text":"不能。UA 是客户端自己发的，可以随意伪造。爬虫伪装成 Chrome 很常见，要配合 IP、行为特征综合判断。"}},{"@type":"Question","name":"iOS 上的 Chrome 会被识别成什么？","acceptedAnswer":{"@type":"Answer","text":"因为苹果限制，iOS 上所有浏览器都用 WebKit 内核，UA 里同时有 CriOS 和 Safari。本工具优先识别为 Chrome，但实际渲染引擎是 WebKit。"}},{"@type":"Question","name":"没有识别出来怎么办？","acceptedAnswer":{"@type":"Answer","text":"小众浏览器或新版本 UA 可能不在规则里。可以把 UA 发来补充规则，或者看里面的关键词自己判断。"}}]}]}</script>
+</head><body>
 <header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
 <div class="wrap page">
   <div class="crumb"><a href="index.html">工具箱</a> / User-Agent 解析</div>
   <div class="panel">
-    <h2>🔍 User-Agent 解析</h2>
+    <h1>🔍 User-Agent 解析</h1>
     <p class="desc">解析 User-Agent 字符串，识别浏览器、版本、内核、系统与设备类型。</p>
     <label>User-Agent 字符串</label>
     <textarea id="ua" style="min-height:90px;font-family:ui-monospace,Consolas,monospace">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0</textarea>
