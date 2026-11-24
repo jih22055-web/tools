@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>抽奖转盘 - 在线随机转盘决定吃什么/选谁</title>
+<meta name="description" content="在线抽奖转盘：自定义选项名称，点击开始旋转随机抽取，转盘动画真实减速，适合决定吃什么、抽奖、点名、分任务。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/wheel.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"抽奖转盘","url":"https://toolpocket.cn/wheel.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","description":"在线抽奖转盘：自定义选项名称，点击开始旋转随机抽取，转盘动画真实减速，适合决定吃什么、抽奖、点名、分任务。","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"结果公平吗？","acceptedAnswer":{"@type":"Answer","text":"每个扇形角度相同，落点用 Math.random 生成，理论上等概率。转盘只负责动画好看。"}},{"@type":"Question","name":"能保存常用选项吗？","acceptedAnswer":{"@type":"Answer","text":"不会保存，刷新后回到默认。可以把选项写在记事本里用完再粘。"}},{"@type":"Question","name":"选项多的时候字看不清怎么办？","acceptedAnswer":{"@type":"Answer","text":"扇形变窄后文字会小。超过 12 个建议改成「先分组再抽」，或者直接用「随机抽取」工具（支持一次抽多个）。"}},{"@type":"Question","name":"能连续抽吗？","acceptedAnswer":{"@type":"Answer","text":"可以，每次点「开始旋转」重新随机。想要一次抽多个用「随机抽取」工具。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="抽奖转盘 - 万能工具箱">
+<meta property="og:description" content="在线抽奖转盘：自定义选项名称，点击开始旋转随机抽取，转盘动画真实减速，适合决定吃什么、抽奖、点名、分任务。">
+<meta property="og:url" content="https://toolpocket.cn/wheel.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 抽奖转盘</div>
+  <div class="panel">
+    <h1>🎯 抽奖转盘</h1>
+    <p class="desc">把选项写进去，转一下。吃啥、谁洗碗、抽奖、分任务都能用，选项个数不限。</p>
+    <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex:1 1 340px;text-align:center">
+        <canvas id="cv" width="360" height="360" style="max-width:100%;height:auto"></canvas>
+        <div style="margin-top:14px"><button class="btn" id="go" style="font-size:16px;padding:13px 34px">开始旋转</button></div>
+        <div id="res" style="margin-top:14px;font-size:22px;font-weight:800;color:var(--brand);min-height:32px"></div>
+      </div>
+      <div style="flex:1 1 280px">
+        <label>选项（每行一个）</label>
+        <textarea id="items" style="min-height:240px">火锅
+烧烤
+日料
+川菜
+粤菜
+面食
+轻食
+随便点</textarea>
+        <div class="actions"><button class="btn ghost" id="apply">更新转盘</button><button class="btn ghost" id="sh">打乱顺序</button></div>
+        <p class="hint">至少 2 个选项，最多建议 20 个以内（太多字会挤）。</p>
+      </div>
+    </div>
+  </div>
+  <section class="seo">
+    <p class="lead">转盘用 canvas 画的，旋转过程是真的缓动减速，落点由随机数决定后再倒推动画角度，所以看起来是「转到哪就是哪」，不是先定结果再硬凑。选项全部在你自己浏览器里，不上传、不记录抽奖历史。</p>
+    <h2>适用场景</h2><ul><li>纠结吃什么，转一下决定</li><li>团队分任务、谁值班，转盘决定</li><li>小活动抽奖、送礼物</li><li>课堂上随机点人回答</li></ul>
+    <h2>使用方法</h2><ol><li>在右边文本框里写选项，每行一个</li><li>点「更新转盘」重绘</li><li>点「开始旋转」</li><li>停下后中间会显示结果</li></ol>
+    <h2>常见问题</h2><details><summary>结果公平吗？</summary><p>每个扇形角度相同，落点用 Math.random 生成，理论上等概率。转盘只负责动画好看。</p></details><details><summary>能保存常用选项吗？</summary><p>不会保存，刷新后回到默认。可以把选项写在记事本里用完再粘。</p></details><details><summary>选项多的时候字看不清怎么办？</summary><p>扇形变窄后文字会小。超过 12 个建议改成「先分组再抽」，或者直接用「随机抽取」工具（支持一次抽多个）。</p></details><details><summary>能连续抽吗？</summary><p>可以，每次点「开始旋转」重新随机。想要一次抽多个用「随机抽取」工具。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="random.html">随机抽取</a><a href="lottery.html">双色球机选</a><a href="eattoday.html">今天吃什么</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+var items=[],rot=0,spinning=false;
+var COLORS=['#ef5b41','#f8a08c','#f5c26b','#8ac6a8','#7ea9d4','#b79bd6','#f0a3c0','#9fd0c4'];
+function readItems(){
+  items=document.getElementById('items').value.split('\n').map(function(s){return s.trim()}).filter(Boolean);
+  if(items.length<2){items=['选项 A','选项 B']}
+  draw();
+}
+function draw(){
+  var n=items.length,sa=Math.PI*2/n,W=cv.width,R=W/2-6,cx=W/2,cy=W/2;
+  ctx.clearRect(0,0,W,W);
+  for(var i=0;i<n;i++){
+    var st=rot+i*sa,en=st+sa;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,st,en);ctx.closePath();
+    ctx.fillStyle=COLORS[i%COLORS.length];ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(st+sa/2);
+    ctx.textAlign='right';ctx.fillStyle='#fff';
+    var fs=Math.max(11,Math.min(17,140/Math.max(3,String(items[i]).length),R*sa*0.55));
+    ctx.font='700 '+fs+'px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.fillText(String(items[i]).slice(0,10),R-16,fs*0.36);
+    ctx.restore();
+  }
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle='#fff';ctx.lineWidth=6;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,17,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx-9,10);ctx.lineTo(cx+9,10);ctx.lineTo(cx,30);ctx.closePath();
+  ctx.fillStyle='#ef5b41';ctx.fill();
+}
+function spin(){
+  if(spinning)return;
+  var n=items.length,sa=Math.PI*2/n;
+  var target=Math.random()*Math.PI*2;
+  var turns=5+Math.floor(Math.random()*3);
+  var start=rot,delta=turns*Math.PI*2+target;
+  var t0=performance.now(),dur=3800;
+  spinning=true;document.getElementById('res').textContent='';
+  document.getElementById('go').disabled=true;
+  function frame(t){
+    var p=Math.min(1,(t-t0)/dur);
+    var e=1-Math.pow(1-p,3);
+    rot=start+delta*e;draw();
+    if(p<1){requestAnimationFrame(frame);return}
+    spinning=false;document.getElementById('go').disabled=false;
+    var a=((-Math.PI/2-rot)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+    var idx=Math.floor(a/sa)%n;
+    document.getElementById('res').textContent='结果：'+items[idx];
+    document.getElementById('res').animate([{opacity:0,transform:'scale(.8)'},{opacity:1,transform:'scale(1)'}],{duration:320,easing:'ease-out'});
+  }
+  requestAnimationFrame(frame);
+}
+document.getElementById('go').onclick=spin;
+document.getElementById('apply').onclick=readItems;
+document.getElementById('sh').onclick=function(){
+  for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=items[i];items[i]=items[j];items[j]=t}
+  document.getElementById('items').value=items.join('\n');draw();
+};
+readItems();
+</script><script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
