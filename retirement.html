@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>退休年龄计算器 - 延迟退休新规在线测算</title>
+<meta name="description" content="按 2025 年起实施的渐进式延迟退休方案，输入出生年月和性别，算出新的法定退休年龄和退休时间，附延迟月数明细。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/retirement.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"退休年龄计算器","url":"https://toolpocket.cn/retirement.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","description":"按 2025 年起实施的渐进式延迟退休方案，输入出生年月和性别，算出新的法定退休年龄和退休时间，附延迟月数明细。","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"这个计算依据是什么？","acceptedAnswer":{"@type":"Answer","text":"依据 2024 年 9 月 13 日通过的《关于实施渐进式延迟法定退休年龄的决定》及所附对照表：男职工与原 55 岁女职工自 1965 年 1 月、1970 年 1 月起每 4 个月延迟 1 个月，上限 3 年；原 50 岁女职工自 1975 年 1 月起每 2 个月延迟 1 个月，上限 5 年。"}},{"@type":"Question","name":"可以提前退休吗？","acceptedAnswer":{"@type":"Answer","text":"可以。方案允许弹性提前，最多提前 3 年，但不得低于原法定退休年龄（男 60、女 55/50）。提前需要本人自愿并满足最低缴费年限。"}},{"@type":"Question","name":"缴费年限要求变了吗？","acceptedAnswer":{"@type":"Answer","text":"变了。最低缴费年限从 2030 年起每年提高 6 个月，由 15 年逐步提高到 20 年。具体以参保地社保部门口径为准。"}},{"@type":"Question","name":"特殊工种、病退怎么算？","acceptedAnswer":{"@type":"Answer","text":"特殊工种提前退休、因病完全丧失劳动能力等情形另有规定，本工具不覆盖，请咨询当地社保经办机构。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="退休年龄计算器 - 万能工具箱">
+<meta property="og:description" content="按 2025 年起实施的渐进式延迟退休方案，输入出生年月和性别，算出新的法定退休年龄和退休时间，附延迟月数明细。">
+<meta property="og:url" content="https://toolpocket.cn/retirement.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 退休年龄计算器</div>
+  <div class="panel">
+    <h1>👴 退休年龄计算器</h1>
+    <p class="desc">按 2025 年 1 月起实施的渐进式延迟退休方案，算出你新的法定退休年龄和具体退休年月。</p>
+    <div class="row">
+      <div><label>出生年份</label><input type="number" id="y" value="1990" min="1950" max="2010"></div>
+      <div><label>出生月份</label><select id="m"></select></div>
+    </div>
+    <div class="row">
+      <div><label>身份类别</label><select id="t">
+        <option value="M">男职工（原 60 岁）</option>
+        <option value="F55">女职工 · 原 55 岁（干部/管理技术岗）</option>
+        <option value="F50">女职工 · 原 50 岁（工人岗）</option>
+      </select></div>
+    </div>
+    <div class="actions"><button class="btn" id="go">算一下</button></div>
+    <div class="stat-grid" id="out"></div>
+    <div id="detail" style="margin-top:18px"></div>
+  </div>
+  <section class="seo">
+    <p class="lead">2024 年 9 月全国人大常委会通过决定，自 2025 年 1 月 1 日起用 15 年时间逐步延迟法定退休年龄：男职工从 60 岁延迟到 63 岁，女职工从 55 岁延迟到 58 岁、从 50 岁延迟到 55 岁。节奏是「小步调整」——男职工和原 55 岁女职工每 4 个月延迟 1 个月，原 50 岁女职工每 2 个月延迟 1 个月。这个工具按官方对照表的规则复现计算。</p>
+    <h2>适用场景</h2><ul><li>算自己哪一年哪一月能退休</li><li>算延迟了几个月</li><li>规划养老金缴费和商业保险</li><li>帮父母算他们的退休时间</li></ul>
+    <h2>使用方法</h2><ol><li>填出生年份，选出生月份</li><li>选身份类别（男职工 / 女职工原 55 岁 / 女职工原 50 岁）</li><li>点「算一下」</li><li>看改革后退休年龄、退休年月和延迟月数</li></ol>
+    <h2>常见问题</h2><details><summary>这个计算依据是什么？</summary><p>依据 2024 年 9 月 13 日通过的《关于实施渐进式延迟法定退休年龄的决定》及所附对照表：男职工与原 55 岁女职工自 1965 年 1 月、1970 年 1 月起每 4 个月延迟 1 个月，上限 3 年；原 50 岁女职工自 1975 年 1 月起每 2 个月延迟 1 个月，上限 5 年。</p></details><details><summary>可以提前退休吗？</summary><p>可以。方案允许弹性提前，最多提前 3 年，但不得低于原法定退休年龄（男 60、女 55/50）。提前需要本人自愿并满足最低缴费年限。</p></details><details><summary>缴费年限要求变了吗？</summary><p>变了。最低缴费年限从 2030 年起每年提高 6 个月，由 15 年逐步提高到 20 年。具体以参保地社保部门口径为准。</p></details><details><summary>特殊工种、病退怎么算？</summary><p>特殊工种提前退休、因病完全丧失劳动能力等情形另有规定，本工具不覆盖，请咨询当地社保经办机构。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="tax.html">个税计算器</a><a href="loan.html">贷款计算器</a><a href="datecalc.html">日期计算器</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var MSEL=document.getElementById('m');
+for(var i=1;i<=12;i++){var o=document.createElement('option');o.value=i;o.textContent=i+' 月';MSEL.appendChild(o)}
+MSEL.value=6;
+function calc(){
+  var y=parseInt(document.getElementById('y').value,10);
+  var m=parseInt(MSEL.value,10);
+  var t=document.getElementById('t').value;
+  if(!(y>=1940&&y<=2015)){document.getElementById('out').innerHTML='<div class="stat"><div class="num">—</div><div class="lbl">请填 1940–2015 之间的出生年份</div></div>';document.getElementById('detail').innerHTML='';return}
+  var startY=t==='M'?1965:(t==='F55'?1970:1975);
+  var step=t==='F50'?2:4;
+  var cap=t==='M'?36:(t==='F55'?36:60);
+  var base=t==='M'?60:(t==='F55'?55:50);
+  var mo=(y-startY)*12+(m-1);
+  var delay=mo<0?0:Math.min(cap,Math.floor(mo/step)+1);
+  var totalM=base*12+delay;
+  var retIdx=y*12+(m-1)+totalM;
+  var ry=Math.floor(retIdx/12),rm=retIdx%12+1;
+  var ageY=Math.floor(totalM/12),ageM=totalM%12;
+  var now=new Date();
+  var yearsLeft=((ry-now.getFullYear())*12+(rm-(now.getMonth()+1)))/12;
+  var box=function(n,l,c){return '<div class="stat"><div class="num" style="'+(c?'color:'+c:'')+'">'+n+'</div><div class="lbl">'+l+'</div></div>'};
+  document.getElementById('out').innerHTML=
+    box(ageY+' 岁'+(ageM?' '+ageM+' 个月':''),'改革后法定退休年龄')+
+    box(ry+' 年 '+rm+' 月','预计退休时间')+
+    box('+'+(delay||0)+' 个月','比原规定延迟',delay?'#f59e0b':'#18b566')+
+    box(yearsLeft>0?yearsLeft.toFixed(1)+' 年':'已到龄','距离退休',yearsLeft>0?'':'#18b566');
+  var note=delay===0
+    ? '你属于改革方案实施前已到龄或不受影响的范围，仍按原法定退休年龄执行。'
+    : '你的原法定退休年龄是 '+base+' 岁，改革后延迟 '+delay+' 个月，法定退休年龄变为 '+ageY+' 岁'+(ageM?ageM+' 个月':'')+'。';
+  document.getElementById('detail').innerHTML=
+    '<div style="background:#fafbfc;border:1px solid #e8e9ed;border-radius:10px;padding:18px;font-size:14px;line-height:2;color:#4a4e57">'
+    +'<div>'+note+'</div>'
+    +'<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e8e9ed">'
+    +'<div>延迟规则：'+(t==='F50'?'每 2 个月延迟 1 个月，最多延迟 5 年':'每 4 个月延迟 1 个月，最多延迟 3 年')+'</div>'
+    +'<div>起算时间：'+(t==='M'?'1965 年 1 月':(t==='F55'?'1970 年 1 月':'1975 年 1 月'))+'起出生的开始受影响</div>'
+    +'<div>弹性提前：最多提前 3 年，但不得低于原法定年龄（'+base+' 岁）</div>'
+    +'</div>'
+    +'<p style="margin-top:12px;font-size:12.5px;color:#8b8f99">结果按公开规则推算，仅作参考。实际退休审批、缴费年限认定以当地社保部门为准。</p></div>';
+}
+document.getElementById('go').onclick=calc;
+document.getElementById('y').addEventListener('input',calc);
+MSEL.addEventListener('change',calc);
+document.getElementById('t').addEventListener('change',calc);
+calc();
+</script><script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
