@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2048 小游戏 - 在线玩不用下载</title>
+<meta name="description" content="在线 2048 小游戏：方向键或滑动屏幕合并数字，挑战 2048，自动记录最高分，支持撤销，打开网页就能玩。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/game2048.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"2048 小游戏","url":"https://toolpocket.cn/game2048.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","description":"在线 2048 小游戏：方向键或滑动屏幕合并数字，挑战 2048，自动记录最高分，支持撤销，打开网页就能玩。","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"最高分会丢吗？","acceptedAnswer":{"@type":"Answer","text":"存在浏览器本地存储里，同一个浏览器同一个域名会一直在。清缓存、换浏览器、无痕模式都会丢。"}},{"@type":"Question","name":"为什么不能撤销多步？","acceptedAnswer":{"@type":"Answer","text":"只保留上一步，避免无限回退失去挑战性。"}},{"@type":"Question","name":"手机上玩不动？","acceptedAnswer":{"@type":"Answer","text":"确保在棋盘区域滑动，页面本身不会再滚动。如果滑动无效，试试点一下棋盘再滑。"}},{"@type":"Question","name":"最高能到多少？","acceptedAnswer":{"@type":"Answer","text":"理论最高是 131072，实际上能合出 2048 的人已经不多。"}}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="2048 小游戏 - 万能工具箱">
+<meta property="og:description" content="在线 2048 小游戏：方向键或滑动屏幕合并数字，挑战 2048，自动记录最高分，支持撤销，打开网页就能玩。">
+<meta property="og:url" content="https://toolpocket.cn/game2048.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 2048 小游戏</div>
+  <div class="panel">
+    <h1>🧩 2048 小游戏</h1>
+    <p class="desc">经典 2048，方向键或手机滑动都行，带最高分记录和撤销一步。摸鱼五分钟刚好。</p>
+    <div style="display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px">
+      <div style="display:flex;gap:10px">
+        <div style="background:#fafbfc;border:1px solid #e8e9ed;border-radius:8px;padding:8px 18px;text-align:center"><div style="font-size:11.5px;color:#8b8f99">分数</div><div id="score" style="font-size:20px;font-weight:800;color:#23252a">0</div></div>
+        <div style="background:#fafbfc;border:1px solid #e8e9ed;border-radius:8px;padding:8px 18px;text-align:center"><div style="font-size:11.5px;color:#8b8f99">最高分</div><div id="best" style="font-size:20px;font-weight:800;color:#ef5b41">0</div></div>
+      </div>
+      <div style="display:flex;gap:10px"><button class="btn ghost" id="undo">撤销一步</button><button class="btn" id="new">重新开始</button></div>
+    </div>
+    <div id="board" style="position:relative;width:100%;max-width:400px;aspect-ratio:1;background:#bbada0;border-radius:10px;padding:10px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;touch-action:none"></div>
+    <p class="hint" style="text-align:center;margin-top:14px">电脑用 ↑↓←→ 或 WASD，手机上直接滑动。相同数字撞在一起会合并，目标 2048。</p>
+  </div>
+  <section class="seo">
+    <p class="lead">2048 的规则很简单：每次移动所有方块朝同一方向滑到底，两个相同数字相撞合并成它们的和，每步随机生成一个 2 或 4。四个方向都动不了就结束。最高分存在浏览器本地，清缓存会丢。</p>
+    <h2>适用场景</h2><ul><li>工作间隙摸两分钟鱼</li><li>测一下自己还能不能合成 2048</li><li>手机上随手玩，不用装 App</li><li>跟朋友比最高分</li></ul>
+    <h2>使用方法</h2><ol><li>点「重新开始」开局</li><li>用方向键或滑动屏幕移动</li><li>数字相同的撞在一起会相加</li><li>走错了可以点「撤销一步」</li></ol>
+    <h2>常见问题</h2><details><summary>最高分会丢吗？</summary><p>存在浏览器本地存储里，同一个浏览器同一个域名会一直在。清缓存、换浏览器、无痕模式都会丢。</p></details><details><summary>为什么不能撤销多步？</summary><p>只保留上一步，避免无限回退失去挑战性。</p></details><details><summary>手机上玩不动？</summary><p>确保在棋盘区域滑动，页面本身不会再滚动。如果滑动无效，试试点一下棋盘再滑。</p></details><details><summary>最高能到多少？</summary><p>理论最高是 131072，实际上能合出 2048 的人已经不多。</p></details>
+    <h2>你可能还需要</h2><div class="related"><a href="typing.html">打字速度测试</a><a href="wheel.html">抽奖转盘</a><a href="random.html">随机抽取</a><a href="index.html">全部工具</a></div>
+  </section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var N=4,board=[],score=0,best=+(localStorage.getItem('tp2048')||0),prev=null,over=false;
+var el=document.getElementById('board');
+function init(){
+  board=[];for(var i=0;i<N*N;i++)board.push(0);
+  score=0;over=false;prev=null;add();add();draw();
+}
+function add(){
+  var e=[];board.forEach(function(v,i){if(!v)e.push(i)});
+  if(!e.length)return;
+  var i=e[Math.floor(Math.random()*e.length)];
+  board[i]=Math.random()<0.9?2:4;
+}
+function colors(v){
+  var m={0:['#cdc1b4','#776e65'],2:['#eee4da','#776e65'],4:['#ede0c8','#776e65'],8:['#f2b179','#fff'],16:['#f59563','#fff'],32:['#f67c5f','#fff'],64:['#f65e3b','#fff'],128:['#edcf72','#fff'],256:['#edcc61','#fff'],512:['#edc850','#fff'],1024:['#edc53f','#fff'],2048:['#edc22e','#fff']};
+  return m[v]||['#3c3a32','#fff'];
+}
+function draw(){
+  el.innerHTML=board.map(function(v){
+    var c=colors(v);
+    var fs=v>=1024?22:(v>=128?26:30);
+    return '<div style="background:'+c[0]+';border-radius:7px;display:grid;place-items:center;font-weight:800;font-size:'+fs+'px;color:'+c[1]+';transition:.08s">'+(v||'')+'</div>';
+  }).join('');
+  document.getElementById('score').textContent=score;
+  if(score>best){best=score;localStorage.setItem('tp2048',best)}
+  document.getElementById('best').textContent=best;
+}
+function slide(row){
+  var a=row.filter(function(v){return v});
+  var out=[];
+  for(var i=0;i<a.length;i++){
+    if(a[i]===a[i+1]){out.push(a[i]*2);score+=a[i]*2;i++}
+    else out.push(a[i]);
+  }
+  while(out.length<N)out.push(0);
+  return out;
+}
+function move(dir){
+  if(over)return;
+  var before=board.join(','),snap=board.slice(),snapScore=score;
+  var g=[];for(var r=0;r<N;r++){g.push([]);for(var c=0;c<N;c++)g[r].push(board[r*N+c])}
+  var i,j;
+  if(dir==='l'){for(i=0;i<N;i++){var row=slide(g[i]);g[i]=row}}
+  if(dir==='r'){for(i=0;i<N;i++){var row2=slide(g[i].slice().reverse()).reverse();g[i]=row2}}
+  if(dir==='u'){for(j=0;j<N;j++){var col=slide([g[0][j],g[1][j],g[2][j],g[3][j]]);for(i=0;i<N;i++)g[i][j]=col[i]}}
+  if(dir==='d'){for(j=0;j<N;j++){var col2=slide([g[3][j],g[2][j],g[1][j],g[0][j]]);for(i=0;i<N;i++)g[N-1-i][j]=col2[i]}}
+  var flat=[];for(i=0;i<N;i++)for(j=0;j<N;j++)flat.push(g[i][j]);
+  board=flat;
+  if(board.join(',')!==before){prev={b:snap,s:snapScore};add();draw();check()}
+  else{score=snapScore}
+}
+function movable(){
+  for(var i=0;i<N*N;i++){
+    if(!board[i])return true;
+    if(i%N<N-1&&board[i]===board[i+1])return true;
+    if(i+N<N*N&&board[i]===board[i+N])return true;
+  }
+  return false;
+}
+function check(){
+  if(!movable()){
+    over=true;
+    setTimeout(function(){alert('没有可以移动的了，本局得分 '+score+'。点「重新开始」再来一局。')},120);
+  }
+}
+document.addEventListener('keydown',function(e){
+  var k=e.key.toLowerCase();
+  var map={arrowleft:'l',arrowright:'r',arrowup:'u',arrowdown:'d',a:'l',d:'r',w:'u',s:'d'};
+  if(map[k]){e.preventDefault();move(map[k])}
+});
+var sx=0,sy=0;
+el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+el.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+  if(Math.max(Math.abs(dx),Math.abs(dy))<26)return;
+  if(Math.abs(dx)>Math.abs(dy))move(dx>0?'r':'l');else move(dy>0?'d':'u');
+},{passive:true});
+document.getElementById('new').onclick=function(){init()};
+document.getElementById('undo').onclick=function(){
+  if(!prev){alert('没有可撤销的步骤');return}
+  board=prev.b.slice();score=prev.s;prev=null;over=false;draw();
+};
+init();
+</script><script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
