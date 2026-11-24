@@ -32,7 +32,7 @@
 
   <section class="seo" id="about">
     <h2>关于万能工具箱</h2>
-    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、查询计算、网络工具等 84 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
+    <p class="lead">万能工具箱是一个完全免费的在线工具集合站，提供图片处理、文本处理、编码解码、表格转换、查询计算、网络工具等 86 款实用工具。无需注册、无需下载，打开网页就能用。绝大多数工具在你的浏览器本地完成计算，临时邮箱等需要联网的工具会明确标注。</p>
     <h2>为什么选择我们</h2>
     <ul>
       <li><strong>完全免费</strong>：所有工具永久免费使用，不设会员、不看广告也能用</li>
@@ -138,6 +138,8 @@ const TOOLS = [
   {name:'地图坐标转换',desc:'WGS84、GCJ-02、BD-09 互转，解决点位偏移',icon:'🗺️',color:'#3a6a4a',file:'coordconvert.html',tag:'坐标 转换 gps 火星 百度 高德',cat:'生活工具'},
   {name:'密码强度检测',desc:'评估密码强度与破解时间，指出具体弱点',icon:'🔐',color:'#6a3a4a',file:'passwordstrength.html',tag:'密码 强度 检测 安全',cat:'生活工具'},
   {name:'二维码识别',desc:'上传图片识别二维码内容，本地解析不上传',icon:'📷',color:'#2e6a8c',file:'qrcan.html',tag:'二维码 识别 扫描 解码',cat:'编码解码'},
+  {name:'地址生成器',desc:'生成美英日德加五国虚构地址与姓名电话，支持批量导出 CSV',icon:'📍',color:'#2e7a6a',file:'address-generator.html',tag:'地址生成 美国地址 英国 日本 德国 加拿大 虚拟地址 测试数据 fake address',cat:'查询计算'},
+  {name:'银行卡号校验',desc:'Luhn 算法校验卡号格式，识别卡组织，附公开测试卡号',icon:'💳',color:'#4a5a8a',file:'luhn.html',tag:'luhn 银行卡 信用卡 校验 测试卡号 卡组织',cat:'开发工具'},
 ];
 
 const CATS = ['全部', ...new Set(TOOLS.map(t=>t.cat))];

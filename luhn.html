@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>银行卡号校验器 - Luhn 算法验证卡号格式与识别卡组织</title>
+<meta name="description" content="在线校验银行卡号、信用卡号格式是否正确，用 Luhn 算法判断校验位、识别 Visa、Mastercard、银联、JCB、Amex 等卡组织与卡号位数。附支付服务商公开的测试卡号，适用于开发调试。纯本地运算，不上传卡号。">
+<link rel="stylesheet" href="style.css?v=20261124a">
+<link rel="canonical" href="https://toolpocket.cn/luhn.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"银行卡号校验器（Luhn 算法）","url":"https://toolpocket.cn/luhn.html","description":"在线校验银行卡号、信用卡号格式，用 Luhn 算法判断校验位并识别卡组织与位数，附公开测试卡号。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (browser based)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Luhn 校验通过就说明卡号真实有效吗？","acceptedAnswer":{"@type":"Answer","text":"不能。Luhn 只是校验位算法，用来发现手工输入时的笔误，通过它只说明这串数字的格式合法。卡号是否真实存在、能否扣款，必须经过发卡行授权才能确认，任何本地算法都无法判断。"}},{"@type":"Question","name":"输入的卡号会被上传或保存吗？","acceptedAnswer":{"@type":"Answer","text":"不会。校验全部在你的浏览器里完成，页面不发送任何网络请求，也不写入本地存储，关闭网页即消失。"}},{"@type":"Question","name":"为什么开发时需要用测试卡号？","acceptedAnswer":{"@type":"Answer","text":"接入支付接口做调试时，用真实卡号既危险又会产生实际扣款。支付服务商都会提供公开的测试卡号，配合测试环境可以模拟支付成功、拒付、余额不足等各种返回结果。"}},{"@type":"Question","name":"银联卡为什么有 16 到 19 位？","acceptedAnswer":{"@type":"Answer","text":"银联卡的 BIN 段较多，不同发卡行、不同卡种的长度不统一，常见 16 位，也有 17、18、19 位，都属于合法长度。校验时要按卡组织允许的长度范围判断。"}}]}]}</script>
+<style>
+.card-in{font-size:20px;letter-spacing:1px;font-family:ui-monospace,Menlo,Consolas,monospace;padding:14px 16px}
+.res{margin-top:16px;border:1px solid #e8eaef;border-radius:10px;overflow:hidden;background:#fff}
+.res-row{display:flex;justify-content:space-between;gap:12px;padding:11px 15px;border-bottom:1px solid #eef0f4;font-size:14px}
+.res-row:last-child{border-bottom:none}
+.res-row span:first-child{color:#6b7280}
+.res-row span:last-child{font-weight:600;color:#2b2f3a;text-align:right}
+.ok{color:#2f9e6a!important}
+.bad{color:#d94141!important}
+.tbl-wrap{overflow-x:auto;margin-top:14px;border:1px solid #e8eaef;border-radius:10px}
+table.tc{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+table.tc th,table.tc td{padding:9px 11px;border-bottom:1px solid #eef0f4;text-align:left;white-space:nowrap}
+table.tc th{background:#f7f8fa;font-size:12px;font-weight:600;color:#4a4f5c}
+table.tc tr:last-child td{border-bottom:none}
+table.tc td.num{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.3px}
+.cp{border:1px solid #dfe2e8;background:#fff;border-radius:6px;padding:3px 9px;font-size:12px;cursor:pointer;color:#5a6072;font-family:inherit}
+.cp:hover{border-color:#ef5b41;color:#ef5b41}
+.warn{background:#fff8f0;border:1px solid #f5d9b8;color:#8a5a1a;padding:11px 14px;border-radius:8px;font-size:13px;line-height:1.7;margin:14px 0}
+</style>
+</head><body>
+<header><div class="wrap nav"><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a></nav></div></header>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / 银行卡号校验</div>
+  <div class="panel">
+    <h1>💳 银行卡号校验器</h1>
+    <p class="desc">输入卡号即可判断校验位是否正确、识别卡组织与位数是否合法，用于开发调试与录入纠错。</p>
+    <label>卡号（空格、横线会自动忽略）</label>
+    <input type="text" id="num" class="card-in" inputmode="numeric" autocomplete="off" placeholder="例如 4242 4242 4242 4242">
+    <div class="actions">
+      <button class="btn ghost" id="paste">粘贴</button>
+      <button class="btn ghost" id="clear">清空</button>
+    </div>
+    <div class="res" id="res">
+      <div class="res-row"><span>卡组织</span><span id="brand">—</span></div>
+      <div class="res-row"><span>卡号位数</span><span id="len">—</span></div>
+      <div class="res-row"><span>Luhn 校验</span><span id="luhn">—</span></div>
+      <div class="res-row"><span>结论</span><span id="final">等待输入</span></div>
+    </div>
+    <p class="hint" id="tip"></p>
+    <h2 style="margin:26px 0 6px;font-size:17px">公开测试卡号（仅测试环境有效）</h2>
+    <p class="hint">以下卡号由 Stripe 等支付服务商在官方文档中公开，用于模拟各种支付结果。测试时有效期填任意未来日期，CVC 填任意 3 位（American Express 为 4 位）。</p>
+    <div class="tbl-wrap"><table class="tc" id="tc"></table></div>
+    <div class="warn">本页只做<strong>格式校验</strong>，不联网、不上传、不保存任何卡号，也不会生成卡号。校验通过不等于卡号真实可用，真伪只能由发卡行授权确认。请勿使用他人卡号。</div>
+  </div>
+<section class="seo">
+<p class="lead">银行卡号校验器用 Luhn 算法在线验证卡号格式是否正确，同时识别 Visa、Mastercard、American Express、JCB、Discover、Diners Club、银联等卡组织，并核对卡号位数是否符合该组织的规范。开发支付相关功能、排查用户录入错误、处理订单数据时都能用到。所有计算在浏览器本地完成，不发送网络请求，卡号不会离开你的电脑。</p>
+<h2>适用场景</h2><ul>
+<li>接入支付接口时，先本地校验卡号格式，减少无效请求</li>
+<li>排查用户反馈「卡号输对了却提示错误」，判断是不是漏位或多位</li>
+<li>整理订单、对账数据时，批量核对卡号校验位是否被误改</li>
+<li>开发测试环境填充表单，使用支付服务商公开的测试卡号</li>
+</ul><h2>使用方法</h2><ol>
+<li>把卡号粘贴或输入到上方输入框，空格与横线会被自动忽略</li>
+<li>页面实时显示卡组织、位数、Luhn 校验结果与最终结论</li>
+<li>需要测试支付流程时，从下方测试卡表格点「填入」直接使用</li>
+<li>测试卡号只在测试环境有效，真实环境会被拒绝</li>
+</ol><h2>Luhn 算法是什么</h2>
+<p>Luhn 算法（也叫模 10 算法）是银行卡号通用的校验规则：从右往左，偶数位数字乘 2，乘积超过 9 就减 9，然后把所有数字相加，结果能被 10 整除即为合法。它能挡住大部分手工输入错误，比如某一位敲错、两位数字顺序颠倒，因此几乎所有卡号都带这一位校验数字。但它只是数学规则，无法判断卡号是否真实存在。</p>
+<h2>常见问题</h2>
+<details><summary>Luhn 校验通过就说明卡号真实有效吗？</summary><p>不能。Luhn 只是校验位算法，用来发现手工输入时的笔误，通过它只说明这串数字的格式合法。卡号是否真实存在、能否扣款，必须经过发卡行授权才能确认，任何本地算法都无法判断。</p></details>
+<details><summary>输入的卡号会被上传或保存吗？</summary><p>不会。校验全部在你的浏览器里完成，页面不发送任何网络请求，也不写入本地存储，关闭网页即消失。</p></details>
+<details><summary>为什么开发时需要用测试卡号？</summary><p>接入支付接口做调试时，用真实卡号既危险又会产生实际扣款。支付服务商都会提供公开的测试卡号，配合测试环境可以模拟支付成功、拒付、余额不足、卡过期等各种返回结果，覆盖异常分支。</p></details>
+<details><summary>银联卡为什么有 16 到 19 位？</summary><p>银联的 BIN 段较多，不同发卡行、不同卡种的长度不统一，常见 16 位，也有 17、18、19 位，都属于合法长度。校验时要按卡组织允许的长度范围判断，不能只认 16 位。</p></details>
+<details><summary>这个工具能生成卡号吗？</summary><p>不能，也不提供这个功能。随机生成的卡号有概率命中真实持卡人的号码，属于他人支付凭证。需要测试请直接使用支付服务商公开的测试卡号。</p></details>
+<h2>你可能还需要</h2><div class="related">
+<a href="index.html">全部工具</a>
+<a href="address-generator.html">多国地址生成器</a>
+<a href="randomstring.html">随机字符串生成</a>
+<a href="passwordstrength.html">密码强度检测</a>
+<a href="base64.html">Base64 编码解码</a>
+</div>
+</section>
+</div>
+<footer><div class="wrap">© 2026 万能工具箱 · 免费工具，打开即用</div></footer>
+<script>
+var TESTS=[
+["4242424242424242","Visa","支付成功"],
+["4000056655665556","Visa 借记卡","支付成功"],
+["5555555555554444","Mastercard","支付成功"],
+["2223003122003222","Mastercard 2 系列","支付成功"],
+["5200828282828210","Mastercard 借记卡","支付成功"],
+["378282246310005","American Express","支付成功"],
+["371449635398431","American Express","支付成功"],
+["6011111111111117","Discover","支付成功"],
+["3056930009020004","Diners Club","支付成功"],
+["3566002020360505","JCB","支付成功"],
+["6200000000000005","银联 UnionPay","支付成功"],
+["4000000000000002","Visa","拒付 card_declined"],
+["4000000000009995","Visa","余额不足"],
+["4000000000000069","Visa","卡已过期"],
+["4000000000000127","Visa","CVC 校验失败"],
+["4000000000000119","Visa","处理错误"],
+["4100000000000019","Visa","要求 3D Secure 验证"]
+];
+
+function detect(n){
+  if(/^4/.test(n))return {name:'Visa',len:[13,16,19]};
+  if(/^(5[1-5]|2[2-7])/.test(n))return {name:'Mastercard',len:[16]};
+  if(/^3[47]/.test(n))return {name:'American Express',len:[15]};
+  if(/^35/.test(n))return {name:'JCB',len:[16,17,18,19]};
+  if(/^62/.test(n))return {name:'银联 UnionPay',len:[16,17,18,19]};
+  if(/^(6011|65|64[4-9])/.test(n))return {name:'Discover',len:[16,17,18,19]};
+  if(/^3(0[0-5]|[689])/.test(n))return {name:'Diners Club',len:[14,16,19]};
+  if(/^(50|5[6-8]|6[37])/.test(n))return {name:'Maestro',len:[12,13,14,15,16,17,18,19]};
+  return {name:'未识别的卡组织',len:[]};
+}
+function luhn(n){
+  var s=0,alt=false;
+  for(var i=n.length-1;i>=0;i--){
+    var d=n.charCodeAt(i)-48;
+    if(alt){d*=2;if(d>9)d-=9}
+    s+=d;alt=!alt;
+  }
+  return s%10===0;
+}
+function check(){
+  var raw=document.getElementById('num').value.replace(/[\s-]/g,'');
+  var brandEl=document.getElementById('brand'),lenEl=document.getElementById('len'),
+      luhnEl=document.getElementById('luhn'),finEl=document.getElementById('final'),
+      tip=document.getElementById('tip');
+  if(!raw){
+    brandEl.textContent='—';brandEl.className='';
+    lenEl.textContent='—';lenEl.className='';
+    luhnEl.textContent='—';luhnEl.className='';
+    finEl.textContent='等待输入';finEl.className='';
+    tip.textContent='';return;
+  }
+  if(!/^\d+$/.test(raw)){
+    brandEl.textContent='—';lenEl.textContent=raw.length+' 位（含非数字）';
+    luhnEl.textContent='—';luhnEl.className='';
+    finEl.textContent='含非数字字符';finEl.className='bad';
+    tip.textContent='卡号只包含数字，请检查是否混入了字母或符号。';return;
+  }
+  var b=detect(raw);
+  brandEl.textContent=b.name;
+  lenEl.textContent=raw.length+' 位'+(b.len.length?('，应为 '+b.len.join(' / ')+' 位'):'');
+  var lk=luhn(raw);
+  luhnEl.textContent=lk?'通过':'不通过';
+  luhnEl.className=lk?'ok':'bad';
+  var lenOk=b.len.length?(b.len.indexOf(raw.length)>-1):true;
+  if(!lenOk)lenEl.className='bad';else lenEl.className='';
+  if(raw.length<12){
+    finEl.textContent='位数过短';finEl.className='bad';
+    tip.textContent='正常卡号至少 12 位，请检查是否漏输了数字。';
+  }else if(!lenOk){
+    finEl.textContent='位数与该卡组织规范不符';finEl.className='bad';
+    tip.textContent='格式不合规。如果你确定卡类型没错，请核对是否有漏位或多位。';
+  }else if(!lk){
+    finEl.textContent='校验位错误';finEl.className='bad';
+    tip.textContent='Luhn 校验不通过，说明至少有一位数字输错了，或数字顺序被调换。';
+  }else{
+    finEl.textContent='格式合法';finEl.className='ok';
+    tip.textContent='格式检查通过。注意：这只代表格式正确，卡号是否存在仍需发卡行授权确认。';
+  }
+}
+document.getElementById('num').addEventListener('input',check);
+document.getElementById('clear').onclick=function(){
+  document.getElementById('num').value='';check();document.getElementById('num').focus();
+};
+document.getElementById('paste').onclick=function(){
+  var el=document.getElementById('num');
+  if(navigator.clipboard&&navigator.clipboard.readText){
+    navigator.clipboard.readText().then(function(t){el.value=t.trim();check()},function(){
+      el.focus();document.getElementById('tip').textContent='浏览器未授权读取剪贴板，请直接按 Ctrl+V 粘贴。'
+    });
+  }else{el.focus();document.getElementById('tip').textContent='请直接按 Ctrl+V 粘贴。'}
+};
+
+var tbl=document.getElementById('tc');
+tbl.innerHTML='<thead><tr><th>卡号</th><th>卡组织</th><th>模拟结果</th><th>操作</th></tr></thead><tbody>'+
+TESTS.map(function(t,i){
+  return '<tr><td class="num">'+t[0].replace(/(.{4})/g,'$1 ').trim()+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td><button class="cp" data-i="'+i+'">填入</button></td></tr>';
+}).join('')+'</tbody>';
+tbl.querySelectorAll('button.cp').forEach(function(btn){
+  btn.onclick=function(){
+    document.getElementById('num').value=TESTS[+btn.dataset.i][0];
+    check();
+    document.getElementById('num').scrollIntoView({block:'center'});
+  };
+});
+check();
+</script></body></html>
