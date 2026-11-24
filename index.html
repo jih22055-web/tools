@@ -40,8 +40,7 @@
     </div>
   </section>
 
-  <h2 class="section-title" id="tools"><span class="dot"></span> 全部工具 <span id="count" style="color:var(--muted);font-size:14px;font-weight:400"></span></h2>
-  <div class="catbar" id="catbar"></div>
+  <h2 class="section-title" id="tools"><span class="dot"></span> <span id="catTitle">全部工具</span> <span id="count" style="color:var(--muted);font-size:14px;font-weight:400"></span></h2>
   <div class="grid" id="grid"></div>
 
   <section class="seo" id="about">
@@ -205,22 +204,21 @@ function syncSb(){
     else a.classList.remove('active');
   });
 }
-function renderCatbar(){
-  const bar = document.getElementById('catbar');
-  bar.innerHTML = CATS.map(c=>'<a href="#" data-cat="'+c+'" class="'+(c===curCat?'active':'')+'">'+c+'</a>').join('');
-  syncSb();
-  bar.onclick = e=>{
-    const a = e.target.closest('a[data-cat]'); if(!a) return;
-    e.preventDefault(); curCat = a.dataset.cat; renderCatbar(); doSearch(); syncSb();
-  };
+function syncTitle(){
+  document.getElementById('catTitle').textContent = curCat==='全部' ? '全部工具' : curCat;
 }
 function doSearch(){
   const q = search.value.trim().toLowerCase();
-  const list = TOOLS.filter(t=>(curCat==='全部'||t.cat===curCat) && (!q||(t.name+t.desc+t.tag).toLowerCase().includes(q)));
+  const list = TOOLS.filter(t=>
+    (q ? true : (curCat==='全部'||t.cat===curCat)) &&
+    (!q || (t.name+t.desc+t.tag).toLowerCase().includes(q))
+  );
   grid.innerHTML = list.map(t=>'<a class="tool" href="'+t.file+'"><span class="arrow">↗</span><div class="ic" style="background:'+t.color+'22;color:'+t.color+'">'+t.icon+'</div><h3>'+t.name+'</h3><p>'+t.desc+'</p></a>').join('');
   count.textContent = '('+list.length+')';
+  document.getElementById('catTitle').textContent = q ? '搜索结果' : (curCat==='全部' ? '全部工具' : curCat);
 }
-renderCatbar();
+syncTitle();
+syncSb();
 doSearch();
 search.addEventListener('input',doSearch);
 document.getElementById('searchBtn').addEventListener('click',doSearch);
