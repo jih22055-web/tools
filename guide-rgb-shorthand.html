@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>#RGB 和 #RRGGBB 有什么区别？三位颜色简写怎么展开</title>
+<meta name="description" content="#RGB 是 #RRGGBB 的简写，每位重复一次：#ABC 等于 #AABBCC，不是 #A0B0C0。讲清展开规则、什么时候能简写，以及带透明度的 8 位写法。">
+<link rel="stylesheet" href="style.css?v=20261124b">
+<link rel="canonical" href="https://toolpocket.cn/guide-rgb-shorthand.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"#RGB 和 #RRGGBB 有什么区别","description":"#RGB 是 #RRGGBB 的简写，每位重复一次：#ABC 等于 #AABBCC，不是 #A0B0C0。讲清展开规则、什么时候能简写，以及带透明度的 8 位写法。","url":"https://toolpocket.cn/guide-rgb-shorthand.html","inLanguage":"zh-CN","datePublished":"2026-11-25","dateModified":"2026-11-25","author":{"@type":"Organization","name":"万能工具箱"},"publisher":{"@type":"Organization","name":"万能工具箱"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"工具箱","item":"https://toolpocket.cn/"},{"@type":"ListItem","position":2,"name":"使用教程","item":"https://toolpocket.cn/guide.html"},{"@type":"ListItem","position":3,"name":"颜色格式"}]}]}</script>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="万能工具箱">
+<meta property="og:title" content="#RGB 和 #RRGGBB 有什么区别？三位颜色简写怎么展开">
+<meta property="og:description" content="#RGB 是 #RRGGBB 的简写，每位重复一次：#ABC 等于 #AABBCC，不是 #A0B0C0。讲清展开规则、什么时候能简写，以及带透明度的 8 位写法。">
+<meta property="og:url" content="https://toolpocket.cn/guide-rgb-shorthand.html">
+<meta property="og:image" content="https://toolpocket.cn/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://toolpocket.cn/og-image.jpg">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?bff83449250c2543276e6343675b69f8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<header><div class="wrap nav"><button class="sbbtn" id="sbBtn" aria-label="打开菜单" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="index.html" class="logo"><span class="mark">🧰</span> 万能工具箱</a><nav class="nav-links"><a href="index.html">全部工具</a><a href="guide.html">使用教程</a></nav></div></header>
+<aside class="sb" id="sb"><div class="sb-brand"><a href="index.html"><span class="mark">🧰</span>万能工具箱</a></div><nav class="sb-nav"><a class="sb-item" href="index.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>全部工具</a><a class="sb-item active" href="guide.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/><path d="M8 7h8M8 11h5"/></svg></span>使用教程</a><div class="sb-group">工具分类</div><a class="sb-item" href="index.html?cat=%E5%9B%BE%E7%89%87%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m20 16-5-5-8 8"/></svg></span>图片工具</a><a class="sb-item" href="index.html?cat=%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h10M5 18h7"/></svg></span>文本工具</a><a class="sb-item" href="index.html?cat=%E7%BC%96%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg></span>编码加密</a><a class="sb-item" href="index.html?cat=%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="m9 8-4.5 4L9 16M15 8l4.5 4L15 16"/></svg></span>开发工具</a><a class="sb-item" href="index.html?cat=%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h13l-3-3M20 15.5H7l3 3"/></svg></span>数据转换</a><a class="sb-item" href="index.html?cat=%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></svg></span>网络工具</a><a class="sb-item" href="index.html?cat=%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></svg></span>日期时间</a><a class="sb-item" href="index.html?cat=%E6%8D%A2%E7%AE%97%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M8 7.5h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/></svg></span>换算计算</a><a class="sb-item" href="index.html?cat=%E5%81%A5%E5%BA%B7%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7.2-4.6-7.2-9.6A4.2 4.2 0 0 1 12 7.2a4.2 4.2 0 0 1 7.2 3.2C19.2 15.4 12 20 12 20z"/></svg></span>健康计算</a><a class="sb-item" href="index.html?cat=%E8%B4%A2%E5%8A%A1%E8%AE%A1%E7%AE%97"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8l3 3.4L15 8M12 11.4V16M9.4 12.6h5.2M9.4 14.8h5.2"/></svg></span>财务计算</a><a class="sb-item" href="index.html?cat=%E7%94%9F%E6%B4%BB%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M5.5 21V4c4-2.2 7 2.2 11 0v9.4c-4 2.2-7-2.2-11 0"/></svg></span>生活工具</a><a class="sb-item" href="index.html?cat=%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10.5" rx="4.5"/><path d="M7 12.2h4M9 10.2v4"/><circle cx="15.6" cy="11.2" r="1"/><circle cx="17.8" cy="13.4" r="1"/></svg></span>游戏娱乐</a><a class="sb-item" href="index.html?cat=%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.6-4.6"/></svg></span>查询工具</a><div class="sb-group">关于</div><a class="sb-item" href="about.html"><span class="sb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.2c.6-3.7 3.4-5.6 7.2-5.6s6.6 1.9 7.2 5.6"/></svg></span>关于本站</a></nav></aside><div class="sb-mask" id="sbMask"></div>
+<div class="wrap page">
+  <div class="crumb"><a href="index.html">工具箱</a> / <a href="guide.html">使用教程</a> / 颜色格式</div>
+  <div class="article">
+    <h1>#RGB 和 #RRGGBB 有什么区别</h1>
+    <div class="meta">2026-11-25 · 约 482 字</div>
+<p>看别人写的 CSS 里有 <code>color: #f00</code>，自己写的是 <code>#ff0000</code>，颜色一模一样。这两个是同一个颜色的两种写法：前者是简写，后者是完整写法。</p>
+
+<h2>展开规则：每位复制一次</h2>
+<p><code>#RRGGBB</code> 用六位十六进制表示红、绿、蓝三个通道，每通道两位，取值 00 到 FF。<code>#RGB</code> 把每个通道压缩成一位，展开时把这一位<b>重复两次</b>：</p>
+<ul>
+<li><code>#ABC</code> → <code>#AABBCC</code></li>
+<li><code>#f00</code> → <code>#ff0000</code>（纯红）</li>
+<li><code>#fff</code> → <code>#ffffff</code>（纯白）</li>
+<li><code>#369</code> → <code>#336699</code></li>
+</ul>
+<p>最常犯的错是以为 <code>#ABC</code> 等于 <code>#A0B0C0</code>——那是"后面补零"，不是"重复一次"。正确结果是 <code>#AABBCC</code>，颜色明显更亮。</p>
+
+<h2>什么时候能简写</h2>
+<p>不是所有颜色都能压成三位。只有当每个通道的两位完全相同（比如 <code>AA</code>、<code>FF</code>、<code>33</code>）时才能简写。<code>#FF8800</code> 里 <code>88</code> 可以缩写但 <code>00</code> 也行，它能写成 <code>#F80</code>；而 <code>#FF8040</code> 的绿色通道是 <code>80</code>、蓝色是 <code>40</code>，两位不一样，就没法简写。</p>
+<p>换句话说，理论上 1600 多万种颜色里只有 4096 种能简写。设计稿里给出的颜色大多是六位，正是因为它们通常不在那 4096 种里。</p>
+
+<h2>带透明度的情况</h2>
+<p>现代 CSS 还支持八位写法 <code>#RRGGBBAA</code>，最后两位是 alpha 通道（00 全透明，FF 完全不透明）。对应的简写是四位 <code>#RGBA</code>，同样每位重复一次：<code>#F008</code> 等于 <code>#FF000088</code>，也就是半透明红色。</p>
+
+<h2>该用哪种</h2>
+<ul>
+<li>团队协作和代码可维护性优先 → 统一用六位，直观、不用在脑子里展开</li>
+<li>手写小段样式、追求简洁 → 能用三位就用三位，比如 <code>#000</code>、<code>#fff</code>、<code>#333</code></li>
+<li>需要透明度 → 用八位 <code>#RRGGBBAA</code>，比 <code>rgba()</code> 更短</li>
+</ul>
+<p>还有一点值得注意：早期 IE 不支持三位简写，但那已经是二十年前的问题了，现在所有浏览器都支持。真正需要留意的是某些老旧的邮件客户端，写邮件模板时最好用六位。</p>
+
+<div class="tip"><p>一句话：<code>#ABC</code> 就是 <code>#AABBCC</code>，每位重复一次而非补零。只有每通道两位相同时才能简写，拿不准就用六位最保险。</p></div>
+  <div style="margin-top:34px;padding-top:22px;border-top:1px solid var(--line)">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">这篇文章用到的工具</div>
+      <div class="related"><a href="color.html">颜色转换工具</a><a href="cssformat.html">CSS 美化与压缩</a><a href="htmlformat.html">HTML 美化与压缩</a></div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:24px 0 10px"><a href="guide.html" style="color:var(--muted);font-size:14px">← 返回教程列表</a></div>
+</div>
+<footer><div class="wrap">
+  <div>© 2026 万能工具箱 · 免费工具，打开即用</div>
+  <div style="margin-top:7px">商务合作与问题反馈：<a href="mailto:lao110112@outlook.com">lao110112@outlook.com</a> · <a href="about.html">关于本站</a></div>
+</div></footer>
+<script>
+(function(){var b=document.getElementById('sbBtn'),s=document.getElementById('sb'),m=document.getElementById('sbMask');if(!b||!s)return;
+function set(o){s.classList.toggle('open',o);if(m)m.classList.toggle('on',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!s.classList.contains('open'))});
+if(m)m.addEventListener('click',function(){set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body></html>
